@@ -1,0 +1,19 @@
+{
+  "scenario_id": "ambiguous_communication",
+  "name": "Ambiguous customer communication",
+  "description": "The CRM shows a potential follow-up gap, while a recent customer communication may be relevant but is too ambiguous to determine whether it concerns the quote.",
+  "expected": {
+    "primary_only": {
+      "finding": true,
+      "interpretation": "Potential follow-up gap based on the quote follow-up baseline.",
+      "confidence": "high"
+    },
+    "cross_system": {
+      "finding": true,
+      "interpretation": "The opportunity may require follow-up, but the recent communication is ambiguous and cannot reliably be treated as quote-related evidence.",
+      "confidence": "low"
+    },
+    "incremental_information": true,
+    "recommendation": "Verify the communication context before taking action."
+  }
+}

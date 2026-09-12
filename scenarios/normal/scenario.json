@@ -1,0 +1,19 @@
+{
+  "scenario_id": "normal",
+  "name": "Normal opportunity",
+  "description": "A quote was recently sent and the opportunity is still within the business's expected follow-up interval.",
+  "expected": {
+    "primary_only": {
+      "finding": false,
+      "interpretation": "No follow-up gap detected.",
+      "confidence": "high"
+    },
+    "cross_system": {
+      "finding": false,
+      "interpretation": "No follow-up gap detected.",
+      "confidence": "high"
+    },
+    "incremental_information": false,
+    "recommendation": null
+  }
+}

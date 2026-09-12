@@ -1,0 +1,23 @@
+{
+  "scenario_id": "incorrect_identity",
+  "name": "Incorrect customer identity",
+  "description": "The communication system contains a customer with similar identifying details to the CRM customer, but the available evidence is insufficient or contradictory. The systems must not incorrectly merge the identities.",
+  "expected": {
+    "resolution": {
+      "result": "no_match",
+      "same_canonical_customer": false
+    },
+    "primary_only": {
+      "finding": true,
+      "interpretation": "Potential follow-up gap based on the CRM opportunity timeline.",
+      "confidence": "high"
+    },
+    "cross_system": {
+      "finding": true,
+      "interpretation": "The communication cannot be safely associated with the CRM customer, so it must not change the opportunity diagnosis.",
+      "confidence": "high"
+    },
+    "incremental_information": false,
+    "recommendation": "Follow up with the opportunity owner using verified CRM information."
+  }
+}

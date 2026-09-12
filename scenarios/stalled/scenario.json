@@ -1,0 +1,19 @@
+{
+  "scenario_id": "stalled",
+  "name": "Genuine stalled opportunity",
+  "description": "A quote was sent and the expected follow-up interval has been exceeded. There is no recent customer engagement or internal follow-up activity.",
+  "expected": {
+    "primary_only": {
+      "finding": true,
+      "interpretation": "Potential follow-up gap requiring attention.",
+      "confidence": "high"
+    },
+    "cross_system": {
+      "finding": true,
+      "interpretation": "The opportunity appears genuinely stalled because the quote is beyond the expected follow-up interval and there is no recent customer engagement or internal follow-up activity.",
+      "confidence": "high"
+    },
+    "incremental_information": false,
+    "recommendation": "Follow up with the opportunity owner."
+  }
+}

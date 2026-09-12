@@ -1,0 +1,19 @@
+{
+  "scenario_id": "false_positive",
+  "name": "False positive prevented by context",
+  "description": "The CRM appears to show an overdue quote follow-up, but communication context shows that the customer explicitly requested no follow-up until a known future date.",
+  "expected": {
+    "primary_only": {
+      "finding": true,
+      "interpretation": "Potential follow-up gap based on the quote follow-up baseline.",
+      "confidence": "medium"
+    },
+    "cross_system": {
+      "finding": false,
+      "interpretation": "The communication provides relevant evidence that the customer requested a later follow-up, so the apparent gap should be suppressed.",
+      "confidence": "high"
+    },
+    "incremental_information": true,
+    "recommendation": null
+  }
+}
