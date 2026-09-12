@@ -1,0 +1,325 @@
+{
+  "source": "crm",
+  "records": [
+    {
+      "scenario_id": "normal",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_001",
+        "name": "Aarav Mehta",
+        "email": "aarav@example.com",
+        "phone": "+91-9000000001"
+      },
+      "employee": {
+        "id": "emp_001",
+        "name": "Rahul Sharma"
+      },
+      "opportunity": {
+        "id": "opp_001",
+        "stage": "quote_sent",
+        "value": 85000,
+        "quote_sent_at": "2026-09-10T09:00:00",
+        "last_crm_activity_at": "2026-09-11T10:00:00"
+      },
+      "quote": {
+        "id": "quote_001",
+        "amount": 85000,
+        "sent_at": "2026-09-10T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "stalled",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_002",
+        "name": "Priya Kapoor",
+        "email": "priya@example.com",
+        "phone": "+91-9000000002"
+      },
+      "employee": {
+        "id": "emp_002",
+        "name": "Vikram Singh"
+      },
+      "opportunity": {
+        "id": "opp_002",
+        "stage": "quote_sent",
+        "value": 120000,
+        "quote_sent_at": "2026-09-01T09:00:00",
+        "last_crm_activity_at": "2026-09-02T10:00:00"
+      },
+      "quote": {
+        "id": "quote_002",
+        "amount": 120000,
+        "sent_at": "2026-09-01T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "hidden_engagement",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_003",
+        "name": "Rohan Gupta",
+        "email": "rohan@example.com",
+        "phone": "+91-9000000003"
+      },
+      "employee": {
+        "id": "emp_003",
+        "name": "Amit Verma"
+      },
+      "opportunity": {
+        "id": "opp_003",
+        "stage": "quote_sent",
+        "value": 95000,
+        "quote_sent_at": "2026-09-04T09:00:00",
+        "last_crm_activity_at": "2026-09-05T10:00:00"
+      },
+      "quote": {
+        "id": "quote_003",
+        "amount": 95000,
+        "sent_at": "2026-09-04T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "long_cycle",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_004",
+        "name": "Neha Patel",
+        "email": "neha@example.com",
+        "phone": "+91-9000000004"
+      },
+      "employee": {
+        "id": "emp_004",
+        "name": "Sanjay Rao"
+      },
+      "opportunity": {
+        "id": "opp_004",
+        "stage": "quote_sent",
+        "value": 450000,
+        "cycle_type": "long",
+        "quote_sent_at": "2026-08-20T09:00:00",
+        "last_crm_activity_at": "2026-08-22T10:00:00"
+      },
+      "quote": {
+        "id": "quote_004",
+        "amount": 450000,
+        "sent_at": "2026-08-20T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "irrelevant_communication",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_005",
+        "name": "Kabir Shah",
+        "email": "kabir@example.com",
+        "phone": "+91-9000000005"
+      },
+      "employee": {
+        "id": "emp_005",
+        "name": "Manish Kumar"
+      },
+      "opportunity": {
+        "id": "opp_005",
+        "stage": "quote_sent",
+        "value": 70000,
+        "quote_sent_at": "2026-09-01T09:00:00",
+        "last_crm_activity_at": "2026-09-02T10:00:00"
+      },
+      "quote": {
+        "id": "quote_005",
+        "amount": 70000,
+        "sent_at": "2026-09-01T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "duplicate_identity",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_006",
+        "name": "Ananya Iyer",
+        "email": "ananya@example.com",
+        "phone": "+91-9000000006"
+      },
+      "employee": {
+        "id": "emp_006",
+        "name": "Deepak Joshi"
+      },
+      "opportunity": {
+        "id": "opp_006",
+        "stage": "quote_sent",
+        "value": 110000,
+        "quote_sent_at": "2026-09-01T09:00:00",
+        "last_crm_activity_at": "2026-09-02T10:00:00"
+      },
+      "quote": {
+        "id": "quote_006",
+        "amount": 110000,
+        "sent_at": "2026-09-01T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "incorrect_identity",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_007",
+        "name": "Karan Malhotra",
+        "email": "karan@example.com",
+        "phone": "+91-9000000007"
+      },
+      "employee": {
+        "id": "emp_007",
+        "name": "Rakesh Yadav"
+      },
+      "opportunity": {
+        "id": "opp_007",
+        "stage": "quote_sent",
+        "value": 90000,
+        "quote_sent_at": "2026-09-01T09:00:00",
+        "last_crm_activity_at": "2026-09-02T10:00:00"
+      },
+      "quote": {
+        "id": "quote_007",
+        "amount": 90000,
+        "sent_at": "2026-09-01T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "missing_external_data",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_008",
+        "name": "Meera Nair",
+        "email": "meera@example.com",
+        "phone": "+91-9000000008"
+      },
+      "employee": {
+        "id": "emp_008",
+        "name": "Arjun Das"
+      },
+      "opportunity": {
+        "id": "opp_008",
+        "stage": "quote_sent",
+        "value": 65000,
+        "quote_sent_at": "2026-09-01T09:00:00",
+        "last_crm_activity_at": "2026-09-02T10:00:00"
+      },
+      "quote": {
+        "id": "quote_008",
+        "amount": 65000,
+        "sent_at": "2026-09-01T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "false_positive",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_009",
+        "name": "Ishaan Roy",
+        "email": "ishaan@example.com",
+        "phone": "+91-9000000009"
+      },
+      "employee": {
+        "id": "emp_009",
+        "name": "Nitin Shah"
+      },
+      "opportunity": {
+        "id": "opp_009",
+        "stage": "quote_sent",
+        "value": 135000,
+        "quote_sent_at": "2026-09-01T09:00:00",
+        "last_crm_activity_at": "2026-09-02T10:00:00"
+      },
+      "quote": {
+        "id": "quote_009",
+        "amount": 135000,
+        "sent_at": "2026-09-01T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "false_negative",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_010",
+        "name": "Diya Menon",
+        "email": "diya@example.com",
+        "phone": "+91-9000000010"
+      },
+      "employee": {
+        "id": "emp_010",
+        "name": "Suresh Kumar"
+      },
+      "opportunity": {
+        "id": "opp_010",
+        "stage": "quote_sent",
+        "value": 160000,
+        "quote_sent_at": "2026-09-10T09:00:00",
+        "last_crm_activity_at": "2026-09-11T10:00:00"
+      },
+      "quote": {
+        "id": "quote_010",
+        "amount": 160000,
+        "sent_at": "2026-09-10T09:00:00"
+      }
+    },
+    {
+      "scenario_id": "ambiguous_communication",
+      "business": {
+        "id": "biz_001",
+        "name": "Northstar HVAC Services"
+      },
+      "customer": {
+        "id": "crm_cust_011",
+        "name": "Arjun Mehta",
+        "email": "arjun@example.com",
+        "phone": "+91-9000000011"
+      },
+      "employee": {
+        "id": "emp_011",
+        "name": "Vivek Singh"
+      },
+      "opportunity": {
+        "id": "opp_011",
+        "stage": "quote_sent",
+        "value": 100000,
+        "quote_sent_at": "2026-09-01T09:00:00",
+        "last_crm_activity_at": "2026-09-02T10:00:00"
+      },
+      "quote": {
+        "id": "quote_011",
+        "amount": 100000,
+        "sent_at": "2026-09-01T09:00:00"
+      }
+    }
+  ]
+}

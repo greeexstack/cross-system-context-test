@@ -1,0 +1,196 @@
+{
+    "source": "communication",
+    "records": [
+        {
+            "scenario_id": "normal",
+            "customer": {
+                "id": "comm_cust_001",
+                "name": "Aarav Mehta",
+                "email": "aarav@example.com",
+                "phone": "+91-9000000001"
+            },
+            "communications": [
+                {
+                    "id": "comm_001",
+                    "direction": "outbound",
+                    "timestamp": "2026-09-10T10:00:00",
+                    "channel": "email",
+                    "topic": "quote",
+                    "content": "Quote sent to customer."
+                }
+            ]
+        },
+        {
+            "scenario_id": "stalled",
+            "customer": {
+                "id": "comm_cust_002",
+                "name": "Priya Kapoor",
+                "email": "priya@example.com",
+                "phone": "+91-9000000002"
+            },
+            "communications": []
+        },
+        {
+            "scenario_id": "hidden_engagement",
+            "customer": {
+                "id": "comm_cust_003",
+                "name": "Rohan Gupta",
+                "email": "rohan@example.com",
+                "phone": "+91-9000000003"
+            },
+            "communications": [
+                {
+                    "id": "comm_003",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-11T14:30:00",
+                    "channel": "whatsapp",
+                    "topic": "quote",
+                    "content": "Customer asked for an update on the quote and said they are ready to discuss the next step."
+                }
+            ]
+        },
+        {
+            "scenario_id": "long_cycle",
+            "customer": {
+                "id": "comm_cust_004",
+                "name": "Neha Patel",
+                "email": "neha@example.com",
+                "phone": "+91-9000000004"
+            },
+            "communications": [
+                {
+                    "id": "comm_004",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-05T11:00:00",
+                    "channel": "email",
+                    "topic": "quote",
+                    "content": "Customer said the project decision will take several weeks."
+                }
+            ]
+        },
+        {
+            "scenario_id": "irrelevant_communication",
+            "customer": {
+                "id": "comm_cust_005",
+                "name": "Kabir Shah",
+                "email": "kabir@example.com",
+                "phone": "+91-9000000005"
+            },
+            "communications": [
+                {
+                    "id": "comm_005",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-10T15:00:00",
+                    "channel": "whatsapp",
+                    "topic": "invoice",
+                    "content": "Customer asked for a copy of an old invoice."
+                }
+            ]
+        },
+        {
+            "scenario_id": "duplicate_identity",
+            "customer": {
+                "id": "comm_cust_006",
+                "name": "Ananya Iyer",
+                "email": "ananya@example.com",
+                "phone": "+91-9000000006"
+            },
+            "communications": [
+                {
+                    "id": "comm_006",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-10T12:00:00",
+                    "channel": "phone",
+                    "topic": "quote",
+                    "content": "Customer called asking about the quote."
+                }
+            ]
+        },
+        {
+            "scenario_id": "incorrect_identity",
+            "customer": {
+                "id": "comm_cust_007",
+                "name": "Karan Malhotra",
+                "email": "different@example.com",
+                "phone": "+91-9111111111"
+            },
+            "communications": [
+                {
+                    "id": "comm_007",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-10T12:00:00",
+                    "channel": "phone",
+                    "topic": "quote",
+                    "content": "A customer with a similar name asked about a different project."
+                }
+            ]
+        },
+        {
+            "scenario_id": "missing_external_data",
+            "customer": {
+                "id": "comm_cust_008",
+                "name": "Meera Nair",
+                "email": "meera@example.com",
+                "phone": "+91-9000000008"
+            },
+            "communications": null
+        },
+        {
+            "scenario_id": "false_positive",
+            "customer": {
+                "id": "comm_cust_009",
+                "name": "Ishaan Roy",
+                "email": "ishaan@example.com",
+                "phone": "+91-9000000009"
+            },
+            "communications": [
+                {
+                    "id": "comm_009",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-03T09:30:00",
+                    "channel": "email",
+                    "topic": "quote",
+                    "content": "Customer requested that the business wait until the end of the month before following up."
+                }
+            ]
+        },
+        {
+            "scenario_id": "false_negative",
+            "customer": {
+                "id": "comm_cust_010",
+                "name": "Diya Menon",
+                "email": "diya@example.com",
+                "phone": "+91-9000000010"
+            },
+            "communications": [
+                {
+                    "id": "comm_010",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-11T16:00:00",
+                    "channel": "whatsapp",
+                    "topic": "quote",
+                    "content": "Customer confirmed they want to proceed with the quoted work and asked how to move forward."
+                }
+            ]
+        },
+        {
+            "scenario_id": "ambiguous_communication",
+            "customer": {
+                "id": "comm_cust_011",
+                "name": "Arjun Mehta",
+                "email": "arjun@example.com",
+                "phone": "+91-9000000011"
+            },
+            "communications": [
+                {
+                    "id": "comm_011",
+                    "direction": "inbound",
+                    "timestamp": "2026-09-10T13:00:00",
+                    "channel": "whatsapp",
+                    "topic": "general",
+                    "content": "Customer asked whether there were any updates. It is unclear whether the message refers to the quote."
+                }
+            ]
+        }
+    ]
+}
