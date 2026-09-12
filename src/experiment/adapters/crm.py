@@ -19,6 +19,17 @@ class CRMAdapter:
             data = json.load(file)
 
         return data["records"]
+    def load_scenario(
+        self,
+        scenario_id: str,
+    ) -> dict:
+        for record in self.load():
+            if record["scenario_id"] == scenario_id:
+                return record
+
+        raise ValueError(
+            f"CRM scenario not found: {scenario_id}"
+        )
 
     def load_entities(self) -> list[tuple[Business, Customer, Employee, Opportunity, Quote]]:
         records = self.load()

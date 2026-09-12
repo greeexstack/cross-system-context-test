@@ -11,6 +11,7 @@ from experiment.evidence.primary_only import EvidenceItem
 class PrimaryOnlyDiagnosis:
     opportunity_id: str
     diagnosis: str
+    diagnosis_type: str
     evidence: tuple[EvidenceItem, ...]
     confidence: str
     recommendation: str
@@ -37,12 +38,29 @@ class PrimaryOnlyDiagnoser:
             detection,
         )
 
+        if not baseline_result.applicable:
+            return PrimaryOnlyDiagnosis(
+                opportunity_id=opportunity.id,
+                diagnosis=(
+                    "No primary-system follow-up gap is currently "
+                    "detected because the opportunity is outside "
+                    "the applicable follow-up baseline."
+                ),
+                diagnosis_type="no_finding",
+                evidence=evidence.items,
+                confidence="medium",
+                recommendation=(
+                    "No follow-up action is indicated by this detection."
+                ),
+            )
+
         if not detection.detected:
             return PrimaryOnlyDiagnosis(
                 opportunity_id=opportunity.id,
                 diagnosis=(
                     "No primary-system follow-up gap is currently detected."
                 ),
+                diagnosis_type="no_finding",
                 evidence=evidence.items,
                 confidence="high",
                 recommendation=(
@@ -66,6 +84,7 @@ class PrimaryOnlyDiagnoser:
         return PrimaryOnlyDiagnosis(
             opportunity_id=opportunity.id,
             diagnosis=diagnosis,
+            diagnosis_type="internal_activity_gap",
             evidence=evidence.items,
             confidence="medium",
             recommendation=(

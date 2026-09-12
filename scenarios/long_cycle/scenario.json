@@ -1,19 +1,19 @@
 {
   "scenario_id": "long_cycle",
-  "name": "Legitimate long-cycle opportunity",
-  "description": "A quote has been open longer than the normal follow-up interval, but the opportunity is legitimately following a longer customer decision cycle.",
+  "description": "A legitimate long-cycle opportunity where the quote may remain inactive for longer than the standard follow-up interval.",
   "expected": {
     "primary_only": {
       "finding": false,
-      "interpretation": "No urgent follow-up gap should be raised because this opportunity belongs to a legitimate long-cycle case.",
-      "confidence": "medium"
+      "diagnosis_class": "no_finding",
+      "confidence": "medium",
+      "recommendation_class": "none"
     },
     "cross_system": {
       "finding": false,
-      "interpretation": "No urgent follow-up gap should be raised because the opportunity is legitimately following a longer decision cycle.",
-      "confidence": "high"
+      "diagnosis_class": "no_finding",
+      "confidence": "high",
+      "recommendation_class": "none"
     },
-    "incremental_information": true,
-    "recommendation": null
+    "incremental_information": false
   }
 }

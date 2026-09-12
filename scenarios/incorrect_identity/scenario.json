@@ -1,23 +1,22 @@
 {
-  "scenario_id": "incorrect_identity",
-  "name": "Incorrect customer identity",
-  "description": "The communication system contains a customer with similar identifying details to the CRM customer, but the available evidence is insufficient or contradictory. The systems must not incorrectly merge the identities.",
-  "expected": {
-    "resolution": {
-      "result": "no_match",
-      "same_canonical_customer": false
+    "scenario_id": "incorrect_identity",
+    "description": "The external communication belongs to a different customer with a similar name and a different identity, so it must not be associated with the CRM opportunity.",
+    "expected": {
+        "primary_only": {
+            "finding": true,
+            "diagnosis_class": "internal_activity_gap",
+            "confidence": "medium",
+            "recommendation_class": "owner_followup"
+        },
+        "cross_system": {
+            "finding": true,
+            "diagnosis_class": "unverified_communication",
+            "confidence": "medium",
+            "recommendation_class": "verify_crm_followup_status"
+        },
+        "incremental_information": false
     },
-    "primary_only": {
-      "finding": true,
-      "interpretation": "Potential follow-up gap based on the CRM opportunity timeline.",
-      "confidence": "high"
-    },
-    "cross_system": {
-      "finding": true,
-      "interpretation": "The communication cannot be safely associated with the CRM customer, so it must not change the opportunity diagnosis.",
-      "confidence": "high"
-    },
-    "incremental_information": false,
-    "recommendation": "Follow up with the opportunity owner using verified CRM information."
-  }
+    "identity_resolution": {
+        "expected_status": "ambiguous_match"
+    }
 }

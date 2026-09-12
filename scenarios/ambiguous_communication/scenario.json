@@ -1,19 +1,22 @@
 {
-  "scenario_id": "ambiguous_communication",
-  "name": "Ambiguous customer communication",
-  "description": "The CRM shows a potential follow-up gap, while a recent customer communication may be relevant but is too ambiguous to determine whether it concerns the quote.",
-  "expected": {
-    "primary_only": {
-      "finding": true,
-      "interpretation": "Potential follow-up gap based on the quote follow-up baseline.",
-      "confidence": "high"
+    "scenario_id": "ambiguous_communication",
+    "description": "The CRM opportunity is overdue, while an external communication asks for an update but does not clearly establish whether the message concerns the quote.",
+    "expected": {
+        "primary_only": {
+            "finding": true,
+            "diagnosis_class": "internal_activity_gap",
+            "confidence": "medium",
+            "recommendation_class": "owner_followup"
+        },
+        "cross_system": {
+            "finding": true,
+            "diagnosis_class": "unverified_communication",
+            "confidence": "low",
+            "recommendation_class": "verify_communication_context"
+        },
+        "incremental_information": true
     },
-    "cross_system": {
-      "finding": true,
-      "interpretation": "The opportunity may require follow-up, but the recent communication is ambiguous and cannot reliably be treated as quote-related evidence.",
-      "confidence": "low"
-    },
-    "incremental_information": true,
-    "recommendation": "Verify the communication context before taking action."
-  }
+    "identity_resolution": {
+        "expected_status": "confident_match"
+    }
 }

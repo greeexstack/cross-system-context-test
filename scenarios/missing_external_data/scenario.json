@@ -1,23 +1,22 @@
 {
-  "scenario_id": "missing_external_data",
-  "name": "Missing external communication data",
-  "description": "The CRM contains an opportunity that may require follow-up, but the communication system is unavailable or provides no usable data for the customer.",
-  "expected": {
-    "resolution": {
-      "result": "unavailable",
-      "same_canonical_customer": null
+    "scenario_id": "missing_external_data",
+    "description": "The CRM opportunity is overdue, but the external communication source has no available communication record for this customer.",
+    "expected": {
+        "primary_only": {
+            "finding": true,
+            "diagnosis_class": "internal_activity_gap",
+            "confidence": "medium",
+            "recommendation_class": "owner_followup"
+        },
+        "cross_system": {
+            "finding": true,
+            "diagnosis_class": "external_data_unavailable",
+            "confidence": "medium",
+            "recommendation_class": "owner_followup_and_record_unavailability"
+        },
+        "incremental_information": false
     },
-    "primary_only": {
-      "finding": true,
-      "interpretation": "Potential follow-up gap based on the CRM opportunity timeline.",
-      "confidence": "medium"
-    },
-    "cross_system": {
-      "finding": true,
-      "interpretation": "A potential follow-up gap is detected, but the communication context is unavailable, so the system must not infer whether the customer recently engaged.",
-      "confidence": "medium"
-    },
-    "incremental_information": false,
-    "recommendation": "Follow up with the opportunity owner and record that external communication context was unavailable."
-  }
+    "identity_resolution": {
+        "expected_status": "unavailable"
+    }
 }

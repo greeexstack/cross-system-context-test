@@ -1,19 +1,19 @@
 {
   "scenario_id": "hidden_engagement",
-  "name": "Customer engagement invisible in CRM",
-  "description": "A customer has recently contacted the business about a quote, but the CRM contains no corresponding recent internal activity.",
+  "description": "The CRM shows an overdue quote with no recent internal CRM activity, while the communication system shows that the customer recently contacted the business about the quote.",
   "expected": {
     "primary_only": {
       "finding": true,
-      "interpretation": "Potential follow-up gap caused by customer inactivity or missing follow-up.",
-      "confidence": "medium"
+      "diagnosis_class": "internal_activity_gap",
+      "confidence": "medium",
+      "recommendation_class": "owner_followup"
     },
     "cross_system": {
       "finding": true,
-      "interpretation": "The customer recently engaged, while the CRM shows no corresponding internal activity. The issue is more likely an internal follow-up or activity-recording gap than customer inactivity.",
-      "confidence": "high"
+      "diagnosis_class": "internal_activity_gap",
+      "confidence": "high",
+      "recommendation_class": "verify_communication_and_owner_followup"
     },
-    "incremental_information": true,
-    "recommendation": "Verify the communication and follow up with the opportunity owner."
+    "incremental_information": true
   }
 }

@@ -1,23 +1,22 @@
 {
-  "scenario_id": "duplicate_identity",
-  "name": "Duplicate customer identity",
-  "description": "The same customer appears under slightly different identifying details in the CRM and communication system. Entity resolution should recognize them as the same customer when the available evidence is sufficiently strong.",
-  "expected": {
-    "resolution": {
-      "result": "confident_match",
-      "same_canonical_customer": true
+    "scenario_id": "duplicate_identity",
+    "description": "The CRM customer and communication customer represent the same person through a duplicate customer identity, and the external communication is relevant to the quote.",
+    "expected": {
+        "primary_only": {
+            "finding": true,
+            "diagnosis_class": "internal_activity_gap",
+            "confidence": "medium",
+            "recommendation_class": "owner_followup"
+        },
+        "cross_system": {
+            "finding": true,
+            "diagnosis_class": "internal_activity_gap",
+            "confidence": "high",
+            "recommendation_class": "verify_communication_and_owner_followup"
+        },
+        "incremental_information": true
     },
-    "primary_only": {
-      "finding": true,
-      "interpretation": "Potential follow-up gap based on the CRM opportunity timeline.",
-      "confidence": "high"
-    },
-    "cross_system": {
-      "finding": true,
-      "interpretation": "The communication belongs to the same customer and can be safely used as additional context for the opportunity.",
-      "confidence": "high"
-    },
-    "incremental_information": true,
-    "recommendation": "Use the resolved communication context and follow up with the opportunity owner."
-  }
+    "identity_resolution": {
+        "expected_status": "confident_match"
+    }
 }

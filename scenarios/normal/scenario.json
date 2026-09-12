@@ -1,19 +1,19 @@
 {
-  "scenario_id": "normal",
-  "name": "Normal opportunity",
-  "description": "A quote was recently sent and the opportunity is still within the business's expected follow-up interval.",
-  "expected": {
-    "primary_only": {
-      "finding": false,
-      "interpretation": "No follow-up gap detected.",
-      "confidence": "high"
-    },
-    "cross_system": {
-      "finding": false,
-      "interpretation": "No follow-up gap detected.",
-      "confidence": "high"
-    },
-    "incremental_information": false,
-    "recommendation": null
-  }
+    "scenario_id": "normal",
+    "description": "Normal opportunity where the CRM shows a quote sent recently and the communication system contains a normal outbound quote communication.",
+    "expected": {
+        "primary_only": {
+            "finding": false,
+            "diagnosis_class": "no_finding",
+            "confidence": "high",
+            "recommendation_class": "none"
+        },
+        "cross_system": {
+            "finding": false,
+            "diagnosis_class": "no_finding",
+            "confidence": "high",
+            "recommendation_class": "none"
+        },
+        "incremental_information": false
+    }
 }

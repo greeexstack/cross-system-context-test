@@ -56,6 +56,9 @@ class Communication:
     channel: str
     topic: str
     content: str
+    customer_name: Optional[str] = None
+    customer_email: Optional[str] = None
+    customer_phone: Optional[str] = None
 
 
 @dataclass(frozen=True)

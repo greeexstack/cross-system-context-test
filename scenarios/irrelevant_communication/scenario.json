@@ -1,19 +1,19 @@
 {
   "scenario_id": "irrelevant_communication",
-  "name": "Irrelevant communication",
-  "description": "A quote is within or beyond the expected follow-up interval, but the customer's recent communication concerns an unrelated matter and should not change the opportunity diagnosis.",
+  "description": "The quote opportunity is overdue in CRM, but the only external communication is unrelated to the quote and concerns an invoice.",
   "expected": {
     "primary_only": {
       "finding": true,
-      "interpretation": "Potential follow-up gap based on the quote follow-up baseline.",
-      "confidence": "high"
+      "diagnosis_class": "internal_activity_gap",
+      "confidence": "medium",
+      "recommendation_class": "owner_followup"
     },
     "cross_system": {
       "finding": true,
-      "interpretation": "The opportunity remains a potential follow-up gap because the customer's recent communication is unrelated to the quote and does not provide relevant evidence to change the diagnosis.",
-      "confidence": "high"
+      "diagnosis_class": "unrelated_communication",
+      "confidence": "high",
+      "recommendation_class": "owner_followup"
     },
-    "incremental_information": false,
-    "recommendation": "Follow up with the opportunity owner."
+    "incremental_information": false
   }
 }

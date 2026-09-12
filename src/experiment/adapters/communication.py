@@ -1,6 +1,6 @@
 import json
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 from experiment.domain.models import Communication
 
@@ -15,6 +15,18 @@ class CommunicationAdapter:
 
         return data["records"]
 
+    def load_scenario(
+        self,
+        scenario_id: str,
+    ) -> dict:
+        for record in self.load():
+            if record["scenario_id"] == scenario_id:
+                return record
+
+        raise ValueError(
+            f"Communication scenario not found: {scenario_id}"
+        )
+
     def load_communications(self) -> list[Communication]:
         records = self.load()
         communications = []
@@ -27,17 +39,22 @@ class CommunicationAdapter:
                 continue
 
             for item in communication_records:
-                communications.append(
-                    Communication(
-                        id=item["id"],
-                        business_id="biz_001",
-                        customer_id=customer["id"],
-                        direction=item["direction"],
-                        timestamp=datetime.fromisoformat(item["timestamp"]),
-                        channel=item["channel"],
-                        topic=item["topic"],
-                        content=item["content"],
-                    )
-                )
+             communications.append(
+              Communication(
+                id=item["id"],
+                business_id="biz_001",
+                customer_id=customer["id"],
+                direction=item["direction"],
+                timestamp=datetime.fromisoformat(
+                item["timestamp"]
+             ),
+                channel=item["channel"],
+             topic=item["topic"],
+             content=item["content"],
+             customer_name=customer.get("name"),
+             customer_email=customer.get("email"),
+             customer_phone=customer.get("phone"),
+    )
+)
 
         return communications

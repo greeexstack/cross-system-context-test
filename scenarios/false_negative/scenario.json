@@ -1,19 +1,22 @@
 {
-  "scenario_id": "false_negative",
-  "name": "Opportunity signal hidden from CRM",
-  "description": "The CRM shows a normal opportunity state, but recent relevant communication indicates that the customer is ready to proceed and the CRM has not captured that change.",
-  "expected": {
-    "primary_only": {
-      "finding": false,
-      "interpretation": "No follow-up gap detected.",
-      "confidence": "high"
+    "scenario_id": "false_negative",
+    "description": "The CRM does not show a follow-up gap, but the communication system contains recent customer engagement that reveals an important opportunity requiring follow-up.",
+    "expected": {
+        "primary_only": {
+            "finding": false,
+            "diagnosis_class": "no_finding",
+            "confidence": "high",
+            "recommendation_class": "none"
+        },
+        "cross_system": {
+            "finding": true,
+            "diagnosis_class": "followup_gap",
+            "confidence": "high",
+            "recommendation_class": "verify_communication_and_owner_followup"
+        },
+        "incremental_information": true
     },
-    "cross_system": {
-      "finding": true,
-      "interpretation": "Recent relevant customer communication indicates increased purchase intent that is not reflected in the CRM. The opportunity should receive attention despite appearing normal in the primary system.",
-      "confidence": "high"
-    },
-    "incremental_information": true,
-    "recommendation": "Verify the communication and follow up with the opportunity owner."
-  }
+    "identity_resolution": {
+        "expected_status": "confident_match"
+    }
 }

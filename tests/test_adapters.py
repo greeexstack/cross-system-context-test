@@ -39,3 +39,25 @@ def test_communication_adapter_loads_available_communications():
     assert first.customer_id == "comm_cust_001"
     assert first.direction == "outbound"
     assert first.topic == "quote"
+def test_communication_adapter_loads_hidden_engagement_scenario():
+    adapter = CommunicationAdapter(
+        "scenarios/data/communications.json"
+    )
+
+    result = adapter.load_scenario("hidden_engagement")
+
+    assert result["scenario_id"] == "hidden_engagement"
+    assert result["customer"]["id"] == "comm_cust_003"
+    assert len(result["communications"]) == 1
+    assert result["communications"][0]["topic"] == "quote"
+
+
+def test_communication_adapter_loads_missing_external_data_scenario():
+    adapter = CommunicationAdapter(
+        "scenarios/data/communications.json"
+    )
+
+    result = adapter.load_scenario("missing_external_data")
+
+    assert result["scenario_id"] == "missing_external_data"
+    assert result["communications"] is None
