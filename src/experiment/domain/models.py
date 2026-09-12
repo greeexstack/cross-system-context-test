@@ -33,6 +33,7 @@ class Opportunity:
     owner_id: str
     stage: str
     value: float
+    cycle_type: str = "standard"
     quote_sent_at: Optional[datetime] = None
     last_crm_activity_at: Optional[datetime] = None
 

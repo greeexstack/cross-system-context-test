@@ -57,6 +57,7 @@ class CRMAdapter:
                 owner_id=employee.id,
                 stage=opportunity_data["stage"],
                 value=float(opportunity_data["value"]),
+                cycle_type=opportunity_data.get("cycle_type", "standard"),
                 quote_sent_at=self._parse_datetime(
                     opportunity_data.get("quote_sent_at")
                 ),
