@@ -36,7 +36,9 @@ def test_primary_only_diagnoses_followup_gap():
     assert "exceeded" in diagnosis.diagnosis
     assert "CRM" in diagnosis.diagnosis
     assert diagnosis.confidence == "medium"
-    assert len(diagnosis.evidence) >= 2
+    assert len(diagnosis.evidence) == 4
+    assert all(item.source in {"CRM", "EXPERIMENTAL_BASELINE", "DETECTION"}
+               for item in diagnosis.evidence)
     assert "follow up" in diagnosis.recommendation.lower()
 
 
@@ -97,3 +99,4 @@ def test_primary_only_does_not_recommend_followup_when_no_gap_detected():
     assert detection.detected is False
     assert "No primary-system follow-up gap" in diagnosis.diagnosis
     assert diagnosis.confidence == "high"
+    assert len(diagnosis.evidence) == 4

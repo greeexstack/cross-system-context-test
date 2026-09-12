@@ -3,42 +3,38 @@ from dataclasses import dataclass
 from experiment.baseline.quote_followup import BaselineResult
 from experiment.detection.followup_gap import FollowupGapDetection
 from experiment.domain.models import Opportunity
+from experiment.evidence.builder import PrimaryOnlyEvidenceBuilder
+from experiment.evidence.primary_only import EvidenceItem
 
 
 @dataclass(frozen=True)
 class PrimaryOnlyDiagnosis:
     opportunity_id: str
     diagnosis: str
-    evidence: tuple[str, ...]
+    evidence: tuple[EvidenceItem, ...]
     confidence: str
     recommendation: str
 
 
 class PrimaryOnlyDiagnoser:
+    def __init__(
+        self,
+        evidence_builder: PrimaryOnlyEvidenceBuilder | None = None,
+    ):
+        self.evidence_builder = (
+            evidence_builder or PrimaryOnlyEvidenceBuilder()
+        )
+
     def diagnose(
         self,
         opportunity: Opportunity,
         baseline_result: BaselineResult,
         detection: FollowupGapDetection,
     ) -> PrimaryOnlyDiagnosis:
-        evidence: list[str] = []
-
-        if opportunity.quote_sent_at is not None:
-            evidence.append(
-                f"CRM quote sent at {opportunity.quote_sent_at.isoformat()}."
-            )
-
-        if opportunity.last_crm_activity_at is not None:
-            evidence.append(
-                "CRM last activity at "
-                f"{opportunity.last_crm_activity_at.isoformat()}."
-            )
-        else:
-            evidence.append("CRM contains no recorded activity timestamp.")
-
-        evidence.append(
-            "Experimental attention threshold: "
-            f"{baseline_result.attention_threshold}."
+        evidence = self.evidence_builder.build(
+            opportunity,
+            baseline_result,
+            detection,
         )
 
         if not detection.detected:
@@ -47,9 +43,11 @@ class PrimaryOnlyDiagnoser:
                 diagnosis=(
                     "No primary-system follow-up gap is currently detected."
                 ),
-                evidence=tuple(evidence),
+                evidence=evidence.items,
                 confidence="high",
-                recommendation="No follow-up action is indicated by this detection.",
+                recommendation=(
+                    "No follow-up action is indicated by this detection."
+                ),
             )
 
         if opportunity.last_crm_activity_at is None:
@@ -68,7 +66,7 @@ class PrimaryOnlyDiagnoser:
         return PrimaryOnlyDiagnosis(
             opportunity_id=opportunity.id,
             diagnosis=diagnosis,
-            evidence=tuple(evidence),
+            evidence=evidence.items,
             confidence="medium",
             recommendation=(
                 "Verify the opportunity status and follow up with the "
