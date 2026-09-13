@@ -651,9 +651,27 @@ Five representative cases were tested.
 | F10-D1 | Service / next-step | `service_completed_next_step_unrecorded / supported_by_secondary_context / next_step_followup` | `service_completed_next_step_unrecorded / primary_only / no next-step focus` | FAIL |
 
 Observed result:
+## Candidate lexical-normalization result
 
-```text
-4 / 5 representative paraphrases failed
-1 / 5 representative paraphrases passed
-80% failure rate
-20% behavioral-consistency rate
+A dependency-free candidate extractor was evaluated against the same
+independently worded generalization variants used to probe the frozen
+v0.2 lexical baseline.
+
+| Case | Baseline | Candidate |
+|---|---:|---:|
+| F01 — follow-up | 2/3 | 3/3 |
+| F02 — approval | 2/3 | 3/3 |
+| F03 — rejection | 3/3 | 3/3 |
+| F04 — irrelevance | 2/3 | 3/3 |
+| F10 — next step | 3/3 | 3/3 |
+
+The candidate therefore improves coverage on three cases and does not
+regress on any tested case.
+
+This result demonstrates improved lexical generalization within the
+controlled battery. It does not establish genuine semantic understanding
+or vocabulary-independent reasoning.
+
+The candidate remains experimental and is not a replacement for the
+frozen baseline. The paired F10 paraphrase involving "asked what the next
+handoff step is" still exposes a normalization gap.
