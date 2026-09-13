@@ -12,7 +12,7 @@ It is not intended to reproduce an enterprise CRM agent, a general multi-tool ag
 
 The central question is narrower:
 
-> When a primary-system interpretation is exposed to secondary-system context, does the system change, strengthen, weaken, or preserve its interpretation exactly as the secondary evidence justifiesâ€”and reject context that is unrelated, misattributed, ambiguous, stale, unavailable, or otherwise insufficient?
+> When a primary-system interpretation is exposed to secondary-system context, does the system change, strengthen, weaken, or preserve its interpretation exactly as the secondary evidence justifies -- and reject context that is unrelated, misattributed, ambiguous, stale, unavailable, or otherwise insufficient?
 
 The unit of evaluation is therefore the **controlled change between paired system states**, not simply whether an agent can complete a business task.
 
@@ -22,7 +22,7 @@ Current work shows that several neighboring areas are already established.
 
 ### Enterprise cross-system agents
 
-Enterprise-Bench evaluates enterprise AI agents across CRM, support, engineering, and knowledge systems. Its current L1â€“L2 suite includes cross-system retrieval and multi-source analytical reasoning, with evaluation of precision, efficiency, safety, and reliability. [1]
+Enterprise-Bench evaluates enterprise AI agents across CRM, support, engineering, and knowledge systems. Its current L1Ã¢â‚¬â€œL2 suite includes cross-system retrieval and multi-source analytical reasoning, with evaluation of precision, efficiency, safety, and reliability. [1]
 
 ### CRM agent benchmarking
 
