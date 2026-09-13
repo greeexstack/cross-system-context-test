@@ -623,3 +623,37 @@ Its purpose is to determine whether the system responds to the **meaning of evid
 That distinction must be established empirically before external-system integration.
 
 **External integration remains blocked until this diagnostic phase is complete.**
+# 19. Observed v0.2 Baseline Result
+
+The initial controlled paraphrase battery was executed against the frozen v0.2 engine.
+
+Execution conditions:
+
+- frozen v0.2 engine;
+- original fixture metadata retained;
+- same primary record;
+- same secondary communication ID;
+- same customer identity;
+- same timestamp;
+- same source;
+- only the communication summary wording was changed;
+- no ground-truth data was supplied to the engine;
+- no fixture files were modified.
+
+Five representative cases were tested.
+
+| Case | Evidence relation | Original result | Paraphrase result | Behavioral consistency |
+|---|---|---|---|---|
+| F01-D1 | Relevant | `quote_followup_pending / supported_by_secondary_context` | `quote_pending_decision / primary_only` | FAIL |
+| F02-D1 | Supporting | `quote_pending_decision / secondary_supported / stronger` | `quote_pending_decision / primary_only / moderate` | FAIL |
+| F03-D1 | Contradictory | `negotiation_open / weakened_by_secondary_context / weaker` | `negotiation_open / primary_only / moderate` | FAIL |
+| F04-D1 | Irrelevant | `quote_pending_decision / primary_only` | `quote_pending_decision / primary_only` | PASS |
+| F10-D1 | Service / next-step | `service_completed_next_step_unrecorded / supported_by_secondary_context / next_step_followup` | `service_completed_next_step_unrecorded / primary_only / no next-step focus` | FAIL |
+
+Observed result:
+
+```text
+4 / 5 representative paraphrases failed
+1 / 5 representative paraphrases passed
+80% failure rate
+20% behavioral-consistency rate
