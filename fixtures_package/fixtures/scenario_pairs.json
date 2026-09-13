@@ -1,0 +1,761 @@
+[
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F01",
+    "frozen_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "supported_by_secondary_context"
+    },
+    "metamorphic_operation": "add relevant same-customer communication",
+    "pair_id": "F01-D1",
+    "primary": {
+      "record_id": "O001",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent and awaiting follow-up."
+    },
+    "split": "development",
+    "variant": "relevant",
+    "variant_case": {
+      "secondary_evidence": [
+        "M001"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F01",
+    "frozen_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "supported_by_secondary_context"
+    },
+    "metamorphic_operation": "add relevant same-customer communication",
+    "pair_id": "F01-E1",
+    "primary": {
+      "record_id": "O003",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent with no decision recorded."
+    },
+    "split": "evaluation",
+    "variant": "relevant",
+    "variant_case": {
+      "secondary_evidence": [
+        "M012"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F02",
+    "frozen_assertion": {
+      "decision_strength": "moderate",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "decision_strength": "stronger",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "secondary_supported"
+    },
+    "metamorphic_operation": "add evidence that supports existing interpretation without changing class",
+    "pair_id": "F02-D1",
+    "primary": {
+      "record_id": "O002",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent; primary system shows an open decision."
+    },
+    "split": "development",
+    "variant": "supporting",
+    "variant_case": {
+      "secondary_evidence": [
+        "M002"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F02",
+    "frozen_assertion": {
+      "decision_strength": "moderate",
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "decision_strength": "stronger",
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "secondary_supported"
+    },
+    "metamorphic_operation": "add evidence that supports existing interpretation without changing class",
+    "pair_id": "F02-E1",
+    "primary": {
+      "record_id": "O001",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent and follow-up is due."
+    },
+    "split": "evaluation",
+    "variant": "supporting",
+    "variant_case": {
+      "secondary_evidence": [
+        "M001"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F03",
+    "frozen_assertion": {
+      "decision_strength": "moderate",
+      "interpretation_class": "negotiation_open",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "decision_strength": "weaker",
+      "interpretation_class": "negotiation_open",
+      "support_level": "weakened_by_secondary_context"
+    },
+    "metamorphic_operation": "add directly contradictory same-customer communication",
+    "pair_id": "F03-D1",
+    "primary": {
+      "record_id": "O004",
+      "record_type": "opportunity",
+      "summary": "Negotiation stage with a revised quote sent; commercial acceptance is unresolved."
+    },
+    "split": "development",
+    "variant": "contradictory",
+    "variant_case": {
+      "secondary_evidence": [
+        "M004"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F03",
+    "frozen_assertion": {
+      "decision_strength": "moderate",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "decision_strength": "weaker",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "mixed_evidence"
+    },
+    "metamorphic_operation": "add evidence that conflicts with the primary interpretation direction",
+    "pair_id": "F03-E1",
+    "primary": {
+      "record_id": "O003",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent; decision state is unresolved."
+    },
+    "split": "evaluation",
+    "variant": "contradictory",
+    "variant_case": {
+      "secondary_evidence": [
+        "M003",
+        "M013"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F04",
+    "frozen_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "add same-customer but different-project communication",
+    "pair_id": "F04-D1",
+    "primary": {
+      "record_id": "O005",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent; decision remains open."
+    },
+    "split": "development",
+    "variant": "irrelevant",
+    "variant_case": {
+      "secondary_evidence": [
+        "M005"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_source_status": "available"
+    },
+    "family_id": "F04",
+    "frozen_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "add same-customer service communication unrelated to the quote",
+    "pair_id": "F04-E1",
+    "primary": {
+      "record_id": "O006",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent; no decision recorded."
+    },
+    "split": "evaluation",
+    "variant": "irrelevant",
+    "variant_case": {
+      "secondary_evidence": [
+        "M011"
+      ],
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "ops@globex.example",
+        "name": "Globex Manufacturing",
+        "phone": "+1-555-0199"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F05",
+    "frozen_assertion": {
+      "identity_match": "no_match",
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "identity_match": "no_match",
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "replace secondary identity with definite different customer identity",
+    "pair_id": "F05-D1",
+    "primary": {
+      "record_id": "O001",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent for Acme Industrial."
+    },
+    "split": "development",
+    "variant": "wrong_identity",
+    "variant_case": {
+      "secondary_evidence": [
+        {
+          "communication_id": "M009",
+          "summary": "A message discusses a proposal, but identity fields identify a different customer."
+        }
+      ],
+      "secondary_identity": {
+        "email": "sales@acme-manufacturing.example",
+        "name": "Acme Manufacturing",
+        "phone": "+1-555-0199"
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "admin@pinecrest.example",
+        "name": "Pinecrest Labs",
+        "phone": "+1-555-0177"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F05",
+    "frozen_assertion": {
+      "identity_match": "no_match",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "identity_match": "no_match",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "replace secondary identity with definite different customer identity",
+    "pair_id": "F05-E1",
+    "primary": {
+      "record_id": "O002",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent for Northstar Health."
+    },
+    "split": "evaluation",
+    "variant": "wrong_identity",
+    "variant_case": {
+      "secondary_evidence": [
+        {
+          "communication_id": "M010",
+          "summary": "A proposal-related message exists under a different customer identity."
+        }
+      ],
+      "secondary_identity": {
+        "email": "buying@northstar-holdings.example",
+        "name": "Northstar Holdings",
+        "phone": "+1-555-0198"
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "projects@summit-energy.example",
+        "name": "Summit Energy",
+        "phone": "+1-555-0104"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F06",
+    "frozen_assertion": {
+      "identity_match": "confirmed_match",
+      "interpretation_class": "negotiation_open",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "identity_match": "ambiguous_match",
+      "interpretation_class": "negotiation_open",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "remove secondary email and phone while retaining same name",
+    "pair_id": "F06-D1",
+    "primary": {
+      "record_id": "O004",
+      "record_type": "opportunity",
+      "summary": "Proposal is in negotiation for Summit Energy."
+    },
+    "split": "development",
+    "variant": "ambiguous_identity",
+    "variant_case": {
+      "secondary_evidence": [
+        "M004"
+      ],
+      "secondary_identity": {
+        "email": null,
+        "name": "Summit Energy",
+        "phone": null
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "it@orchid-retail.example",
+        "name": "Orchid Retail",
+        "phone": "+1-555-0105"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F06",
+    "frozen_assertion": {
+      "identity_match": "confirmed_match",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "identity_match": "ambiguous_match",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "remove secondary email and phone while retaining same name",
+    "pair_id": "F06-E1",
+    "primary": {
+      "record_id": "O005",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent for Orchid Retail."
+    },
+    "split": "evaluation",
+    "variant": "ambiguous_identity",
+    "variant_case": {
+      "secondary_evidence": [
+        "M005"
+      ],
+      "secondary_identity": {
+        "email": null,
+        "name": "Orchid Retail",
+        "phone": null
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [
+        {
+          "communication_id": "M001",
+          "occurred_at": "2026-09-12T10:00:00Z"
+        }
+      ],
+      "secondary_identity": {
+        "email": "ops@acme-industrial.example",
+        "name": "Acme Industrial",
+        "phone": "+1-555-0101"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F07",
+    "frozen_assertion": {
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "supported_by_secondary_context",
+      "temporal_status": "fresh"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "temporal_context_rejected",
+      "temporal_status": "clearly_stale"
+    },
+    "metamorphic_operation": "change only timestamp from fresh to clearly stale; preserve identity and content",
+    "pair_id": "F07-D1",
+    "primary": {
+      "record_id": "O001",
+      "record_type": "opportunity",
+      "summary": "Proposal is currently sent and awaiting decision."
+    },
+    "split": "development",
+    "variant": "stale_timestamp",
+    "variant_case": {
+      "secondary_evidence": [
+        {
+          "communication_id": "M001",
+          "occurred_at": "2026-08-01T10:00:00Z"
+        }
+      ],
+      "secondary_identity": {
+        "email": "ops@acme-industrial.example",
+        "name": "Acme Industrial",
+        "phone": "+1-555-0101"
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [
+        {
+          "communication_id": "M002",
+          "occurred_at": "2026-09-12T11:00:00Z"
+        }
+      ],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F07",
+    "frozen_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "secondary_supported",
+      "temporal_status": "fresh"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "temporal_context_rejected",
+      "temporal_status": "clearly_stale"
+    },
+    "metamorphic_operation": "change only timestamp from fresh to clearly stale; preserve identity and content",
+    "pair_id": "F07-E1",
+    "primary": {
+      "record_id": "O002",
+      "record_type": "opportunity",
+      "summary": "Proposal is currently sent and awaiting decision."
+    },
+    "split": "evaluation",
+    "variant": "stale_timestamp",
+    "variant_case": {
+      "secondary_evidence": [
+        {
+          "communication_id": "M002",
+          "occurred_at": "2026-08-01T11:00:00Z"
+        }
+      ],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "buying@bluepeak-logistics.example",
+        "name": "BluePeak Logistics",
+        "phone": "+1-555-0103"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F08",
+    "frozen_assertion": {
+      "availability": "available",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "no_secondary_evidence"
+    },
+    "frozen_variant_assertion": {
+      "availability": "unavailable",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "safe_fallback_primary_only"
+    },
+    "metamorphic_operation": "change secondary source from available-with-no-communication to unavailable",
+    "pair_id": "F08-D1",
+    "primary": {
+      "record_id": "O003",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent; current communication state is unknown to the primary system."
+    },
+    "split": "development",
+    "variant": "source_unavailable_vs_no_communication",
+    "variant_case": {
+      "secondary_evidence": null,
+      "secondary_identity": null,
+      "secondary_source_status": "unavailable"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "ops@acme-industrial.example",
+        "name": "Acme Industrial",
+        "phone": "+1-555-0101"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F08",
+    "frozen_assertion": {
+      "availability": "available",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "no_secondary_evidence"
+    },
+    "frozen_variant_assertion": {
+      "availability": "unavailable",
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "safe_fallback_primary_only"
+    },
+    "metamorphic_operation": "change secondary source from available-with-no-communication to unavailable",
+    "pair_id": "F08-E1",
+    "primary": {
+      "record_id": "O006",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent; current communication state is unknown to the primary system."
+    },
+    "split": "evaluation",
+    "variant": "source_unavailable_vs_no_communication",
+    "variant_case": {
+      "secondary_evidence": null,
+      "secondary_identity": null,
+      "secondary_source_status": "unavailable"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [
+        "M001"
+      ],
+      "secondary_identity": {
+        "email": "ops@acme-industrial.example",
+        "name": "Acme Industrial",
+        "phone": "+1-555-0101"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F09",
+    "frozen_assertion": {
+      "interpretation_class": "quote_followup_pending",
+      "support_level": "supported_by_secondary_context"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_followup_pending",
+      "reversion": "toward_primary_only",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "remove secondary evidence while retaining primary and identity",
+    "pair_id": "F09-D1",
+    "primary": {
+      "record_id": "O001",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent and awaiting follow-up."
+    },
+    "split": "development",
+    "variant": "remove_context",
+    "variant_case": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "ops@acme-industrial.example",
+        "name": "Acme Industrial",
+        "phone": "+1-555-0101"
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [
+        "M002"
+      ],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F09",
+    "frozen_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "support_level": "secondary_supported"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "quote_pending_decision",
+      "reversion": "toward_primary_only",
+      "support_level": "primary_only"
+    },
+    "metamorphic_operation": "remove secondary evidence while retaining primary and identity",
+    "pair_id": "F09-E1",
+    "primary": {
+      "record_id": "O002",
+      "record_type": "opportunity",
+      "summary": "Proposal is sent and decision remains open."
+    },
+    "split": "evaluation",
+    "variant": "remove_context",
+    "variant_case": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F10",
+    "frozen_assertion": {
+      "interpretation_class": "service_completed_next_step_unrecorded",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "service_completed_next_step_unrecorded",
+      "recommended_focus": "next_step_followup",
+      "support_level": "supported_by_secondary_context"
+    },
+    "metamorphic_operation": "apply cross-system context to a service-completion workflow rather than a quote workflow",
+    "pair_id": "F10-D1",
+    "primary": {
+      "record_id": "O007",
+      "record_type": "service_order",
+      "summary": "Service migration workshop is marked completed; next handoff step is not recorded."
+    },
+    "split": "development",
+    "variant": "different_workflow_service_completion",
+    "variant_case": {
+      "secondary_evidence": [
+        "M007"
+      ],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    }
+  },
+  {
+    "base": {
+      "secondary_evidence": [],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    },
+    "family_id": "F10",
+    "frozen_assertion": {
+      "interpretation_class": "service_completed_next_step_unrecorded",
+      "support_level": "primary_only"
+    },
+    "frozen_variant_assertion": {
+      "interpretation_class": "service_completed_next_step_unrecorded",
+      "recommended_focus": "next_step_followup",
+      "support_level": "supported_by_secondary_context"
+    },
+    "metamorphic_operation": "apply cross-system context to a distinct service-completion workflow rather than a quote workflow",
+    "pair_id": "F10-E1",
+    "primary": {
+      "record_id": "O007",
+      "record_type": "service_order",
+      "summary": "Service transition handoff is marked completed; the customer follow-up step is not recorded."
+    },
+    "split": "evaluation",
+    "variant": "different_workflow_service_completion",
+    "variant_case": {
+      "secondary_evidence": [
+        "M014"
+      ],
+      "secondary_identity": {
+        "email": "procurement@northstar-health.example",
+        "name": "Northstar Health",
+        "phone": "+1-555-0102"
+      },
+      "secondary_source_status": "available"
+    }
+  }
+]
