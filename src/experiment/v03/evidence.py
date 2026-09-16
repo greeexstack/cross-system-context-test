@@ -17,6 +17,12 @@ class TemporalQuality(str, Enum):
     UNKNOWN = "unknown"
 
 
+class AssertionPolarity(str, Enum):
+    POSITIVE = "positive"
+    NEGATIVE = "negative"
+    UNKNOWN = "unknown"
+
+
 @dataclass(frozen=True)
 class EvidenceProvenance:
     source_system: str
@@ -38,17 +44,25 @@ class EvidenceSemantics:
     These describe what the evidence says. They do not encode the
     benchmark's expected behavioral transition.
 
+    Positive and negative assertions are represented separately so that
+    mixed statements can preserve unaffected facts.
+
     Example:
+
         requests_followup=True
+        negated_concepts=("completion",)
 
-    is an observation about the communication.
+    means the observation contains a follow-up request while explicitly
+    negating completion.
 
-    It must not become:
-
-        expected_transition="strengthen"
+    The semantic representation deliberately remains factual and
+    benchmark-independent.
     """
 
     topic: str | None = None
+
+    polarity: AssertionPolarity = AssertionPolarity.POSITIVE
+    negated_concepts: tuple[str, ...] = ()
 
     requests_followup: bool | None = None
     expresses_acceptance: bool | None = None

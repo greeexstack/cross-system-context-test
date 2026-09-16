@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import re
 
 from .evidence import (
+    AssertionPolarity,
     EvidenceIdentity,
     EvidenceProvenance,
     EvidenceSemantics,
@@ -38,6 +39,7 @@ class LexicalNormalizationSemanticExtractor:
         - No expected transition is produced.
         - No supporting/contradictory role is emitted.
         - Provenance and identity remain separate from content semantics.
+        - Negation is represented as factual polarity information.
 
     This should NOT be described as genuine semantic understanding.
     It is a dependency-free lexical-normalization experiment.
@@ -61,6 +63,7 @@ class LexicalNormalizationSemanticExtractor:
                 r"\bwants? to (?:arrange|schedule) .*discussion\b",
                 r"\bwants? to (?:arrange|schedule) .*conversation\b",
                 r"\bwants? to (?:speak|talk) .*again\b",
+                r"\b(?:would like|would love) to (?:speak|talk) .*again\b",
                 r"\bdiscuss(?:ed|ing)? .*again\b",
             ),
         ),
@@ -75,6 +78,7 @@ class LexicalNormalizationSemanticExtractor:
                 r"\bfinancial authorization\b",
                 r"\bfunding has been authorized\b",
                 r"\bfunds? (?:has|have) been authorized\b",
+                r"\bfunding for .* has been authorized\b",
                 r"\b(?:budget|funding) (?:was|has been) approved\b",
                 r"\b(?:amount|price|quote|quoted amount) .*approved\b",
             ),
@@ -195,9 +199,22 @@ class LexicalNormalizationSemanticExtractor:
     ) -> NormalizedExtractionResult:
         normalized_text, concepts = self._normalize(content)
 
+        negated_concepts = self._detect_negated_concepts(
+            normalized_text,
+            concepts,
+        )
+
+        polarity = (
+            AssertionPolarity.NEGATIVE
+            if negated_concepts and len(negated_concepts) == len(concepts)
+            else AssertionPolarity.POSITIVE
+        )
+
         semantics = self._build_semantics(
             normalized_text,
             concepts,
+            negated_concepts,
+            polarity,
         )
 
         evidence = SemanticEvidence(
@@ -253,22 +270,112 @@ class LexicalNormalizationSemanticExtractor:
 
         return normalized
 
+    @classmethod
+    def _detect_negated_concepts(
+        cls,
+        normalized_text: str,
+        concepts: list[str],
+    ) -> list[str]:
+        """
+        Detect explicit local negation for concepts.
+
+        This is intentionally narrow and clause-oriented. It is not
+        intended to provide general natural-language negation parsing.
+        """
+
+        negated: list[str] = []
+
+        patterns_by_concept: dict[str, tuple[str, ...]] = {
+            "followup": (
+                r"\bdo not want\b[^.?!;]*\b(?:discussion|conversation)\b",
+                r"\bdoes not want\b[^.?!;]*\b(?:discussion|conversation)\b",
+                r"\bdid not want\b[^.?!;]*\b(?:discussion|conversation)\b",
+                r"\bdoesn't want\b[^.?!;]*\b(?:discussion|conversation)\b",
+                r"\bdon't want\b[^.?!;]*\b(?:discussion|conversation)\b",
+            ),
+            "approval": (
+                r"\bdo not have\b[^.?!;]*\bapproval\b",
+                r"\bdoes not have\b[^.?!;]*\bapproval\b",
+                r"\bdid not have\b[^.?!;]*\bapproval\b",
+                r"\bdo not have\b[^.?!;]*\bapproved\b",
+                r"\bdoes not have\b[^.?!;]*\bapproved\b",
+            ),
+            "completion": (
+                r"\b(?:is|was|are|were)\s+not\s+complete\b",
+                r"\b(?:is|was|are|were)\s+not\s+finished\b",
+                r"\bhas\s+not\s+been\s+completed\b",
+                r"\bhave\s+not\s+been\s+completed\b",
+                r"\bhas\s+not\s+finished\b",
+                r"\bhave\s+not\s+finished\b",
+            ),
+            "acceptance": (
+                r"\bdo not accept\b",
+                r"\bdoes not accept\b",
+                r"\bdid not accept\b",
+                r"\bdo not agree\b",
+                r"\bdoes not agree\b",
+            ),
+        }
+
+        for concept in concepts:
+            patterns = patterns_by_concept.get(concept, ())
+
+            if any(
+                re.search(pattern, normalized_text)
+                for pattern in patterns
+            ):
+                negated.append(concept)
+
+        return negated
+
     def _build_semantics(
         self,
         normalized_text: str,
         concepts: list[str],
+        negated_concepts: list[str],
+        polarity: AssertionPolarity,
     ) -> EvidenceSemantics:
         concept_set = set(concepts)
+        negated_set = set(negated_concepts)
 
-        requests_followup = "followup" in concept_set
-        confirms_approval = "approval" in concept_set
-        expresses_rejection = "rejection" in concept_set
-        confirms_completion = "completion" in concept_set
-        requests_next_step = "next_step" in concept_set
+        requests_followup = (
+            True
+            if "followup" in concept_set and "followup" not in negated_set
+            else None
+        )
+
+        confirms_approval = (
+            True
+            if "approval" in concept_set and "approval" not in negated_set
+            else None
+        )
+
+        expresses_rejection = (
+            True
+            if "rejection" in concept_set
+            else None
+        )
+
+        confirms_completion = (
+            True
+            if "completion" in concept_set
+            and "completion" not in negated_set
+            else None
+        )
+
+        requests_next_step = (
+            True
+            if "next_step" in concept_set
+            else None
+        )
 
         expresses_acceptance = (
-            confirms_approval
-            or bool(
+            True
+            if (
+                "approval" in concept_set
+                and "approval" not in negated_set
+            )
+            else bool(
                 re.search(
                     r"\baccepted?\b|\bacceptance\b|"
                     r"\bhas agreed\b|\bagreed to\b|"
@@ -277,6 +384,9 @@ class LexicalNormalizationSemanticExtractor:
                 )
             )
         )
+
+        if "acceptance" in negated_set:
+            expresses_acceptance = None
 
         concerns_same_work_item: bool | None
 
@@ -296,6 +406,8 @@ class LexicalNormalizationSemanticExtractor:
 
         return EvidenceSemantics(
             topic=topic,
+            polarity=polarity,
+            negated_concepts=tuple(negated_concepts),
             requests_followup=requests_followup,
             expresses_acceptance=expresses_acceptance,
             expresses_rejection=expresses_rejection,
