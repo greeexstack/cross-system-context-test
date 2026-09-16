@@ -308,6 +308,18 @@ class LexicalNormalizationSemanticExtractor:
                 r"\bhas\s+not\s+finished\b",
                 r"\bhave\s+not\s+finished\b",
             ),
+            "next_step": (
+                r"\bdo not want to discuss\b[^.?!;]*\bwhat comes next\b",
+                r"\bdoes not want to discuss\b[^.?!;]*\bwhat comes next\b",
+                r"\bdid not want to discuss\b[^.?!;]*\bwhat comes next\b",
+                r"\bdon't want to discuss\b[^.?!;]*\bwhat comes next\b",
+                r"\bdoesn't want to discuss\b[^.?!;]*\bwhat comes next\b",
+                r"\bdo not want to know\b[^.?!;]*\bwhat comes next\b",
+                r"\bdoes not want to know\b[^.?!;]*\bwhat comes next\b",
+                r"\bdo not want .*next step\b",
+                r"\bdoes not want .*next step\b",
+                r"\bdid not want .*next step\b",
+            ),
             "acceptance": (
                 r"\bdo not accept\b",
                 r"\bdoes not accept\b",
