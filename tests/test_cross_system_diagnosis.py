@@ -164,3 +164,29 @@ def test_missing_external_communication_preserves_uncertainty():
         "external communication data was unavailable"
         in result.recommendation
     )
+def test_different_work_item_communication_does_not_change_diagnosis():
+    opportunity = make_opportunity()
+
+    communication = Communication(
+        id="comm_different_work_item",
+        business_id="biz_001",
+        customer_id="cust_001",
+        direction="inbound",
+        timestamp=datetime(2026, 1, 8, tzinfo=timezone.utc),
+        channel="whatsapp",
+        topic="quote",
+        content="Customer asked about a different project.",
+    )
+
+    result = CrossSystemDiagnoser().diagnose(
+        opportunity,
+        communication,
+        make_primary_evidence(),
+    )
+
+    assert result.diagnosis_type == "unrelated_communication"
+    assert result.confidence == "high"
+    assert (
+        "different work item"
+        in result.diagnosis.lower()
+    )

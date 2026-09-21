@@ -206,6 +206,34 @@ class CrossSystemDiagnoser:
         if communication.direction == "inbound":
             content = communication.content.lower()
 
+            # Explicitly identified different-work-item communication must
+            # not be interpreted as evidence about the current opportunity.
+            if any(
+                phrase in content
+                for phrase in (
+                    "different project",
+                    "separate project",
+                    "another project",
+                    "different work item",
+                    "different opportunity",
+                )
+            ):
+                return CrossSystemDiagnosis(
+                    opportunity_id=opportunity.id,
+                    diagnosis=(
+                        "The available communication explicitly concerns "
+                        "a different work item rather than the opportunity "
+                        "under review."
+                    ),
+                    diagnosis_type="unrelated_communication",
+                    evidence=evidence,
+                    confidence="high",
+                    recommendation=(
+                        "Verify the opportunity status and follow up with "
+                        "the opportunity owner."
+                    ),
+                )
+
             if communication.topic == "quote":
                 if any(
                     phrase in content
