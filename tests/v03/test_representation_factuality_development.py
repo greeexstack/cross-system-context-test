@@ -5,36 +5,7 @@ from experiment.v03.normalized_extractor import (
     LexicalNormalizationSemanticExtractor,
 )
 
-from fixtures.semantic_cases import (
-    F01_EQUIVALENT_A,
-    F01_EQUIVALENT_B,
-    F02_EQUIVALENT_A,
-    F02_EQUIVALENT_B,
-    F03_EQUIVALENT_A,
-    F03_EQUIVALENT_B,
-    F10_EQUIVALENT_A,
-    F10_EQUIVALENT_B,
-)
-
-
-FIELDS = (
-    "topic",
-    "requests_followup",
-    "confirms_approval",
-    "expresses_acceptance",
-    "expresses_rejection",
-    "confirms_completion",
-    "requests_next_step",
-    "concerns_same_work_item",
-)
-
-
-PAIRS = (
-    ("F01", F01_EQUIVALENT_A, F01_EQUIVALENT_B),
-    ("F02", F02_EQUIVALENT_A, F02_EQUIVALENT_B),
-    ("F03", F03_EQUIVALENT_A, F03_EQUIVALENT_B),
-    ("F10", F10_EQUIVALENT_A, F10_EQUIVALENT_B),
-)
+from test_extractor_paraphrases import PARAPHRASE_CASES
 
 
 EXTRACTOR = LexicalNormalizationSemanticExtractor()
@@ -52,22 +23,24 @@ def _extract(text: str) -> EvidenceSemantics:
 
 
 def _explicit_fields(
-    expected: EvidenceSemantics,
+    required_features: dict[str, object],
 ) -> tuple[str, ...]:
     return tuple(
         field
-        for field in FIELDS
-        if getattr(expected, field) is not None
+        for field, expected in required_features.items()
+        if expected is not None
     )
 
 
 def _field_matches(
     actual: EvidenceSemantics,
-    expected: EvidenceSemantics,
+    expected: dict[str, object],
 ) -> dict[str, bool]:
+    fields = _explicit_fields(expected)
+
     return {
-        field: getattr(actual, field) == getattr(expected, field)
-        for field in _explicit_fields(expected)
+        field: getattr(actual, field) == expected[field]
+        for field in fields
     }
 
 
@@ -75,28 +48,35 @@ def _measure() -> dict[str, object]:
     field_rows: list[dict[str, object]] = []
     pair_rows: list[dict[str, object]] = []
 
-    total_fields = 0
-    matching_fields = 0
+    total_decisions = 0
+    matching_decisions = 0
 
-    for family_id, left, right in PAIRS:
-        left_actual = _extract(left.content)
-        right_actual = _extract(right.content)
+    for (
+        pair_id,
+        original_text,
+        paraphrase_text,
+        required_features,
+        _known_failure,
+    ) in PARAPHRASE_CASES:
 
-        left_matches = _field_matches(
-            left_actual,
-            left.semantics,
+        original_actual = _extract(original_text)
+        paraphrase_actual = _extract(paraphrase_text)
+
+        original_matches = _field_matches(
+            original_actual,
+            required_features,
         )
-        right_matches = _field_matches(
-            right_actual,
-            right.semantics,
+        paraphrase_matches = _field_matches(
+            paraphrase_actual,
+            required_features,
         )
 
-        for variant, actual, expected, matches in (
-            ("A", left_actual, left.semantics, left_matches),
-            ("B", right_actual, right.semantics, right_matches),
+        for variant, actual, matches in (
+            ("original", original_actual, original_matches),
+            ("paraphrase", paraphrase_actual, paraphrase_matches),
         ):
-            total_fields += len(matches)
-            matching_fields += sum(matches.values())
+            total_decisions += len(matches)
+            matching_decisions += sum(matches.values())
 
             mismatches = tuple(
                 field
@@ -106,7 +86,7 @@ def _measure() -> dict[str, object]:
 
             field_rows.append(
                 {
-                    "family": family_id,
+                    "pair": pair_id,
                     "variant": variant,
                     "mismatches": mismatches,
                     "all_explicit_fields_correct": all(
@@ -115,60 +95,66 @@ def _measure() -> dict[str, object]:
                 }
             )
 
-        explicit = _explicit_fields(left.semantics)
-
-        left_projection = tuple(
-            (field, getattr(left_actual, field))
-            for field in explicit
+        explicit_fields = _explicit_fields(
+            required_features,
         )
 
-        right_projection = tuple(
-            (field, getattr(right_actual, field))
-            for field in explicit
+        original_projection = tuple(
+            (field, getattr(original_actual, field))
+            for field in explicit_fields
+        )
+
+        paraphrase_projection = tuple(
+            (field, getattr(paraphrase_actual, field))
+            for field in explicit_fields
         )
 
         expected_projection = tuple(
-            (field, getattr(left.semantics, field))
-            for field in explicit
+            (field, required_features[field])
+            for field in explicit_fields
+        )
+
+        original_correct = (
+            original_projection == expected_projection
+        )
+        paraphrase_correct = (
+            paraphrase_projection == expected_projection
         )
 
         full_representation_changed = (
-            left_actual != right_actual
+            original_actual != paraphrase_actual
         )
 
-        projected_representation_changed = (
-            left_projection != right_projection
+        explicit_projection_changed = (
+            original_projection != paraphrase_projection
         )
-
-        left_factual = left_projection == expected_projection
-        right_factual = right_projection == expected_projection
 
         pair_rows.append(
             {
-                "family": family_id,
+                "pair": pair_id,
                 "full_representation_changed": (
                     full_representation_changed
                 ),
                 "explicit_projection_changed": (
-                    projected_representation_changed
+                    explicit_projection_changed
                 ),
-                "left_factually_correct": left_factual,
-                "right_factually_correct": right_factual,
+                "original_factually_correct": original_correct,
+                "paraphrase_factually_correct": paraphrase_correct,
                 "benign_representation_drift": (
                     full_representation_changed
-                    and left_factual
-                    and right_factual
-                    and not projected_representation_changed
+                    and original_correct
+                    and paraphrase_correct
+                    and not explicit_projection_changed
                 ),
             }
         )
 
     return {
-        "total_explicit_field_decisions": total_fields,
-        "matching_explicit_field_decisions": matching_fields,
+        "total_explicit_field_decisions": total_decisions,
+        "matching_explicit_field_decisions": matching_decisions,
         "factual_field_accuracy": (
-            matching_fields / total_fields
-            if total_fields
+            matching_decisions / total_decisions
+            if total_decisions
             else 0.0
         ),
         "field_rows": field_rows,
