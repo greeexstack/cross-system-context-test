@@ -383,14 +383,7 @@ def test_h6_conflicting_fixture_is_explicitly_detectable():
     )
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "H6 is not implemented in the production reasoner: "
-        "split compatible facts currently do not reproduce the "
-        "single-record joint decision."
-    ),
-)
+
 def test_h6_production_reasoner_split_matches_single_record_control():
     completion = _completion()
     next_step = _next_step()
