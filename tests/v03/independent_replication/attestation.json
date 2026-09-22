@@ -1,0 +1,10 @@
+{
+  "fixture_status": "independent_pending",
+  "author_accessed_candidate_results": false,
+  "author_accessed_prior_holdout_texts": false,
+  "author_copied_prior_holdout": false,
+  "author_used_candidate_failure_diagnostics": false,
+  "oracle_fixed_before_candidate_evaluation": true,
+  "fixture_modified_after_evaluation": false,
+  "author_attestation": "Pending independent author signature/confirmation."
+}
