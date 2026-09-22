@@ -293,8 +293,17 @@ class V03Reasoner:
         positive_concepts: set[str] = set()
         negated_concepts: set[str] = set()
 
+        has_acceptance = False
+        has_rejection = False
+
         for item in items:
             semantics = item.semantics
+
+            if semantics.expresses_acceptance is True:
+                has_acceptance = True
+
+            if semantics.expresses_rejection is True:
+                has_rejection = True
 
             for field_name, concept in _COMPOSABLE_FIELDS:
                 if getattr(semantics, field_name) is True:
@@ -305,6 +314,14 @@ class V03Reasoner:
                     cls._canonical_concept(concept)
                 )
 
+        # Acceptance and rejection are incompatible factual assertions
+        # for the same composition candidate. Treat the combination as
+        # unresolved rather than allowing naïve positive-field merging.
+        if has_acceptance and has_rejection:
+            return True
+
+        # Explicit semantic negation conflicts with a positive assertion
+        # of the same concept.
         return bool(
             positive_concepts.intersection(negated_concepts)
         )
