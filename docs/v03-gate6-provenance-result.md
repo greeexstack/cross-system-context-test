@@ -1,5 +1,4 @@
-@'
-# v0.3 Gate 6 — External Independence / Provenance Result
+python -c "from pathlib import Path; Path('docs/v03-gate6-provenance-result.md').write_text('''# v0.3 Gate 6 — External Independence / Provenance Result
 
 ## Formal role of Gate 6
 
