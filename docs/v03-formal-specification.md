@@ -738,11 +738,21 @@ All frozen v0.2 cases remain passing unless an intentional specification change 
 
 The system must materially improve over the observed v0.2 paraphrase baseline.
 
-The exact statistical threshold will be established after the full paraphrase battery is constructed.
+The operational definition of material improvement is fixed prospectively in
+`docs/v03-acceptance-gates-addendum.md`.
 
+The Gate-2 criterion is a minimum 50% relative reduction in paraphrase error
+rate on the same genuinely independent evaluation population.
+
+Both frozen v0.2 and frozen v0.3 must be evaluated on the identical acceptance
+fixture using the identical predefined decision tuple.
 ### Gate 3 — Resistance
 
-Unsupported-change behavior must remain within a predefined tolerance.
+Unsupported-change behavior must remain within the predefined tolerance
+specified in `docs/v03-acceptance-gates-addendum.md`.
+
+The canonical Gate-3 tolerance is zero unsupported changes in the designated
+resistance population.
 
 ### Gate 4 — Non-circularity
 
