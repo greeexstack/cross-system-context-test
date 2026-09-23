@@ -70,12 +70,18 @@ faithful paraphrase pairs
 total paraphrase pairs
 ```
 
-A pair is faithful only when the complete predefined downstream decision tuple is preserved.
+A pair is faithful only when the complete predefined downstream decision
+tuple is preserved.
 
-The tuple must be fixed before evaluation.
+The canonical downstream decision tuple is:
 
-No post-hoc choice of fields may be made after inspecting results.
-
+```text
+(
+    interpretation_class,
+    support_level,
+    decision_strength,
+    recommended_focus,
+)
 ---
 
 ## 2.3 Material improvement criterion
