@@ -68,6 +68,7 @@ Pairwise Downstream Decision Fidelity
 faithful paraphrase pairs
 /
 total paraphrase pairs
+```
 
 A pair is faithful only when the complete predefined downstream decision
 tuple is preserved.
@@ -81,7 +82,17 @@ The canonical downstream decision tuple is:
     decision_strength,
     recommended_focus,
 )
----
+```
+
+These four observable fields constitute the primary Gate-2 behavioral output.
+
+Diagnostic prose, evidence IDs, provenance metadata, timestamps, internal
+representations, and other implementation-specific fields are excluded from
+the primary fidelity metric.
+
+The tuple is fixed before evaluation.
+
+No post-hoc choice of fields may be made after inspecting results.
 
 ## 2.3 Material improvement criterion
 
