@@ -1,0 +1,117 @@
+[
+  {
+    "case_id": "IRH-F1-001",
+    "primary_interpretation": "follow_up",
+    "primary_decision_strength": "explicit",
+    "texts": [
+      "Please provide another update on the current work item.",
+      "I need a further check-in about this task.",
+      "When you can, send the next status for the item we are tracking.",
+      "Could you follow up on this assigned matter?"
+    ],
+    "expected_fields": [
+      ["topic", "follow_up"],
+      ["polarity", "neutral"],
+      ["negated_concepts", []],
+      ["requests_followup", true],
+      ["expresses_acceptance", null],
+      ["expresses_rejection", null],
+      ["confirms_approval", null],
+      ["confirms_completion", null],
+      ["requests_next_step", true],
+      ["concerns_same_work_item", true]
+    ]
+  },
+  {
+    "case_id": "IRH-F2-001",
+    "primary_interpretation": "approval",
+    "primary_decision_strength": "explicit",
+    "texts": [
+      "The current work item is approved and accepted.",
+      "I accept this request and authorize it.",
+      "This proposal is accepted and signed off.",
+      "We accept the plan for this item and confirm approval."
+    ],
+    "expected_fields": [
+      ["topic", "approval"],
+      ["polarity", "positive"],
+      ["negated_concepts", []],
+      ["requests_followup", null],
+      ["expresses_acceptance", true],
+      ["expresses_rejection", false],
+      ["confirms_approval", true],
+      ["confirms_completion", null],
+      ["requests_next_step", null],
+      ["concerns_same_work_item", true]
+    ]
+  },
+  {
+    "case_id": "IRH-F3-001",
+    "primary_interpretation": "rejection",
+    "primary_decision_strength": "explicit",
+    "texts": [
+      "The current work item is rejected.",
+      "This request is denied.",
+      "We refuse this proposal.",
+      "The plan for this item is turned down."
+    ],
+    "expected_fields": [
+      ["topic", "rejection"],
+      ["polarity", "negative"],
+      ["negated_concepts", []],
+      ["requests_followup", null],
+      ["expresses_acceptance", false],
+      ["expresses_rejection", true],
+      ["confirms_approval", false],
+      ["confirms_completion", null],
+      ["requests_next_step", null],
+      ["concerns_same_work_item", true]
+    ]
+  },
+  {
+    "case_id": "IRH-F4-001",
+    "primary_interpretation": "different_work_item",
+    "primary_decision_strength": "explicit",
+    "texts": [
+      "This message is about a different initiative: the warehouse relocation.",
+      "The subject here is the separate facilities upgrade.",
+      "I am writing regarding the customer portal rollout, which is another work item.",
+      "This note covers a distinct compliance training program."
+    ],
+    "expected_fields": [
+      ["topic", "different_work_item"],
+      ["polarity", "neutral"],
+      ["negated_concepts", []],
+      ["requests_followup", null],
+      ["expresses_acceptance", null],
+      ["expresses_rejection", null],
+      ["confirms_approval", null],
+      ["confirms_completion", null],
+      ["requests_next_step", null],
+      ["concerns_same_work_item", false]
+    ]
+  },
+  {
+    "case_id": "IRH-F5-001",
+    "primary_interpretation": "completion_plus_subsequent_action",
+    "primary_decision_strength": "explicit",
+    "texts": [
+      "The current work item is complete; please start the next step for it.",
+      "We finished this task, so begin the subsequent action on the same item.",
+      "This request is completed; trigger the downstream check attached to it.",
+      "Completion of the assigned item is confirmed; carry out the next phase linked to it."
+    ],
+    "expected_fields": [
+      ["topic", "completion_and_next_step"],
+      ["polarity", "positive"],
+      ["negated_concepts", []],
+      ["requests_followup", null],
+      ["expresses_acceptance", null],
+      ["expresses_rejection", null],
+      ["confirms_approval", null],
+      ["confirms_completion", true],
+      ["requests_next_step", true],
+      ["concerns_same_work_item", true]
+    ]
+  }
+]

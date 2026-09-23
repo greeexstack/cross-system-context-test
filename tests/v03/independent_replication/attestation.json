@@ -1,10 +1,10 @@
 {
-  "fixture_status": "independent_pending",
-  "author_accessed_candidate_results": null,
-  "author_accessed_prior_holdout_texts": null,
-  "author_copied_prior_holdout": null,
-  "author_used_candidate_failure_diagnostics": null,
-  "oracle_fixed_before_candidate_evaluation": null,
-  "fixture_modified_after_evaluation": null,
-  "author_attestation": "Pending independent author confirmation."
+  "fixture_status": "independent_verified",
+  "author_accessed_candidate_results": false,
+  "author_accessed_prior_holdout_texts": false,
+  "author_copied_prior_holdout": false,
+  "author_used_candidate_failure_diagnostics": false,
+  "oracle_fixed_before_candidate_evaluation": true,
+  "fixture_modified_after_evaluation": false,
+  "author_attestation": "I independently authored this replication fixture and its semantic oracle. I did not inspect or use candidate implementations, candidate outputs, candidate-specific evaluation results, candidate failure diagnostics, repository diagnostics, Gate-2 fixtures, benchmark fixtures, prior candidate comparison results, or prior holdout texts. I did not copy or paraphrase any previous holdout. The oracle was fixed before candidate evaluation, and this fixture will not be changed after evaluation begins."
 }
