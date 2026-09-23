@@ -68,7 +68,6 @@ Pairwise Downstream Decision Fidelity
 faithful paraphrase pairs
 /
 total paraphrase pairs
-```
 
 A pair is faithful only when the complete predefined downstream decision
 tuple is preserved.
