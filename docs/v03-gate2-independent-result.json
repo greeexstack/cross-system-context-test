@@ -1,0 +1,426 @@
+{
+  "fixture": {
+    "cases": 5,
+    "pairs": 15,
+    "path": "tests\\v03\\gate2_independent_fixture.json"
+  },
+  "protocol": {
+    "decision_tuple": [
+      "interpretation_class",
+      "support_level",
+      "decision_strength",
+      "recommended_focus"
+    ],
+    "gate": "Gate 2 \u2014 Paraphrase robustness",
+    "material_improvement_rule": "E3 <= floor(E2 / 2)",
+    "v02_freeze": "v0.2.0",
+    "v03_candidate": "ClauseLocalRelationalEventFrameExtractor",
+    "v03_freeze": "05f8cbf",
+    "zero_error_baseline": "Gate 2 not demonstrated"
+  },
+  "v0.2": {
+    "candidate": "v0.2",
+    "errors": 0,
+    "faithful_pairs": 15,
+    "family_results": {
+      "EXT-G2-01": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "quote_pending_decision",
+          "primary_only",
+          "moderate",
+          null
+        ],
+        "primary_only_state": [
+          "quote_pending_decision",
+          "no_secondary_evidence",
+          "moderate",
+          null
+        ],
+        "role": "relevant",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "quote_pending_decision",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "quote_pending_decision",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "quote_pending_decision",
+            "primary_only",
+            "moderate",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-02": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "primary_state_uncertain",
+          "primary_only",
+          "moderate",
+          null
+        ],
+        "primary_only_state": [
+          "primary_state_uncertain",
+          "no_secondary_evidence",
+          "moderate",
+          null
+        ],
+        "role": "supporting",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-03": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "primary_state_uncertain",
+          "primary_only",
+          "moderate",
+          null
+        ],
+        "primary_only_state": [
+          "primary_state_uncertain",
+          "no_secondary_evidence",
+          "moderate",
+          null
+        ],
+        "role": "contradictory",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-04": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "quote_pending_decision",
+          "primary_only",
+          "moderate",
+          null
+        ],
+        "primary_only_state": [
+          "quote_pending_decision",
+          "no_secondary_evidence",
+          "moderate",
+          null
+        ],
+        "role": "irrelevant",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "quote_pending_decision",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "quote_pending_decision",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "quote_pending_decision",
+            "primary_only",
+            "moderate",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-05": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "primary_state_uncertain",
+          "primary_only",
+          "moderate",
+          null
+        ],
+        "primary_only_state": [
+          "primary_state_uncertain",
+          "no_secondary_evidence",
+          "moderate",
+          null
+        ],
+        "role": "service-next-step",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "primary_state_uncertain",
+            "primary_only",
+            "moderate",
+            null
+          ]
+        ]
+      }
+    },
+    "fidelity": 1.0,
+    "negative_control_preserved": 0,
+    "negative_control_total": 3,
+    "total_pairs": 15
+  },
+  "v0.3": {
+    "candidate": "v0.3-clause-local-v2",
+    "errors": 0,
+    "faithful_pairs": 15,
+    "family_results": {
+      "EXT-G2-01": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "active-opportunity",
+          "primary_only",
+          "moderate",
+          null
+        ],
+        "primary_only_state": [
+          "active-opportunity",
+          "no_secondary_evidence",
+          "moderate",
+          null
+        ],
+        "role": "relevant",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "active-opportunity",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "active-opportunity",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "active-opportunity",
+            "primary_only",
+            "moderate",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-02": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "active-opportunity",
+          "primary_only",
+          "high",
+          null
+        ],
+        "primary_only_state": [
+          "active-opportunity",
+          "no_secondary_evidence",
+          "high",
+          null
+        ],
+        "role": "supporting",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "active-opportunity",
+            "primary_only",
+            "high",
+            null
+          ],
+          [
+            "active-opportunity",
+            "primary_only",
+            "high",
+            null
+          ],
+          [
+            "active-opportunity",
+            "primary_only",
+            "high",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-03": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "resolved",
+          "primary_only",
+          "high",
+          null
+        ],
+        "primary_only_state": [
+          "resolved",
+          "no_secondary_evidence",
+          "high",
+          null
+        ],
+        "role": "contradictory",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "resolved",
+            "primary_only",
+            "high",
+            null
+          ],
+          [
+            "resolved",
+            "primary_only",
+            "high",
+            null
+          ],
+          [
+            "resolved",
+            "primary_only",
+            "high",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-04": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "active-opportunity",
+          "primary_only",
+          "moderate",
+          null
+        ],
+        "primary_only_state": [
+          "active-opportunity",
+          "no_secondary_evidence",
+          "moderate",
+          null
+        ],
+        "role": "irrelevant",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "active-opportunity",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "active-opportunity",
+            "primary_only",
+            "moderate",
+            null
+          ],
+          [
+            "active-opportunity",
+            "primary_only",
+            "moderate",
+            null
+          ]
+        ]
+      },
+      "EXT-G2-05": {
+        "faithful_pairs": 3,
+        "original_state": [
+          "completed",
+          "primary_only",
+          "high",
+          null
+        ],
+        "primary_only_state": [
+          "completed",
+          "no_secondary_evidence",
+          "high",
+          null
+        ],
+        "role": "service-next-step",
+        "total_pairs": 3,
+        "variant_states": [
+          [
+            "completed",
+            "primary_only",
+            "high",
+            null
+          ],
+          [
+            "completed",
+            "primary_only",
+            "high",
+            null
+          ],
+          [
+            "completed",
+            "primary_only",
+            "high",
+            null
+          ]
+        ]
+      }
+    },
+    "fidelity": 1.0,
+    "negative_control_preserved": 0,
+    "negative_control_total": 3,
+    "total_pairs": 15
+  },
+  "verdict": {
+    "maximum_allowed_v03_errors": null,
+    "passed": false,
+    "reason": "Gate 2 not demonstrated: frozen v0.2 produced zero paraphrase errors on the fresh fixture, so a relative error reduction cannot be demonstrated.",
+    "v02_error_rate": 0.0,
+    "v02_errors": 0,
+    "v02_fidelity": 1.0,
+    "v03_error_rate": 0.0,
+    "v03_errors": 0,
+    "v03_fidelity": 1.0,
+    "v03_negative_control_preserved": 0,
+    "v03_negative_control_total": 3
+  }
+}
