@@ -1,0 +1,60 @@
+{
+  "fixture": "tests\\v03\\independent_replication\\fixture.json",
+  "v1": {
+    "candidate": "event_frame_v1",
+    "decision_fidelity": 0.2,
+    "exact_decisions": 4,
+    "family_results": {
+      "IRH-F1-001": {
+        "exact": 0,
+        "total": 4
+      },
+      "IRH-F2-001": {
+        "exact": 0,
+        "total": 4
+      },
+      "IRH-F3-001": {
+        "exact": 0,
+        "total": 4
+      },
+      "IRH-F4-001": {
+        "exact": 4,
+        "total": 4
+      },
+      "IRH-F5-001": {
+        "exact": 0,
+        "total": 4
+      }
+    },
+    "total_variants": 20
+  },
+  "v2": {
+    "candidate": "clause_local_v2",
+    "decision_fidelity": 0.2,
+    "exact_decisions": 4,
+    "family_results": {
+      "IRH-F1-001": {
+        "exact": 0,
+        "total": 4
+      },
+      "IRH-F2-001": {
+        "exact": 0,
+        "total": 4
+      },
+      "IRH-F3-001": {
+        "exact": 0,
+        "total": 4
+      },
+      "IRH-F4-001": {
+        "exact": 4,
+        "total": 4
+      },
+      "IRH-F5-001": {
+        "exact": 0,
+        "total": 4
+      }
+    },
+    "total_variants": 20
+  },
+  "v2_minus_v1": 0.0
+}
