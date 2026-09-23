@@ -1,4 +1,4 @@
-python -c "from pathlib import Path; Path('docs/v03-gate6-provenance-result.md').write_text('''# v0.3 Gate 6 — External Independence / Provenance Result
+# v0.3 Gate 6 - External Independence / Provenance Result
 
 ## Formal role of Gate 6
 
@@ -43,3 +43,28 @@ The specific Gate-6 provenance blocker:
 
 ```text
 genuinely independent authorship/provenance available
+```
+
+is now satisfied.
+
+No standalone Gate-6 score is claimed because the frozen specification does not define one.
+
+## Integration status
+
+External-system integration remains blocked.
+
+Reason:
+
+Gate 2 remains open because the fresh independent fixture produced zero paraphrase errors for both frozen v0.2 and frozen v0.3, so material improvement could not be demonstrated under the frozen criterion.
+
+Therefore resolving the Gate-6 provenance blocker does not authorize external-system integration.
+
+## Research boundary
+
+No Gate-6 criterion was changed after evaluation.
+
+No candidate implementation was changed.
+
+No independent fixture was changed.
+
+No historical H5 replication result was relabeled as current Gate-6 evidence.
