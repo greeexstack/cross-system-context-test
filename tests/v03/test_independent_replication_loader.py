@@ -22,7 +22,13 @@ def load_suite(path: str) -> tuple[IndependentReplicationCase, ...]:
             raise ValueError("each fixture case must be an object")
 
         expected_fields = tuple(
-            (field, value)
+            (
+                field,
+                tuple(value)
+                if field == "negated_concepts"
+                and isinstance(value, list)
+                else value,
+            )
             for field, value in raw["expected_fields"]
         )
 
@@ -67,6 +73,32 @@ def test_loader_accepts_generic_external_fixture(tmp_path) -> None:
     assert loaded[0].texts == ("text one", "text two")
     assert loaded[0].expected_fields == (
         ("requests_followup", None),
+    )
+
+
+def test_loader_normalizes_negated_concepts_to_tuple(tmp_path) -> None:
+    fixture = [
+        {
+            "case_id": "external-negated-concepts",
+            "primary_interpretation": "opaque_primary_label",
+            "primary_decision_strength": "moderate",
+            "texts": ["text one", "text two"],
+            "expected_fields": [
+                ["negated_concepts", []],
+            ],
+        }
+    ]
+
+    path = tmp_path / "fixture.json"
+    path.write_text(
+        json.dumps(fixture),
+        encoding="utf-8",
+    )
+
+    loaded = load_suite(str(path))
+
+    assert loaded[0].expected_fields == (
+        ("negated_concepts", ()),
     )
 
 
