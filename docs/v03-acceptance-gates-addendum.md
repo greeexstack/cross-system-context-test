@@ -73,29 +73,91 @@ No post-hoc choice of fields may be made after inspecting results.
 
 ## 2.3 Material improvement criterion
 
-Material improvement is defined prospectively as a minimum 50% relative reduction in the paraphrase error rate of frozen v0.3 compared with frozen v0.2 on the same genuinely independent evaluation population.
+Material improvement is defined prospectively as a minimum 50% relative reduction in
+the paraphrase error rate of frozen v0.3 compared with frozen v0.2 on the same
+genuinely independent evaluation population.
 
-The rule is:
+Let:
 
 ```text
-v0.3 error rate <= 0.5 × v0.2 error rate
+E2 = number of paraphrase errors made by frozen v0.2
+E3 = number of paraphrase errors made by frozen v0.3
+N  = total number of paraphrase pairs
 ```
 
-Both systems must therefore be evaluated on the identical fresh evaluation fixture using the identical predefined decision tuple.
+Both systems must be evaluated on the identical fresh evaluation fixture using
+the identical predefined decision tuple.
 
-The v0.2 result measured on that fixture is the baseline for the Gate-2 comparison.
+When `E2 > 0`, the Gate-2 requirement is:
 
-The historical v0.2 result of 12/15 = 80% fidelity remains a historical diagnostic baseline and is not substituted for the v0.2 measurement on the fresh acceptance fixture.
+```text
+E3 / N <= 0.5 × (E2 / N)
+```
 
-The 50% relative error-reduction requirement is a prospective operational definition of "material improvement" adopted before the independent acceptance fixture is evaluated.
+Because both systems use the same evaluation population, this is equivalently:
+
+```text
+E3 <= floor(E2 / 2)
+```
+
+The historical v0.2 result of `12/15 = 80%` fidelity remains a historical
+diagnostic baseline and is not substituted for the v0.2 measurement on the
+fresh acceptance fixture.
+
+The 50% relative error-reduction requirement is a prospective operational
+definition of "material improvement" adopted before the independent acceptance
+fixture is evaluated.
 
 It must not be changed after evaluation results are observed.
 
-For illustration only, if frozen v0.2 produces 12/15 faithful pairs on the fresh fixture, its error rate is 20%. A 50% relative reduction would require v0.3 to have an error rate of 10% or less, which on a 15-pair fixture requires at least 14/15 faithful pairs.
+### Zero-error baseline rule
 
-This example does not define the baseline for the future evaluation; the actual fresh-fixture v0.2 measurement does.
+If frozen v0.2 produces zero paraphrase errors on the fresh acceptance fixture:
 
----
+```text
+E2 = 0
+```
+
+then Gate 2 is not considered passed by an equally perfect v0.3 result.
+
+There is no measurable improvement over a zero-error baseline under the
+relative-error-reduction criterion.
+
+The result must therefore be classified as:
+
+```text
+Gate 2: not demonstrated
+```
+
+and must not be converted into a pass by changing the criterion after observing
+the result.
+
+### Example
+
+For illustration only, if frozen v0.2 produces:
+
+```text
+12 / 15 faithful pairs
+3 / 15 errors
+```
+
+then:
+
+```text
+E2 = 3
+floor(E2 / 2) = 1
+```
+
+Therefore frozen v0.3 must produce at most one error:
+
+```text
+14 / 15 faithful pairs
+```
+
+A two-error result would not satisfy the 50% relative error-reduction rule.
+
+This example does not define the baseline for the future evaluation. The actual
+fresh-fixture v0.2 measurement does.
 
 ## 2.4 Negative-control requirement
 
