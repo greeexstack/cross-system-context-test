@@ -44,11 +44,18 @@ The evaluation fixture must be genuinely independently authored and must satisfy
 
 The same fixture must be evaluated against:
 
-1. frozen v0.2;
-2. the frozen v0.3 candidate.
+1. the permanently frozen v0.2 implementation;
+2. the frozen v0.3 clause-local candidate:
+   `ClauseLocalRelationalEventFrameExtractor`,
+   frozen at commit `05f8cbf`.
 
 Neither implementation may be modified between the two evaluations.
 
+The v0.3 candidate is the exact implementation present at `05f8cbf`.
+The repository history contains no subsequent changes to:
+`src/experiment/v03/clause_local_extractor_v2.py`
+or
+`src/experiment/v03/clause_local_extractor.py`.
 ---
 
 ## 2.2 Primary metric
@@ -74,9 +81,10 @@ No post-hoc choice of fields may be made after inspecting results.
 ## 2.3 Material improvement criterion
 
 Material improvement is defined prospectively as a minimum 50% relative reduction in
-the paraphrase error rate of frozen v0.3 compared with frozen v0.2 on the same
-genuinely independent evaluation population.
-
+the paraphrase error rate of the frozen v0.3 clause-local candidate
+(`ClauseLocalRelationalEventFrameExtractor`, frozen at `05f8cbf`) compared with
+the permanently frozen v0.2 implementation on the same genuinely independent
+evaluation population.
 Let:
 
 ```text
@@ -405,4 +413,4 @@ The next experiment must answer the acceptance question directly rather than exp
 
 The purpose of the next evaluation is not to improve a candidate after seeing failures.
 
-The purpose is to determine whether the frozen v0.3 candidate satisfies the already-defined acceptance conditions.
+The purpose is to determine whether the frozen v0.3 clause-local candidate (`ClauseLocalRelationalEventFrameExtractor`, frozen at `05f8cbf`) satisfies the already-defined acceptance conditions.
