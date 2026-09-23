@@ -1,0 +1,197 @@
+[
+  {
+    "case_id": "EXT-G2-01",
+    "role": "relevant",
+    "primary": {
+      "record_id": "OPP-2026-0417",
+      "record_type": "opportunity",
+      "customer_id": "CUST-ML-8823",
+      "summary": "Proposal submitted to Meridian Logistics for a CRM platform deployment covering their North American sales operations. Awaiting procurement review."
+    },
+    "primary_state": {
+      "interpretation_class": "active-opportunity",
+      "decision_strength": "moderate"
+    },
+    "customer": {
+      "customer_id": "CUST-ML-8823",
+      "name": "Dana Kowalski",
+      "email": "d.kowalski@meridianlogistics.com",
+      "phone": "+1-312-555-0147"
+    },
+    "occurred_at": "2026-09-08T14:30:00Z",
+    "texts": [
+      "During a phone call on Tuesday, the IT director at Meridian Logistics mentioned that their team is currently comparing our CRM proposal against offerings from two other vendors, and they expect to narrow the field by the end of the quarter.",
+      "Meridian Logistics' IT director indicated on a Tuesday call that the proposal we submitted for the CRM platform is being evaluated alongside two competing solutions, with a shortlist decision anticipated before the quarter closes.",
+      "We learned from a Tuesday conversation with the IT director that Meridian Logistics has our CRM proposal under active review together with two rival products, and the team plans to reduce the candidate pool by quarter's end.",
+      "The IT director of Meridian Logistics told us by phone on Tuesday that two other vendors' CRM offerings are being weighed against ours, and a decision to shortlist is expected no later than the close of the quarter."
+    ],
+    "oracle": {
+      "topic": "CRM platform procurement evaluation",
+      "negated_concepts": [],
+      "expresses_acceptance": false,
+      "polarity": "neutral",
+      "confirms_approval": false,
+      "concerns_same_work_item": true,
+      "confirms_completion": false,
+      "expresses_rejection": false,
+      "requests_followup": false,
+      "requests_next_step": false
+    }
+  },
+  {
+    "case_id": "EXT-G2-02",
+    "role": "supporting",
+    "primary": {
+      "record_id": "OPP-2026-0533",
+      "record_type": "opportunity",
+      "customer_id": "CUST-HG-4491",
+      "summary": "Cloud migration engagement proposed to Halverson Group covering legacy on-premises infrastructure transition. Verbal interest expressed; awaiting formal budget confirmation."
+    },
+    "primary_state": {
+      "interpretation_class": "active-opportunity",
+      "decision_strength": "high"
+    },
+    "customer": {
+      "customer_id": "CUST-HG-4491",
+      "name": "Erik Halverson",
+      "email": "e.halverson@halversongroup.com",
+      "phone": "+1-617-555-0293"
+    },
+    "occurred_at": "2026-09-10T09:15:00Z",
+    "texts": [
+      "Halverson Group's CFO confirmed in a budget review meeting that funding for the cloud migration project has been allocated in the upcoming fiscal year's capital expenditure plan.",
+      "In the recent budget review, the CFO of Halverson Group verified that the capital expenditure plan for the next fiscal year includes a dedicated allocation for the cloud migration initiative.",
+      "Budget approval for the cloud migration work at Halverson Group has been verbally confirmed by their CFO, who noted that the funds are earmarked in next year's capital spending plan.",
+      "According to Halverson Group's CFO, the upcoming fiscal year's capex budget already contains a line item covering the cloud migration project, as stated during the budget review session."
+    ],
+    "oracle": {
+      "topic": "cloud migration project funding confirmation",
+      "negated_concepts": [],
+      "expresses_acceptance": true,
+      "polarity": "positive",
+      "confirms_approval": true,
+      "concerns_same_work_item": true,
+      "confirms_completion": false,
+      "expresses_rejection": false,
+      "requests_followup": false,
+      "requests_next_step": false
+    }
+  },
+  {
+    "case_id": "EXT-G2-03",
+    "role": "contradictory",
+    "primary": {
+      "record_id": "SVC-2026-1182",
+      "record_type": "service-order",
+      "customer_id": "CUST-RV-7760",
+      "summary": "HVAC rooftop cooling unit repair completed at Riverside retail location. Compressor issue diagnosed and repaired. Marked resolved by field technician."
+    },
+    "primary_state": {
+      "interpretation_class": "resolved",
+      "decision_strength": "high"
+    },
+    "customer": {
+      "customer_id": "CUST-RV-7760",
+      "name": "Maria Vasquez",
+      "email": "m.vasquez@riversideretail.com",
+      "phone": "+1-951-555-0338"
+    },
+    "occurred_at": "2026-09-14T07:45:00Z",
+    "texts": [
+      "The store manager at the Riverside location called to report that the rooftop cooling unit failed again over the weekend, stating that the original repair did not resolve the underlying compressor issue.",
+      "According to a phone report from the Riverside store manager, the rooftop cooling unit broke down once more during the weekend, and the manager believes the compressor problem was never actually fixed by the earlier repair visit.",
+      "The Riverside location's store manager notified us by phone that the rooftop cooling unit stopped working again over the weekend, indicating that the compressor fault identified in the original service order persists despite the repair.",
+      "A weekend breakdown of the rooftop cooling unit at the Riverside store was reported by the location manager, who stated that the underlying compressor defect was not addressed by the previous repair and remains unresolved."
+    ],
+    "oracle": {
+      "topic": "HVAC repair recurrence at Riverside location",
+      "negated_concepts": ["repair-resolved", "compressor-fixed"],
+      "expresses_acceptance": false,
+      "polarity": "negative",
+      "confirms_approval": false,
+      "concerns_same_work_item": true,
+      "confirms_completion": false,
+      "expresses_rejection": true,
+      "requests_followup": false,
+      "requests_next_step": false
+    }
+  },
+  {
+    "case_id": "EXT-G2-04",
+    "role": "irrelevant",
+    "primary": {
+      "record_id": "OPP-2026-0629",
+      "record_type": "opportunity",
+      "customer_id": "CUST-CT-3354",
+      "summary": "Fleet management software proposal submitted to Caldwell Transport for GPS tracking and route optimization across their regional trucking operations."
+    },
+    "primary_state": {
+      "interpretation_class": "active-opportunity",
+      "decision_strength": "moderate"
+    },
+    "customer": {
+      "customer_id": "CUST-CT-3354",
+      "name": "James Caldwell",
+      "email": "j.caldwell@caldwelltransport.com",
+      "phone": "+1-405-555-0182"
+    },
+    "occurred_at": "2026-09-11T16:00:00Z",
+    "texts": [
+      "The facilities team announced that the third-floor kitchen renovation will begin on the 15th of next month, and employees should use the break room on the first floor during the construction period.",
+      "Employees have been notified by facilities that construction on the third-floor kitchen is scheduled to start next month on the 15th, and the first-floor break room will serve as the alternative dining area in the interim.",
+      "Starting on the 15th of next month, the third-floor kitchen will be closed for renovation, according to the facilities team, who advised staff to use the first-floor break room until the work is complete.",
+      "The facilities department has informed staff that the kitchen on the third floor will undergo renovation beginning next month on the 15th, with the first-floor break room available as a temporary alternative for meals."
+    ],
+    "oracle": {
+      "topic": "office kitchen renovation schedule",
+      "negated_concepts": [],
+      "expresses_acceptance": false,
+      "polarity": "neutral",
+      "confirms_approval": false,
+      "concerns_same_work_item": false,
+      "confirms_completion": false,
+      "expresses_rejection": false,
+      "requests_followup": false,
+      "requests_next_step": false
+    }
+  },
+  {
+    "case_id": "EXT-G2-05",
+    "role": "service-next-step",
+    "primary": {
+      "record_id": "SVC-2026-0947",
+      "record_type": "service-order",
+      "customer_id": "CUST-SD-5518",
+      "summary": "Network infrastructure upgrade completed at Lakewood School District administrative office. All switches, access points, and cabling installed and tested. Marked complete."
+    },
+    "primary_state": {
+      "interpretation_class": "completed",
+      "decision_strength": "high"
+    },
+    "customer": {
+      "customer_id": "CUST-SD-5518",
+      "name": "Patricia Englund",
+      "email": "p.englund@lakewood.k12.edu",
+      "phone": "+1-218-555-0276"
+    },
+    "occurred_at": "2026-09-12T11:20:00Z",
+    "texts": [
+      "The project coordinator confirmed that the final documentation package, including network diagrams and warranty registration forms, will be delivered to the school district's IT office no later than Friday.",
+      "By Friday at the latest, the school district's IT office will receive the complete documentation package containing network diagrams and warranty registration paperwork, as confirmed by the project coordinator.",
+      "According to the project coordinator, the district's IT office should expect delivery of the closing documentation bundle — network diagrams along with warranty registration forms — by the end of the week on Friday.",
+      "The project coordinator has arranged for the final documentation set, which includes the network layout diagrams and the warranty registration documents, to be handed over to the school district IT office with a Friday deadline."
+    ],
+    "oracle": {
+      "topic": "post-completion documentation and warranty delivery",
+      "negated_concepts": [],
+      "expresses_acceptance": false,
+      "polarity": "positive",
+      "confirms_approval": false,
+      "concerns_same_work_item": true,
+      "confirms_completion": true,
+      "expresses_rejection": false,
+      "requests_followup": false,
+      "requests_next_step": true
+    }
+  }
+]
