@@ -1,4 +1,4 @@
-﻿# Cross-System Context Test
+# Cross-System Context Test
 
 A controlled experiment for testing whether relevant context from a secondary business data source can improve decisions made from a primary-system record.
 
@@ -43,7 +43,7 @@ Python 3.12 or newer is required.
 From the repository root:
 
 ```powershell
-python -m pip install -e .
+python -m pip install -e ".[dev]"
 ```
 
 ## CLI
@@ -141,7 +141,7 @@ Remove-Item -Recurse -Force ".pytest-tmp" -ErrorAction SilentlyContinue
 Package version:
 
 ```text
-0.1.0
+0.1.1
 ```
 
 Public experiment:
