@@ -7,11 +7,16 @@ name = "cross-system-context-test"
 version = "0.1.1"
 description = "A controlled experiment engine for testing whether cross-system business context improves business decisions."
 requires-python = ">=3.12"
+
 [project.scripts]
 cross-system-context = "experiment.cli:main"
+
 [project.optional-dependencies]
 dev = [
     "pytest==9.1.1",
+    "httpx2==2.13.1",
+    "fastapi==0.141.1",
+    "uvicorn[standard]==0.53.0",
 ]
 nlp-experiment = [
     "spacy==3.8.16",
