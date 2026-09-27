@@ -10,6 +10,8 @@ from .models import (
     EvaluationListItem,
     EvaluationResult,
     HealthResponse,
+    UserEvaluationCreateRequest,
+    UserEvaluationResult,
 )
 from .service import EvaluationService
 
@@ -21,26 +23,36 @@ service = EvaluationService(FIXTURE_ROOT)
 
 app = FastAPI(
     title="Cross-System Context API",
-    version="0.1.1",
+    version="0.1.2",
     description=(
-        "Product API over the validated Cross-System Context v0.2 "
-        "controlled evaluation."
+        "Product API over the validated Cross-System Context "
+        "evaluation engine."
     ),
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-@app.get("/health", response_model=HealthResponse)
+@app.get(
+    "/health",
+    response_model=HealthResponse,
+)
 def health() -> HealthResponse:
     return HealthResponse()
 
+
+# ---------------------------------------------------------------------------
+# Frozen research benchmark
+# ---------------------------------------------------------------------------
 
 @app.get(
     "/v1/evaluations",
@@ -80,7 +92,10 @@ def get_evaluation(run_id: str) -> EvaluationResult:
     "/v1/evaluations/{run_id}/cases/{pair_id}",
     response_model=dict,
 )
-def get_case(run_id: str, pair_id: str) -> dict:
+def get_case(
+    run_id: str,
+    pair_id: str,
+) -> dict:
     result = service.get(run_id)
 
     if result is None:
@@ -97,3 +112,35 @@ def get_case(run_id: str, pair_id: str) -> dict:
         status_code=404,
         detail="Case not found.",
     )
+
+
+# ---------------------------------------------------------------------------
+# User evaluation
+# ---------------------------------------------------------------------------
+
+@app.post(
+    "/v1/user-evaluations",
+    response_model=UserEvaluationResult,
+)
+def create_user_evaluation(
+    request: UserEvaluationCreateRequest,
+) -> UserEvaluationResult:
+    return service.run_user_evaluation(request)
+
+
+@app.get(
+    "/v1/user-evaluations/{run_id}",
+    response_model=UserEvaluationResult,
+)
+def get_user_evaluation(
+    run_id: str,
+) -> UserEvaluationResult:
+    result = service.get_user(run_id)
+
+    if result is None:
+        raise HTTPException(
+            status_code=404,
+            detail="User evaluation not found.",
+        )
+
+    return result
