@@ -128,3 +128,13 @@ def test_create_and_get_user_evaluation() -> None:
     assert retrieved["additional_context"] == payload["additional_context"]
     assert retrieved["base"] == body["base"]
     assert retrieved["variant"] == body["variant"]
+
+def test_get_missing_user_evaluation() -> None:
+    response = client.get(
+        "/v1/user-evaluations/nonexistent-run"
+    )
+
+    assert response.status_code == 404
+    assert response.json() == {
+        "detail": "User evaluation not found."
+    }
