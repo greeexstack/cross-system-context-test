@@ -127,15 +127,11 @@ export default function EvaluatePage() {
         </div>
 
         <h1>
-          Understand what is happening
-          <br />
-          in your business.
-        </h1>
+  Evaluate whether new business context changes a situation
+</h1>
 
         <p>
-          Describe the business situation, add the
-          information that may change it, and tell us
-          what you want to understand.
+          Describe the situation, add the new information, and see whether it changes the conclusion.
         </p>
       </section>
 
@@ -262,12 +258,12 @@ export default function EvaluatePage() {
                   className="evaluation-guide-content"
                 >
                   <p className="evaluation-guide-intro">
-                    The tool is designed for business
-                    situations where additional
-                    information may change or strengthen
-                    your understanding of what is
-                    happening.
-                  </p>
+  The tool evaluates specific business
+  situations where new customer or
+  communication information may change,
+  strengthen, weaken, or preserve the
+  existing conclusion.
+</p>
 
                   <div className="evaluation-guide-grid">
                     <div>
@@ -320,16 +316,17 @@ export default function EvaluatePage() {
                     </div>
 
                     <div>
-                      <strong>
-                        New business context
-                      </strong>
+  <strong>
+    New business context
+  </strong>
 
-                      <p>
-                        See whether additional customer
-                        or communication information
-                        changes the conclusion.
-                      </p>
-                    </div>
+  <p>
+    See whether new customer or
+    communication information changes
+    the conclusion for a specific
+    business situation.
+  </p>
+</div>
                   </div>
 
                   <div className="evaluation-guide-example">
@@ -461,8 +458,7 @@ export default function EvaluatePage() {
                       event.target.value,
                     )
                   }
-                  placeholder="Describe what is happening now, including the customer, order, opportunity, or service situation."
-                  rows={5}
+                  placeholder="Describe the specific situation now — for example, a quote is waiting for a customer decision, a negotiation is open, or a service is complete but the next step is unclear."                  rows={5}
                   maxLength={4000}
                 />
               </label>
@@ -479,8 +475,8 @@ export default function EvaluatePage() {
                       event.target.value,
                     )
                   }
-                  placeholder="Add the communication, observation, or other information that may change your understanding of the situation."
-                  rows={5}
+                  placeholder="Add the specific customer communication, observation, or business event that may change the situation."
+                   rows={5}
                   maxLength={4000}
                 />
               </label>
@@ -544,24 +540,34 @@ export default function EvaluatePage() {
     </div>
 
     <div className="review-overview">
-      <div className="review-overview-label">
-        You're evaluating
-      </div>
+  <div className="review-overview-label">
+    You are evaluating
+  </div>
 
-      <h3>
-        {name}
-      </h3>
+  <h3>{name}</h3>
+</div>
 
-      <div className="review-meta-line">
-        <span>{workflow || "No workflow specified"}</span>
-        <span className="review-meta-separator">•</span>
-        <span>
-          {recordType === "service_order"
-            ? "Service order"
-            : "Opportunity"}
-        </span>
-      </div>
-    </div>
+<div className="review-meta-strip">
+  <div className="review-meta-item">
+    <span>Workflow</span>
+
+    <strong>
+      {workflow || "Not specified"}
+    </strong>
+  </div>
+
+  <div className="review-meta-divider" />
+
+  <div className="review-meta-item">
+    <span>Business record</span>
+
+    <strong>
+      {recordType === "service_order"
+        ? "Service order"
+        : "Opportunity"}
+    </strong>
+  </div>
+</div>
 
     <div className="review-question">
       <div className="review-block-label">

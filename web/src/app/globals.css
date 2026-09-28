@@ -4043,14 +4043,14 @@ textarea {
 }
 
 .evaluate-page .page-header h1 {
-  max-width: 780px;
+  max-width: 850px;
   margin: 12px 0 14px;
 
   color: var(--eval-text);
-  font-size: clamp(38px, 4.8vw, 54px);
+  font-size: clamp(38px, 4.5vw, 52px);
   font-weight: 720;
-  line-height: 1.06;
-  letter-spacing: -0.045em;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
 }
 
 .evaluate-page .page-header p {
