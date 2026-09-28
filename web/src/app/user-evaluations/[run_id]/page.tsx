@@ -96,8 +96,7 @@ function supportSummary(value: string | null) {
       return "No additional information was available.";
 
     case "primary_only":
-      return "The conclusion is based only on the original information.";
-
+      return "The additional information was considered, but it did not provide enough evidence to change the conclusion.";
     case "secondary_supported":
       return "The additional information strengthened the existing conclusion.";
 
@@ -149,49 +148,173 @@ function getResultState(
   if (uncertain) {
     return {
       kind: "uncertain",
-      label: "MORE INFORMATION NEEDED",
+      label: "More Information Needed",
       title:
-        "There is not enough information to make a clear business conclusion.",
+        "We need more business detail before we can give you a clear conclusion.",
       description:
-        "The information describes a situation, but it does not yet identify a specific customer event, business decision, or next step that the evaluation can assess.",
+        "The information describes a general situation, but it does not yet identify a specific customer event, decision, or next step to evaluate.",
     };
   }
 
   if (result.interpretation_changed) {
-    return {
-      kind: "changed",
-      label: "ADDITIONAL SUPPORT FOUND",
-      title:
-        "The additional information changed the conclusion.",
-      description:
-        "The new information points to a different business situation than the original information did.",
-    };
+    switch (result.variant.interpretation_class) {
+      case "quote_followup_pending":
+        return {
+          kind: "changed",
+          label: "Conclusion Changed",
+          title:
+            "Follow-up is now required.",
+          description:
+            "The latest information indicates that the quote or proposal needs follow-up.",
+        };
+
+      case "quote_pending_decision":
+        return {
+          kind: "changed",
+          label: "Conclusion Changed",
+          title:
+            "The quote is still waiting for a decision.",
+          description:
+            "The latest information changed the business situation to a pending customer decision.",
+        };
+
+      case "negotiation_open":
+        return {
+          kind: "changed",
+          label: "Conclusion Changed",
+          title:
+            "The customer discussion is still open.",
+          description:
+            "The latest information indicates that the customer conversation or negotiation remains active.",
+        };
+
+      case "service_completed_next_step_unrecorded":
+        return {
+          kind: "changed",
+          label: "Conclusion Changed",
+          title:
+            "The service appears complete, but the next step is unclear.",
+          description:
+            "The latest information indicates that a follow-up action may still need to be recorded.",
+        };
+
+      default:
+        return {
+          kind: "changed",
+          label: "Conclusion Changed",
+          title:
+            "The additional information changed the business conclusion.",
+          description:
+            "The new information points to a different business situation than the original information did.",
+        };
+    }
   }
 
-  if (
-    result.support_changed ||
-    result.decision_strength_changed
-  ) {
-    return {
-      kind: "refined",
-      label: "CONCLUSION STRENGTHENED",
-      title:
-        "The conclusion stayed the same, but the new information added useful support.",
-      description:
-        "The additional information did not change the main situation, but it changed how strongly that conclusion is supported.",
-    };
-  }
+  switch (result.variant.interpretation_class) {
+    case "quote_pending_decision":
+      return {
+        kind: "preserved",
+        label: "Conclusion Unchanged",
+        title:
+          "The follow-up decision remains unchanged.",
+        description:
+          "The quote is still waiting for a decision. The latest customer information was considered, but it does not indicate that a decision has been made. Follow-up is still required.",
+      };
 
-  return {
-    kind: "preserved",
-    label: "NO MATERIAL CHANGE",
-    title:
-      "The additional information did not materially change the conclusion.",
-    description:
-      "The result remained aligned with what the original information indicated.",
-  };
+    case "quote_followup_pending":
+      return {
+        kind: "preserved",
+        label: "Conclusion Unchanged",
+        title:
+          "Follow-up is still required.",
+        description:
+          "The additional information was considered, but the business situation still indicates that the quote or proposal needs follow-up.",
+      };
+
+    case "negotiation_open":
+      return {
+        kind: "preserved",
+        label: "Conclusion Unchanged",
+        title:
+          "The customer discussion remains open.",
+        description:
+          "The additional information was considered, but it does not establish a different business situation.",
+      };
+
+    case "service_completed_next_step_unrecorded":
+      return {
+        kind: "preserved",
+        label: "Conclusion Unchanged",
+        title:
+          "The service appears complete, but the next step is still unclear.",
+        description:
+          "The additional information was considered, but it does not establish a different next step.",
+      };
+
+    default:
+      return {
+        kind: "preserved",
+        label: "No Material Change",
+        title:
+          "The additional information did not change the business conclusion.",
+        description:
+          "The new information was considered and did not establish a different business situation.",
+      };
+  }
 }
+function nextStepSummary(
+  result: UserEvaluationResult,
+) {
+  switch (result.variant.interpretation_class) {
+    case "quote_pending_decision":
+      return {
+        title:
+          "Follow up with the customer about the pending quote decision.",
+        description:
+          "The quote is still awaiting a decision. The latest message shows the customer is ready to discuss the next step, so the next action is to continue that conversation and clarify the decision timeline.",
+      };
 
+    case "quote_followup_pending":
+      return {
+        title:
+          "Follow up with the customer about the quote or proposal.",
+        description:
+          "The available information indicates that the quote or proposal still requires follow-up.",
+      };
+
+    case "negotiation_open":
+      return {
+        title:
+          "Continue the customer discussion and confirm the next step.",
+        description:
+          "The customer discussion is still active, so the next action is to clarify what needs to happen next.",
+      };
+
+    case "service_completed_next_step_unrecorded":
+      return {
+        title:
+          "Confirm and record the next step for the completed service.",
+        description:
+          "The service appears complete, but the next business action has not been clearly recorded.",
+      };
+
+    case "primary_state_uncertain":
+      return {
+        title:
+          "Add the business event or decision you want to evaluate.",
+        description:
+          "Provide the specific customer event, decision, pending action, or next step that you want the evaluation to assess.",
+      };
+
+    default:
+      return {
+        title:
+          "Review the result and decide the next business action.",
+        description:
+          "Use the conclusion together with the information considered to determine what should happen next.",
+      };
+  }
+}
 function EvidenceList({
   snapshot,
 }: {
@@ -287,12 +410,11 @@ const [activeSection, setActiveSection] =
   }, [params]);
   useEffect(() => {
   const sectionIds = [
-    "summary",
-    "change",
-    "why",
-    "information",
-    "next-step",
-  ];
+  "summary",
+  "change",
+  "information",
+  "next-step",
+];
 
   const sections = sectionIds
     .map((id) => document.getElementById(id))
@@ -451,68 +573,57 @@ const [activeSection, setActiveSection] =
       </section>
 
       <nav
-        className="result-local-nav"
-        aria-label="Result sections"
-      >
-        <span className="result-local-nav-label">
-          On this page
-        </span>
-
-        <a
-  href="#summary"
-  className={
-    activeSection === "summary"
-      ? "active"
-      : ""
-  }
+  className="result-local-nav"
+  aria-label="Result sections"
 >
-  Summary
-</a>
+  <span className="result-local-nav-label">
+    On this page
+  </span>
 
-<a
-  href="#change"
-  className={
-    activeSection === "change"
-      ? "active"
-      : ""
-  }
->
-  What changed
-</a>
+  <a
+    href="#summary"
+    className={
+      activeSection === "summary"
+        ? "active"
+        : ""
+    }
+  >
+    Summary
+  </a>
 
-<a
-  href="#why"
-  className={
-    activeSection === "why"
-      ? "active"
-      : ""
-  }
->
-  Why this result
-</a>
+  <a
+    href="#change"
+    className={
+      activeSection === "change"
+        ? "active"
+        : ""
+    }
+  >
+    Change
+  </a>
 
-<a
-  href="#information"
-  className={
-    activeSection === "information"
-      ? "active"
-      : ""
-  }
->
-  Information used
-</a>
+  <a
+    href="#information"
+    className={
+      activeSection === "information"
+        ? "active"
+        : ""
+    }
+  >
+    Information used
+  </a>
 
-<a
-  href="#next-step"
-  className={
-    activeSection === "next-step"
-      ? "active"
-      : ""
-  }
->
-  Next step
-</a>
-      </nav>
+  <a
+    href="#next-step"
+    className={
+      activeSection === "next-step"
+        ? "active"
+        : ""
+    }
+  >
+    Next step
+  </a>
+</nav>
 
       <section
         id="summary"
@@ -528,124 +639,84 @@ const [activeSection, setActiveSection] =
       </section>
 
       <section
-        id="change"
-        className="result-section result-section-tight"
-      >
-        <div className="result-section-heading">
-          <div>
-            <div className="section-kicker">
-              WHAT CHANGED
-            </div>
+  id="change"
+  className="result-section result-section-tight"
+>
+  <div className="result-section-heading">
+    <div>
+      <div className="section-kicker">
+        WHAT CHANGED
+      </div>
 
-            <h2>
-              Before and after the new information
-            </h2>
+      <h2>
+        How the business situation changed
+      </h2>
 
-            <p>
-              This shows whether the information you
-              added changed the conclusion.
-            </p>
-          </div>
-        </div>
+      <p>
+        This compares the original situation with the
+        situation after the additional information was
+        considered.
+      </p>
+    </div>
+  </div>
 
-        <div className="result-transition">
-          <div className="result-state-card">
-            <span>ORIGINAL INFORMATION</span>
+  <div className="result-transition">
+    <div className="result-state-card">
+      <span>ORIGINAL CONCLUSION</span>
 
-            <h3>
-              {interpretationSummary(
-                result.base.interpretation_class,
-              )}
-            </h3>
+      <h3>
+        {interpretationSummary(
+          result.base.interpretation_class,
+        )}
+      </h3>
+    </div>
 
-            <p>
-              {supportSummary(
-                result.base.support_level,
-              )}
-            </p>
+    <div className="result-transition-arrow">
+      →
+    </div>
 
-            <small>
-              {signalSummary(
-                result.base.decision_strength,
-              )}
-            </small>
-          </div>
+    <div className="result-state-card result-state-card-active">
+      <span>AFTER THE NEW INFORMATION</span>
 
-          <div className="result-transition-arrow">
-            →
-          </div>
+      <h3>
+        {interpretationSummary(
+          result.variant.interpretation_class,
+        )}
+      </h3>
+    </div>
+  </div>
 
-          <div className="result-state-card result-state-card-active">
-            <span>WITH ADDITIONAL INFORMATION</span>
+  <div className="result-change-summary">
+    {state.kind === "changed" && (
+      <p>
+        The additional information changed the business
+        situation.
+      </p>
+    )}
 
-            <h3>
-              {interpretationSummary(
-                result.variant.interpretation_class,
-              )}
-            </h3>
+    {state.kind === "preserved" && (
+      <p>
+        The additional information did not change the
+        business situation.
+      </p>
+    )}
 
-            <p>
-              {supportSummary(
-                result.variant.support_level,
-              )}
-            </p>
+    {state.kind === "refined" && (
+      <p>
+        The business situation stayed the same after the
+        additional information was considered.
+      </p>
+    )}
 
-            <small>
-              {signalSummary(
-                result.variant.decision_strength,
-              )}
-            </small>
-          </div>
-        </div>
-      </section>
+    {state.kind === "uncertain" && (
+      <p>
+        There is not enough information to establish a
+        clear business situation.
+      </p>
+    )}
+  </div>
+</section>
 
-      <section
-        id="why"
-        className="result-section"
-      >
-        <div className="result-section-heading">
-          <div>
-            <div className="section-kicker">
-              WHY
-            </div>
-
-            <h2>
-              Why this is the result
-            </h2>
-
-            <p>
-              The evaluation explains what the new
-              information did to the original conclusion.
-            </p>
-          </div>
-        </div>
-
-        <div className="result-input-grid">
-          <article>
-            <span>
-              Original information
-            </span>
-
-            <p>
-              {supportSummary(
-                result.base.support_level,
-              )}
-            </p>
-          </article>
-
-          <article>
-            <span>
-              New information
-            </span>
-
-            <p>
-              {supportSummary(
-                result.variant.support_level,
-              )}
-            </p>
-          </article>
-        </div>
-      </section>
 
       <section
         id="information"
@@ -668,68 +739,57 @@ const [activeSection, setActiveSection] =
           </div>
         </div>
 
-        <details>
-          <summary>
-            Show information used
-          </summary>
+        <details className="result-information-details">
+  <summary>
+    <span>Information considered</span>
+    <span
+      className="result-information-chevron"
+      aria-hidden="true"
+    />
+  </summary>
 
-          <EvidenceList
-            snapshot={result.variant}
-          />
+  <EvidenceList
+    snapshot={result.variant}
+  />
 
-          <Notes
-            snapshot={result.variant}
-          />
-        </details>
+
+</details>
       </section>
 
 
 
       <section
-        id="next-step"
-        className="result-next-step"
-      >
-        <div className="section-kicker">
-          NEXT STEP
-        </div>
+  id="next-step"
+  className="result-next-step"
+>
+  <div className="section-kicker">
+    NEXT STEP
+  </div>
 
-        {state.kind === "uncertain" ? (
-          <>
-            <h2>
-              Add the business event or decision
-              you want to evaluate.
-            </h2>
+  {(() => {
+    const nextStep = nextStepSummary(result);
 
-            <p>
-              Useful details include what happened
-              with the customer, what the customer did,
-              what is currently waiting, what decision
-              is pending, or what next step was agreed.
-            </p>
-          </>
-        ) : (
-          <>
-            <h2>
-              Use this result as the starting point
-              for the next business action.
-            </h2>
+    return (
+      <>
+        <h2>
+          {nextStep.title}
+        </h2>
 
-            <p>
-              Review the conclusion alongside the
-              information shown above and decide what
-              should happen next in your workflow.
-            </p>
-          </>
-        )}
+        <p>
+          {nextStep.description}
+        </p>
+      </>
+    );
+  })()}
 
-        <Link
-          href="/evaluate"
-          className="button button-primary"
-        >
-          Run another evaluation
-          <span>→</span>
-        </Link>
-      </section>
+  <Link
+    href="/evaluate"
+    className="button button-primary"
+  >
+    Run Another Evaluation
+    <span>→</span>
+  </Link>
+</section>
 
 
     </main>

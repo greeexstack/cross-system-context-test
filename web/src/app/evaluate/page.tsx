@@ -93,7 +93,7 @@ export default function EvaluatePage() {
   }
 
   return (
-    <main className="site-shell">
+    <main className="site-shell evaluate-page">
       <nav className="nav">
         <Link href="/" className="logo">
           <span className="logo-mark">C</span>
@@ -525,110 +525,100 @@ export default function EvaluatePage() {
         )}
 
         {stage === "review" && (
-          <div className="form-card">
-            <div className="form-card-header">
-              <div>
-                <div className="section-kicker">
-                  READY TO RUN
-                </div>
+  <div className="form-card review-card">
+    <div className="form-card-header">
+      <div>
+        <div className="section-kicker">
+          READY TO RUN
+        </div>
 
-                <h2>
-                  Review your evaluation
-                </h2>
-              </div>
-            </div>
+        <h2>
+          Review your evaluation
+        </h2>
 
-            <div className="review-grid">
-              <div className="review-item">
-                <span>
-                  Name
-                </span>
+        <p className="review-intro">
+          Make sure the question and information below
+          are correct before running the evaluation.
+        </p>
+      </div>
+    </div>
 
-                <strong>
-                  {name}
-                </strong>
-              </div>
+    <div className="review-overview">
+      <div className="review-overview-label">
+        You're evaluating
+      </div>
 
-              <div className="review-item">
-                <span>
-                  Workflow
-                </span>
+      <h3>
+        {name}
+      </h3>
 
-                <strong>
-                  {workflow || "Not specified"}
-                </strong>
-              </div>
+      <div className="review-meta-line">
+        <span>{workflow || "No workflow specified"}</span>
+        <span className="review-meta-separator">•</span>
+        <span>
+          {recordType === "service_order"
+            ? "Service order"
+            : "Opportunity"}
+        </span>
+      </div>
+    </div>
 
-              <div className="review-item">
-                <span>
-                  Record type
-                </span>
+    <div className="review-question">
+      <div className="review-block-label">
+        Your question
+      </div>
 
-                <strong>
-                  {recordType ===
-                  "service_order"
-                    ? "Service order"
-                    : "Opportunity"}
-                </strong>
-              </div>
+      <blockquote>
+        “{objective.trim()}”
+      </blockquote>
+    </div>
 
-              <div className="review-item review-wide">
-                <span>
-                  Objective
-                </span>
+    <div className="review-context-grid">
+      <div className="review-context-card">
+        <div className="review-block-label">
+          Current situation
+        </div>
 
-                <strong>
-                  {objective}
-                </strong>
-              </div>
+        <p>
+          “{primaryContext.trim()}”
+        </p>
+      </div>
 
-              <div className="review-item review-wide">
-                <span>
-                  Current situation
-                </span>
+      <div className="review-context-card">
+        <div className="review-block-label">
+          Additional information
+        </div>
 
-                <strong>
-                  {primaryContext}
-                </strong>
-              </div>
+        <p>
+          “{additionalContext.trim()}”
+        </p>
+      </div>
+    </div>
 
-              <div className="review-item review-wide">
-                <span>
-                  Additional information
-                </span>
+    {error && (
+      <div className="error-box">
+        {error}
+      </div>
+    )}
 
-                <strong>
-                  {additionalContext}
-                </strong>
-              </div>
-            </div>
+    <div className="review-actions">
+      <button
+        className="button button-ghost"
+        onClick={() => setStage("details")}
+      >
+        ← Edit Details
+      </button>
 
-            {error && (
-              <div className="error-box">
-                {error}
-              </div>
-            )}
-
-            <div className="form-footer">
-              <button
-                className="button button-ghost"
-                onClick={() =>
-                  setStage("details")
-                }
-              >
-                ← Edit details
-              </button>
-
-              <button
-                className="button button-primary"
-                onClick={run}
-              >
-                Run evaluation
-                <span>→</span>
-              </button>
-            </div>
-          </div>
-        )}
+      <button
+        className="button button-primary"
+        onClick={run}
+      >
+        Run Evaluation
+        <span>→</span>
+      </button>
+    </div>
+  </div>
+)}
 
         {stage === "running" && (
           <div className="running-card">
@@ -639,14 +629,14 @@ export default function EvaluatePage() {
             </div>
 
             <h2>
-              Comparing the two states.
-            </h2>
+  Reviewing the information you provided.
+</h2>
 
-            <p>
-              The evaluation is reviewing your current
-              situation first, then checking what changes
-              when the additional information is introduced.
-            </p>
+<p>
+  We are checking your current business situation
+  first, then seeing whether the additional
+  information changes or strengthens the conclusion.
+</p>
           </div>
         )}
 
@@ -661,50 +651,49 @@ export default function EvaluatePage() {
             </div>
 
             <h2>
-              Your situation has been evaluated.
-            </h2>
+  Your evaluation is ready.
+</h2>
 
-            <p>
-              The result compares the original
-              interpretation with the interpretation
-              after your additional information was
-              introduced.
-            </p>
+<p>
+  The result shows what we found from your
+  original situation and what changed after
+  the additional information was considered.
+</p>
 
             <div className="success-summary">
               <div>
-                <span>
-                  Evaluation
-                </span>
+  <span>
+    Evaluation
+  </span>
 
-                <strong>
-                  {name}
-                </strong>
-              </div>
+  <strong>
+    {name}
+  </strong>
+</div>
 
-              <div>
-                <span>
-                  Interpretation
-                </span>
+<div>
+  <span>
+    Conclusion
+  </span>
 
-                <strong>
-                  {result.interpretation_changed
-                    ? "Changed"
-                    : "Unchanged"}
-                </strong>
-              </div>
+  <strong>
+    {result.interpretation_changed
+      ? "Changed"
+      : "No material change"}
+  </strong>
+</div>
 
-              <div>
-                <span>
-                  Support
-                </span>
+<div>
+  <span>
+    Additional information
+  </span>
 
-                <strong>
-                  {result.support_changed
-                    ? "Changed"
-                    : "Unchanged"}
-                </strong>
-              </div>
+  <strong>
+    {result.support_changed
+      ? "Added useful support"
+      : "Did not change the support"}
+  </strong>
+</div>
             </div>
 
             <Link
