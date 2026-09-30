@@ -71,6 +71,8 @@ export type UserEvaluationResult = {
   source: "user-input";
   status: "completed";
   created_at: string;
+  starred: boolean;
+  deleted_at: string | null;
 
   name: string;
   objective: string;
@@ -91,6 +93,10 @@ export type UserEvaluationResult = {
 };
 
 async function parseResponse<T>(response: Response): Promise<T> {
+  if (response.status === 204) {
+    return undefined as T;
+  }
+
   if (!response.ok) {
     let detail = `Request failed (${response.status})`;
 
@@ -173,6 +179,44 @@ export async function getUserEvaluations(): Promise<UserEvaluationResult[]> {
   );
 
   return parseResponse<UserEvaluationResult[]>(response);
+}
+export async function deleteUserEvaluation(
+  runId: string,
+): Promise<void> {
+  const response = await fetch(
+    `${API_BASE}/v1/user-evaluations/${runId}`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  await parseResponse<void>(response);
+}
+
+export async function starUserEvaluation(
+  runId: string,
+): Promise<UserEvaluationResult> {
+  const response = await fetch(
+    `${API_BASE}/v1/user-evaluations/${runId}/star`,
+    {
+      method: "POST",
+    },
+  );
+
+  return parseResponse<UserEvaluationResult>(response);
+}
+
+export async function unstarUserEvaluation(
+  runId: string,
+): Promise<UserEvaluationResult> {
+  const response = await fetch(
+    `${API_BASE}/v1/user-evaluations/${runId}/star`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  return parseResponse<UserEvaluationResult>(response);
 }
 export async function getCase(
   runId: string,

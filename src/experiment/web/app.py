@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -18,7 +19,11 @@ from .service import EvaluationService
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 FIXTURE_ROOT = PROJECT_ROOT / "fixtures_package"
-USER_STORAGE_PATH = PROJECT_ROOT / ".runtime" / "user_evaluations.sqlite3"
+
+USER_STORAGE_PATH = os.environ.get(
+    "CROSS_SYSTEM_USER_STORAGE_PATH",
+    str(PROJECT_ROOT / ".runtime" / "user_evaluations.sqlite3"),
+)
 
 service = EvaluationService(
     FIXTURE_ROOT,
@@ -131,6 +136,7 @@ def create_user_evaluation(
 ) -> UserEvaluationResult:
     return service.run_user_evaluation(request)
 
+
 @app.get(
     "/v1/user-evaluations",
     response_model=list[UserEvaluationResult],
@@ -138,6 +144,62 @@ def create_user_evaluation(
 def list_user_evaluations() -> list[UserEvaluationResult]:
     return service.list_user_evaluations()
 
+@app.delete(
+    "/v1/user-evaluations/{run_id}",
+    status_code=204,
+)
+def delete_user_evaluation(
+    run_id: str,
+) -> None:
+    deleted = service.delete_user_evaluation(run_id)
+
+    if not deleted:
+        raise HTTPException(
+            status_code=404,
+            detail="User evaluation not found.",
+        )
+
+
+@app.post(
+    "/v1/user-evaluations/{run_id}/star",
+    response_model=UserEvaluationResult,
+)
+def star_user_evaluation(
+    run_id: str,
+) -> UserEvaluationResult:
+    result = service.set_user_evaluation_starred(
+        run_id,
+        True,
+    )
+
+    if result is None:
+        raise HTTPException(
+            status_code=404,
+            detail="User evaluation not found.",
+        )
+
+    return result
+
+
+@app.delete(
+    "/v1/user-evaluations/{run_id}/star",
+    response_model=UserEvaluationResult,
+)
+def unstar_user_evaluation(
+    run_id: str,
+) -> UserEvaluationResult:
+    result = service.set_user_evaluation_starred(
+        run_id,
+        False,
+    )
+
+    if result is None:
+        raise HTTPException(
+            status_code=404,
+            detail="User evaluation not found.",
+        )
+
+    return result
 @app.get(
     "/v1/user-evaluations/{run_id}",
     response_model=UserEvaluationResult,

@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
+  deleteUserEvaluation,
   getUserEvaluations,
+  starUserEvaluation,
+  unstarUserEvaluation,
   type UserEvaluationResult,
 } from "@/lib/api";
 import { getResultState } from "@/lib/userEvaluationResult";
@@ -27,6 +30,10 @@ function formatSentence(value: string) {
 export default function ReportsPage() {
   const [reports, setReports] = useState<UserEvaluationResult[]>([]);
   const [error, setError] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [processingRunId, setProcessingRunId] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     getUserEvaluations()
@@ -39,6 +46,60 @@ export default function ReportsPage() {
         );
       });
   }, []);
+
+  async function handleStarToggle(report: UserEvaluationResult) {
+    setActionError("");
+    setProcessingRunId(report.run_id);
+
+    try {
+      const updated = report.starred
+        ? await unstarUserEvaluation(report.run_id)
+        : await starUserEvaluation(report.run_id);
+
+      setReports((current) =>
+        current.map((item) =>
+          item.run_id === updated.run_id ? updated : item,
+        ),
+      );
+    } catch (err) {
+      setActionError(
+        err instanceof Error
+          ? err.message
+          : "Unable to update this report.",
+      );
+    } finally {
+      setProcessingRunId(null);
+    }
+  }
+
+  async function handleDelete(report: UserEvaluationResult) {
+    const confirmed = window.confirm(
+      `Delete "${report.name}"? This report will be removed from your active reports.`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setActionError("");
+    setProcessingRunId(report.run_id);
+
+    try {
+      await deleteUserEvaluation(report.run_id);
+
+      setReports((current) =>
+        current.filter((item) => item.run_id !== report.run_id),
+      );
+    } catch (err) {
+      setActionError(
+        err instanceof Error
+          ? err.message
+          : "Unable to delete this report.",
+      );
+    } finally {
+      setProcessingRunId(null);
+    }
+  }
 
   if (error) {
     return (
@@ -98,6 +159,12 @@ export default function ReportsPage() {
         </Link>
       </header>
 
+      {actionError ? (
+        <p className="reports-action-error" role="alert">
+          {actionError}
+        </p>
+      ) : null}
+
       {reports.length === 0 ? (
         <section className="reports-empty">
           <div className="section-kicker">NO REPORTS YET</div>
@@ -113,6 +180,7 @@ export default function ReportsPage() {
         <section className="report-list" aria-label="Evaluation reports">
           {reports.map((report) => {
             const state = getResultState(report);
+            const isProcessing = processingRunId === report.run_id;
 
             return (
               <article className="report-card" key={report.run_id}>
@@ -141,13 +209,49 @@ export default function ReportsPage() {
                       : "Service order"}
                   </span>
 
-                  <Link
-                    href={`/reports/${report.run_id}`}
-                    className="report-card-link"
-                  >
-                    Open report
-                    <span aria-hidden="true">→</span>
-                  </Link>
+                  <div className="report-card-actions">
+                    <button
+                      type="button"
+                      className={`report-card-action ${
+                        report.starred
+                          ? "report-card-action-starred"
+                          : ""
+                      }`}
+                      aria-label={
+                        report.starred
+                          ? `Unstar ${report.name}`
+                          : `Star ${report.name}`
+                      }
+                      title={
+                        report.starred
+                          ? "Unstar report"
+                          : "Star report"
+                      }
+                      disabled={isProcessing}
+                      onClick={() => handleStarToggle(report)}
+                    >
+                      {report.starred ? "★" : "☆"}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="report-card-action report-card-action-delete"
+                      aria-label={`Delete ${report.name}`}
+                      title="Delete report"
+                      disabled={isProcessing}
+                      onClick={() => handleDelete(report)}
+                    >
+                      Delete
+                    </button>
+
+                    <Link
+                      href={`/reports/${report.run_id}`}
+                      className="report-card-link"
+                    >
+                      Open report
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
                 </div>
               </article>
             );

@@ -5992,6 +5992,10 @@ textarea {
 .report-list {
   display: grid;
   gap: 14px;
+  max-height: 980px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-gutter: stable;
 }
 
 .report-card {
@@ -6074,8 +6078,54 @@ textarea {
   color: #647786;
   font-size: 14px;
   line-height: 1.7;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
+.report-card-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.report-card-action {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #72838e;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.report-card-action:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.report-card-action:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.report-card-action-starred {
+  color: #b27a27;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.report-card-action-delete {
+  color: #8a6b6b;
+}
+
+.reports-action-error {
+  margin: 18px 0 0;
+  color: #9b5f5f;
+  font-size: 13px;
+}
 .report-card-bottom {
   margin-top: 22px;
   padding-top: 15px;

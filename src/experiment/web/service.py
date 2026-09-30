@@ -348,8 +348,25 @@ class EvaluationService:
         run_id: str,
     ) -> UserEvaluationResult | None:
         return self.user_store.get(run_id)
+
     def list_user_evaluations(self) -> list[UserEvaluationResult]:
         return self.user_store.list_all()
+
+    def delete_user_evaluation(
+        self,
+        run_id: str,
+    ) -> bool:
+        return self.user_store.delete(run_id)
+
+    def set_user_evaluation_starred(
+        self,
+        run_id: str,
+        starred: bool,
+    ) -> UserEvaluationResult | None:
+        return self.user_store.set_starred(
+            run_id,
+            starred,
+        )
 
     def list_runs(self) -> list[EvaluationListItem]:
         return [

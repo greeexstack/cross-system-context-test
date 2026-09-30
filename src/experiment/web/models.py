@@ -127,6 +127,9 @@ class UserEvaluationResult(BaseModel):
 
     assumptions: list[str] = Field(default_factory=list)
 
+    starred: bool = False
+    deleted_at: datetime | None = None
+
 class HealthResponse(BaseModel):
     status: Literal["ok"] = "ok"
     product_experiment: str = "v0.2"

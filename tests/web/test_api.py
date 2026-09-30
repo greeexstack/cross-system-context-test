@@ -1,6 +1,10 @@
 ﻿from __future__ import annotations
 
+import os
+
 from fastapi.testclient import TestClient
+
+os.environ["CROSS_SYSTEM_USER_STORAGE_PATH"] = ":memory:"
 
 from experiment.web.app import app
 
@@ -208,3 +212,88 @@ def test_list_user_evaluations() -> None:
     body = list_response.json()
 
     assert any(item["run_id"] == run_id for item in body)
+def test_delete_user_evaluation() -> None:
+    payload = {
+        "name": "API Delete Test",
+        "objective": "Verify that deleting an evaluation removes it from active API reads.",
+        "workflow": "Sales",
+        "record_type": "opportunity",
+        "primary_context": "A quote was sent and no decision has been recorded.",
+        "additional_context": "The customer asked for an update.",
+    }
+
+    create_response = client.post(
+        "/v1/user-evaluations",
+        json=payload,
+    )
+
+    assert create_response.status_code == 200
+    run_id = create_response.json()["run_id"]
+
+    delete_response = client.delete(
+        f"/v1/user-evaluations/{run_id}"
+    )
+
+    assert delete_response.status_code == 204
+
+    get_response = client.get(
+        f"/v1/user-evaluations/{run_id}"
+    )
+
+    assert get_response.status_code == 404
+    assert get_response.json() == {
+        "detail": "User evaluation not found."
+    }
+
+    list_response = client.get("/v1/user-evaluations")
+
+    assert list_response.status_code == 200
+    assert all(
+        item["run_id"] != run_id
+        for item in list_response.json()
+    )
+def test_star_and_unstar_user_evaluation() -> None:
+    payload = {
+        "name": "API Star Test",
+        "objective": "Verify starring and unstarring an evaluation through the API.",
+        "workflow": "Sales",
+        "record_type": "opportunity",
+        "primary_context": "A quote was sent and no decision has been recorded.",
+        "additional_context": "The customer asked for an update.",
+    }
+
+    create_response = client.post(
+        "/v1/user-evaluations",
+        json=payload,
+    )
+
+    assert create_response.status_code == 200
+    run_id = create_response.json()["run_id"]
+
+    star_response = client.post(
+        f"/v1/user-evaluations/{run_id}/star"
+    )
+
+    assert star_response.status_code == 200
+    assert star_response.json()["starred"] is True
+
+    get_starred_response = client.get(
+        f"/v1/user-evaluations/{run_id}"
+    )
+
+    assert get_starred_response.status_code == 200
+    assert get_starred_response.json()["starred"] is True
+
+    unstar_response = client.delete(
+        f"/v1/user-evaluations/{run_id}/star"
+    )
+
+    assert unstar_response.status_code == 200
+    assert unstar_response.json()["starred"] is False
+
+    get_unstarred_response = client.get(
+        f"/v1/user-evaluations/{run_id}"
+    )
+
+    assert get_unstarred_response.status_code == 200
+    assert get_unstarred_response.json()["starred"] is False
