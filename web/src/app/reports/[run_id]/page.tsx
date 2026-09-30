@@ -168,14 +168,14 @@ export default function UserEvaluationReportPage({
 </div>
 
       <header className="report-header">
-        
+
         <h1>{result.name}</h1>
 
         <p className="report-purpose">
           {formatSentence(result.objective)}
         </p>
 
-        
+
       </header>
 
             <section
@@ -272,7 +272,7 @@ export default function UserEvaluationReportPage({
             </div>
           </div>
         </section>
-      ) : (      
+      ) : (
         <section className="report-section">
           <div className="report-section-heading">
             <span className="report-section-number">01</span>
@@ -312,7 +312,7 @@ export default function UserEvaluationReportPage({
         </section>
       )}
 
-      
+
       <section className="report-next-step">
         <div className="section-kicker">
   WHAT TO DO NEXT
@@ -338,8 +338,13 @@ export default function UserEvaluationReportPage({
           <span>→</span>
         </Link>
       </div>
-      
 
+<div className="report-library-link">
+  <Link href="/reports">
+    View all reports
+    <span aria-hidden="true">→</span>
+  </Link>
+</div>
             <footer className="report-footer">
         <span>
           Report ID: {result.run_id}

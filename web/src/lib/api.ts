@@ -164,7 +164,16 @@ export async function getUserEvaluation(
 
   return parseResponse<UserEvaluationResult>(response);
 }
+export async function getUserEvaluations(): Promise<UserEvaluationResult[]> {
+  const response = await fetch(
+    `${API_BASE}/v1/user-evaluations`,
+    {
+      cache: "no-store",
+    },
+  );
 
+  return parseResponse<UserEvaluationResult[]>(response);
+}
 export async function getCase(
   runId: string,
   pairId: string,

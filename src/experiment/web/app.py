@@ -18,7 +18,6 @@ from .service import EvaluationService
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 FIXTURE_ROOT = PROJECT_ROOT / "fixtures_package"
-
 USER_STORAGE_PATH = PROJECT_ROOT / ".runtime" / "user_evaluations.sqlite3"
 
 service = EvaluationService(
@@ -132,6 +131,12 @@ def create_user_evaluation(
 ) -> UserEvaluationResult:
     return service.run_user_evaluation(request)
 
+@app.get(
+    "/v1/user-evaluations",
+    response_model=list[UserEvaluationResult],
+)
+def list_user_evaluations() -> list[UserEvaluationResult]:
+    return service.list_user_evaluations()
 
 @app.get(
     "/v1/user-evaluations/{run_id}",

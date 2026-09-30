@@ -348,6 +348,8 @@ class EvaluationService:
         run_id: str,
     ) -> UserEvaluationResult | None:
         return self.user_store.get(run_id)
+    def list_user_evaluations(self) -> list[UserEvaluationResult]:
+        return self.user_store.list_all()
 
     def list_runs(self) -> list[EvaluationListItem]:
         return [

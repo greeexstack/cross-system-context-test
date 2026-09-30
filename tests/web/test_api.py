@@ -138,3 +138,73 @@ def test_get_missing_user_evaluation() -> None:
     assert response.json() == {
         "detail": "User evaluation not found."
     }
+def test_list_user_evaluations() -> None:
+    payload = {
+        "name": "Report Listing Test",
+        "objective": (
+            "Verify that a completed evaluation appears in the reports list."
+        ),
+        "workflow": "Sales",
+        "record_type": "opportunity",
+        "primary_context": (
+            "A quote was sent to the customer and no decision "
+            "has been recorded yet."
+        ),
+        "additional_context": (
+            "The customer asked for an update and said they are ready "
+            "to discuss the next step."
+        ),
+    }
+
+    create_response = client.post(
+        "/v1/user-evaluations",
+        json=payload,
+    )
+
+    assert create_response.status_code == 200
+
+    run_id = create_response.json()["run_id"]
+
+    list_response = client.get("/v1/user-evaluations")
+
+    assert list_response.status_code == 200
+
+    body = list_response.json()
+
+    assert any(item["run_id"] == run_id for item in body)
+
+
+def test_list_user_evaluations() -> None:
+    payload = {
+        "name": "Report Listing Test",
+        "objective": (
+            "Verify that a completed evaluation appears in the reports list."
+        ),
+        "workflow": "Sales",
+        "record_type": "opportunity",
+        "primary_context": (
+            "A quote was sent to the customer and no decision "
+            "has been recorded yet."
+        ),
+        "additional_context": (
+            "The customer asked for an update and said they are ready "
+            "to discuss the next step."
+        ),
+    }
+
+    create_response = client.post(
+        "/v1/user-evaluations",
+        json=payload,
+    )
+
+    assert create_response.status_code == 200
+
+    run_id = create_response.json()["run_id"]
+
+    list_response = client.get("/v1/user-evaluations")
+
+    assert list_response.status_code == 200
+
+    body = list_response.json()
+
+    assert any(item["run_id"] == run_id for item in body)
