@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from pathlib import Path
 
@@ -19,7 +19,12 @@ from .service import EvaluationService
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 FIXTURE_ROOT = PROJECT_ROOT / "fixtures_package"
 
-service = EvaluationService(FIXTURE_ROOT)
+USER_STORAGE_PATH = PROJECT_ROOT / ".runtime" / "user_evaluations.sqlite3"
+
+service = EvaluationService(
+    FIXTURE_ROOT,
+    user_storage_path=USER_STORAGE_PATH,
+)
 
 app = FastAPI(
     title="Cross-System Context API",

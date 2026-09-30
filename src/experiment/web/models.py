@@ -130,4 +130,4 @@ class UserEvaluationResult(BaseModel):
 class HealthResponse(BaseModel):
     status: Literal["ok"] = "ok"
     product_experiment: str = "v0.2"
-    storage: Literal["memory"] = "memory"
+    storage: Literal["sqlite"] = "sqlite"

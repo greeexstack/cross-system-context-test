@@ -10,7 +10,6 @@ from experiment.v02.engine import (
     ReasoningResult,
 )
 from experiment.v02.runner import V02Runner
-
 from .models import (
     CaseResult,
     DimensionResult,
@@ -21,7 +20,7 @@ from .models import (
     UserEvaluationCreateRequest,
     UserEvaluationResult,
 )
-
+from .storage import UserEvaluationStore
 
 DIMENSIONS = (
     "context_sensitivity",
@@ -78,7 +77,11 @@ def reasoning_snapshot(
 
 
 class EvaluationService:
-    def __init__(self, fixture_root: str | Path) -> None:
+    def __init__(
+    self,
+    fixture_root: str | Path,
+    user_storage_path: str | Path = ":memory:",
+) -> None:
         self.fixture_root = Path(fixture_root)
 
         # Frozen benchmark runner.
@@ -92,7 +95,7 @@ class EvaluationService:
         }
 
         self._runs: dict[str, EvaluationResult] = {}
-        self._user_runs: dict[str, UserEvaluationResult] = {}
+        self.user_store = UserEvaluationStore(user_storage_path)
 
     def run_v02(self) -> EvaluationResult:
         started_at = datetime.now(timezone.utc)
@@ -330,7 +333,7 @@ class EvaluationService:
             ],
         )
 
-        self._user_runs[result.run_id] = result
+        self.user_store.save(result)
 
         return result
 
@@ -344,7 +347,7 @@ class EvaluationService:
         self,
         run_id: str,
     ) -> UserEvaluationResult | None:
-        return self._user_runs.get(run_id)
+        return self.user_store.get(run_id)
 
     def list_runs(self) -> list[EvaluationListItem]:
         return [
