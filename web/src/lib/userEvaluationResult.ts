@@ -51,10 +51,9 @@ export function getResultState(
       kind: "uncertain",
       label: "More Information Needed",
       title:
-        "We need more business detail before we can give you a clear conclusion.",
-      description:
-        "The information describes a general situation, but it does not yet identify a specific customer event, decision, or next step to evaluate.",
-    };
+  "We need one specific customer situation before we can give you a clear answer.",
+description:
+  "You described a general process, but not a specific customer situation we can evaluate yet.",    };
   }
 
   if (result.interpretation_changed) {
@@ -201,13 +200,12 @@ export function nextStepSummary(
       };
 
     case "primary_state_uncertain":
-      return {
-        title:
-          "Add the business event or decision you want to evaluate.",
-        description:
-          "Provide the specific customer event, decision, pending action, or next step that you want the evaluation to assess.",
-      };
-
+  return {
+    title:
+      "Start another evaluation with one specific customer situation.",
+    description:
+      "Use one of the examples above, then describe what the customer said, what decision is pending, or what action is expected next.",
+  };
     default:
       return {
         title:

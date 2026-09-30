@@ -782,13 +782,22 @@ const [activeSection, setActiveSection] =
     );
   })()}
 
+  <div className="result-action-row">
   <Link
-    href="/evaluate"
+    href={`/reports/${result.run_id}`}
     className="button button-primary"
   >
-    Run Another Evaluation
+    View Report
     <span>→</span>
   </Link>
+
+  <Link
+    href="/evaluate"
+    className="button button-ghost"
+  >
+    Run Another Evaluation
+  </Link>
+</div>
 </section>
 
 
