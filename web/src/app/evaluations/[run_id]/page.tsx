@@ -22,6 +22,12 @@ export default function EvaluationResultPage({
   const [result, setResult] = useState<EvaluationResult | null>(null);
   const [meta, setMeta] = useState<EvaluationMeta>({});
   const [error, setError] = useState("");
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "passed" | "review"
+  >("all");
+
+  const [dimensionFilter, setDimensionFilter] =
+    useState("all");
 
   useEffect(() => {
     params.then(({ run_id }) => {
@@ -60,6 +66,46 @@ export default function EvaluationResultPage({
       (result.passed_cases / result.total_cases) * 100,
     );
   }, [result]);
+  const dimensionOptions = useMemo(() => {
+    if (!result) {
+      return [];
+    }
+
+    const dimensions = new Set<string>();
+
+    for (const item of result.cases ?? []) {
+      for (const dimension of Object.keys(item.dimensions)) {
+        dimensions.add(dimension);
+      }
+    }
+
+    return Array.from(dimensions).sort();
+  }, [result]);
+
+  const filteredCases = useMemo(() => {
+    if (!result) {
+      return [];
+    }
+
+    return (result.cases ?? []).filter((item) => {
+      const matchesStatus =
+        statusFilter === "all" ||
+        (statusFilter === "passed" && item.passed) ||
+        (statusFilter === "review" && !item.passed);
+
+      const matchesDimension =
+  dimensionFilter === "all" ||
+  item.dimensions[dimensionFilter] === false;
+
+      return matchesStatus && matchesDimension;
+    });
+  }, [result, statusFilter, dimensionFilter]);
+
+  function formatDimension(value: string) {
+    return value
+      .replaceAll("_", " ")
+      .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  }
 
   if (error) {
     return (
@@ -211,10 +257,46 @@ export default function EvaluationResultPage({
           </div>
 
           <div className="case-count">
-            {result.cases?.length ?? 0} cases
-          </div>
+  {filteredCases.length} of {result.cases?.length ?? 0} cases
+</div>
         </div>
+<div className="case-filters" aria-label="Case filters">
+  <label>
+    <span>Result</span>
 
+    <select
+      value={statusFilter}
+      onChange={(event) =>
+        setStatusFilter(
+          event.target.value as "all" | "passed" | "review",
+        )
+      }
+    >
+      <option value="all">All results</option>
+      <option value="passed">Passed</option>
+      <option value="review">Requires review</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Evaluation dimension</span>
+
+    <select
+      value={dimensionFilter}
+      onChange={(event) =>
+        setDimensionFilter(event.target.value)
+      }
+    >
+      <option value="all">All dimensions</option>
+
+      {dimensionOptions.map((dimension) => (
+        <option key={dimension} value={dimension}>
+          {formatDimension(dimension)}
+        </option>
+      ))}
+    </select>
+  </label>
+</div>
         <div className="case-table">
           <div className="case-table-head">
             <span>Case</span>
@@ -223,42 +305,46 @@ export default function EvaluationResultPage({
             <span>Status</span>
             <span />
           </div>
+          {filteredCases.length === 0 ? (
+  <div className="case-filter-empty">
+    No cases match the selected filters.
+  </div>
+) : (
+  filteredCases.map((item) => {
+    const checks = Object.values(item.dimensions);
 
-          {(result.cases ?? []).map((item) => {
-            const checks = Object.values(
-              item.dimensions,
-            );
+    const checksPassed =
+      checks.filter(Boolean).length;
 
-            const checksPassed =
-              checks.filter(Boolean).length;
+    return (
+      <Link
+        key={item.pair_id}
+        href={`/evaluations/${runId}/cases/${item.pair_id}`}
+        className="case-row"
+      >
+        <strong>{item.pair_id}</strong>
 
-            return (
-              <Link
-                key={item.pair_id}
-                href={`/evaluations/${runId}/cases/${item.pair_id}`}
-                className="case-row"
-              >
-                <strong>{item.pair_id}</strong>
+        <span className="muted-cell">
+          {item.split}
+        </span>
 
-                <span className="muted-cell">
-                  {item.split}
-                </span>
+        <span className="muted-cell">
+          {checksPassed} / {checks.length}
+        </span>
 
-                <span className="muted-cell">
-                  {checksPassed} / {checks.length}
-                </span>
+        <span className="case-status">
+          <span className="status-dot" />
+          {item.passed ? "Passed" : "Review"}
+        </span>
 
-                <span className="case-status">
-                  <span className="status-dot" />
-                  {item.passed ? "Passed" : "Review"}
-                </span>
+        <span className="case-arrow">
+  →
+</span>
+      </Link>
+    );
+  })
+)}
 
-                <span className="case-arrow">
-                  →
-                </span>
-              </Link>
-            );
-          })}
         </div>
       </section>
 
