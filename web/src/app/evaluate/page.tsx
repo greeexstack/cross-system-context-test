@@ -699,10 +699,31 @@ export default function EvaluatePage() {
   </span>
 
   <strong>
-    {result.support_changed
-      ? "Added useful support"
-      : "Did not change the support"}
-  </strong>
+  {(() => {
+    switch (result.variant.support_level) {
+      case "secondary_supported":
+        return "Added useful support";
+
+      case "supported_by_secondary_context":
+        return "Added relevant support";
+
+      case "weakened_by_secondary_context":
+        return "Weakened by additional information";
+
+      case "mixed_evidence":
+        return "Mixed evidence";
+
+      case "temporal_context_rejected":
+        return "Additional information was rejected as too old";
+
+      case "primary_only":
+        return "No additional support was established";
+
+      default:
+        return "Additional information was considered";
+    }
+  })()}
+</strong>
 </div>
             </div>
 
