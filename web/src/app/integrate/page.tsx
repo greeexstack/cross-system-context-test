@@ -112,6 +112,72 @@ export default function IntegratePage() {
           </p>
         </div>
       </div>
+      <section className="integration-endpoints">
+  <div className="section-kicker">
+    API REFERENCE
+  </div>
+
+  <h2>
+    Current endpoints
+  </h2>
+
+  <p>
+    These are the API operations available in the current experiment.
+    Authentication and SDK packages are not currently provided.
+  </p>
+
+  <div className="integration-endpoint-list">
+    <div className="integration-status-row">
+      <span>Health</span>
+      <strong>GET /health</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Create user evaluation</span>
+      <strong>POST /v1/user-evaluations</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Get user evaluation</span>
+      <strong>GET /v1/user-evaluations/{"{"}run_id{"}"}</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>List user evaluations</span>
+      <strong>GET /v1/user-evaluations</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Star evaluation</span>
+      <strong>POST /v1/user-evaluations/{"{"}run_id{"}"}/star</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Unstar evaluation</span>
+      <strong>DELETE /v1/user-evaluations/{"{"}run_id{"}"}/star</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Delete evaluation</span>
+      <strong>DELETE /v1/user-evaluations/{"{"}run_id{"}"}</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Run frozen v0.2 benchmark</span>
+      <strong>POST /v1/evaluations</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Get benchmark run</span>
+      <strong>GET /v1/evaluations/{"{"}run_id{"}"}</strong>
+    </div>
+
+    <div className="integration-status-row">
+      <span>Inspect benchmark case</span>
+      <strong>GET /v1/evaluations/{"{"}run_id{"}"}/cases/{"{"}pair_id{"}"}</strong>
+    </div>
+  </div>
+</section>
       <section className="integration-grid">
         <div className="integration-main">
           <div className="section-kicker">
@@ -172,8 +238,14 @@ export default function IntegratePage() {
             <pre>{`{
   "status": "completed",
   "interpretation_changed": false,
-  "support_changed": true,
-  "decision_strength_changed": false
+  "base": {
+    "support_level": "no_secondary_evidence",
+    "decision_strength": "moderate"
+  },
+  "variant": {
+    "support_level": "primary_only",
+    "decision_strength": "moderate"
+  }
 }`}</pre>
           </div>
 
