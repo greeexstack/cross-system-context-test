@@ -51,7 +51,67 @@ export default function IntegratePage() {
           system.
         </p>
       </section>
+      <div className="integration-overview">
+        <div className="integration-overview-card">
+          <div className="section-kicker">
+            API OVERVIEW
+          </div>
 
+          <h2>
+            HTTP + JSON
+          </h2>
+
+          <p>
+            The current API exposes evaluation and report operations over
+            HTTP with JSON request and response bodies.
+          </p>
+
+          <div className="integration-status-row">
+            <span>Health</span>
+            <strong>GET /health</strong>
+          </div>
+
+          <div className="integration-status-row">
+            <span>Version</span>
+            <strong>v0.2</strong>
+          </div>
+
+          <div className="integration-status-row">
+            <span>Storage</span>
+            <strong>SQLite</strong>
+          </div>
+        </div>
+
+        <div className="integration-overview-card subtle">
+          <div className="section-kicker">
+            CURRENT API BOUNDARY
+          </div>
+
+          <h2>
+            What is available today
+          </h2>
+
+          <ul>
+            <li>
+              User evaluations over supplied business context.
+            </li>
+            <li>
+              Retrieval of completed user evaluation results.
+            </li>
+            <li>
+              Saved reports, starring, and deletion.
+            </li>
+            <li>
+              Controlled v0.2 benchmark execution and case inspection.
+            </li>
+          </ul>
+
+          <p>
+            Authentication and SDK packages are not provided by the current
+            experiment API.
+          </p>
+        </div>
+      </div>
       <section className="integration-grid">
         <div className="integration-main">
           <div className="section-kicker">
