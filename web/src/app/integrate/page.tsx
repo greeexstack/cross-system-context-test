@@ -12,15 +12,20 @@ export default function IntegratePage() {
         </Link>
 
         <div className="nav-links">
+          <Link href="/">
+            Overview
+          </Link>
+
           <Link href="/evaluate">
             Evaluations
           </Link>
 
-          <Link
-            href="/integrate"
-            className="nav-active"
-          >
-            Integrate
+          <Link href="/integrate" className="nav-active">
+            Integrations
+          </Link>
+
+          <Link href="/reports">
+            Reports
           </Link>
         </div>
       </nav>
@@ -96,7 +101,7 @@ export default function IntegratePage() {
           <div className="code-card">
             <div className="code-toolbar">
               <span>
-                GET /v1/user-evaluations/{"{run_id}"}
+                GET /v1/user-evaluations/{"{"}run_id{"}"}
               </span>
 
               <span>
