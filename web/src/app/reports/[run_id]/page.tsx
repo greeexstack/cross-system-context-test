@@ -404,6 +404,65 @@ export default function UserEvaluationReportPage({
     </div>
   ) : null}
 </section>
+      <section className="report-section">
+        <div className="report-section-heading">
+          <span className="report-section-number">03</span>
+          <h2>Provenance and limitations</h2>
+        </div>
+
+        <p className="report-section-intro">
+          This report records how this evaluation was produced and what
+          the result does not claim.
+        </p>
+
+        <div className="report-context-grid">
+          <div className="report-context-card">
+            <span>Evaluation version</span>
+            <p>{result.evaluation_version}</p>
+          </div>
+
+          <div className="report-context-card">
+            <span>Source</span>
+            <p>{result.source}</p>
+          </div>
+
+          <div className="report-context-card">
+            <span>Workflow</span>
+            <p>{result.workflow || "Not specified"}</p>
+          </div>
+
+          <div className="report-context-card">
+            <span>Record type</span>
+            <p>{formatValue(result.record_type)}</p>
+          </div>
+        </div>
+
+        {result.assumptions.length > 0 ? (
+          <>
+            <div className="report-section-heading" style={{ marginTop: 28 }}>
+              <h2>Assumptions</h2>
+            </div>
+
+            <div className="result-notes">
+              {result.assumptions.map((assumption, index) => (
+                <p key={`${assumption}-${index}`}>
+                  {assumption}
+                </p>
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        <div className="report-section-heading" style={{ marginTop: 28 }}>
+          <h2>Limitation</h2>
+        </div>
+
+        <p className="report-section-intro">
+          This user evaluation is based on the context supplied for this
+          run. It is not scored against the frozen v0.2 benchmark ground
+          truth.
+        </p>
+      </section>
       <section className="report-next-step">
         <div className="section-kicker">
   WHAT TO DO NEXT
