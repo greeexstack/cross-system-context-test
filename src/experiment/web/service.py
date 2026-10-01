@@ -16,6 +16,8 @@ from .models import (
     EvaluationListItem,
     EvaluationResult,
     EvidenceItem,
+    IntegratedEvaluationCreateRequest,
+    IntegratedEvaluationResult,
     ReasoningSnapshot,
     UserEvaluationCreateRequest,
     UserEvaluationResult,
@@ -336,7 +338,153 @@ class EvaluationService:
         self.user_store.save(result)
 
         return result
+    def run_integrated_evaluation(
+        self,
+        request: IntegratedEvaluationCreateRequest,
+    ) -> IntegratedEvaluationResult:
+        created_at = datetime.now(timezone.utc)
 
+        evaluation_at = request.evaluation_at or created_at
+
+        if evaluation_at.tzinfo is None:
+            evaluation_at = evaluation_at.replace(tzinfo=timezone.utc)
+
+        primary = {
+            "record_id": request.primary.record_id,
+            "record_type": request.primary.record_type,
+            "summary": request.primary.summary,
+        }
+
+        customers = [
+            {
+                "customer_id": request.primary.customer.id,
+                "name": request.primary.customer.name,
+                "email": request.primary.customer.email,
+                "phone": request.primary.customer.phone,
+            }
+        ]
+
+        opportunities = [
+            {
+                "opportunity_id": request.primary.record_id,
+                "customer_id": request.primary.customer.id,
+            }
+        ]
+
+        communications = [
+            {
+                "communication_id": item.communication_id,
+                "customer_id": item.customer.id,
+                "channel": item.channel,
+                "direction": item.direction,
+                "occurred_at": item.occurred_at.isoformat(),
+                "subject": item.topic,
+                "summary": item.content,
+            }
+            for item in request.secondary.communications
+        ]
+
+        engine = ContextReasoningEngine(
+            EngineConfig(
+                stale_after_days=30,
+            )
+        )
+
+        engine.initialize_indexes(
+            customers=customers,
+            opportunities=opportunities,
+            communications=communications,
+            evaluation_at=evaluation_at.isoformat(),
+        )
+
+        secondary_evidence = [
+            {
+                "communication_id": item.communication_id,
+            }
+            for item in request.secondary.communications
+        ]
+
+        secondary_identity = None
+
+        if request.secondary.communications:
+            customer = request.secondary.communications[0].customer
+            secondary_identity = {
+                "email": customer.email,
+                "phone": customer.phone,
+                "name": customer.name,
+            }
+
+        base_case = {
+            "pair_id": "INTEGRATED-EVALUATION",
+            "primary": primary,
+            "base": {
+                "secondary_evidence": [],
+                "secondary_source_status": "available",
+            },
+            "variant_case": {
+                "secondary_evidence": secondary_evidence,
+                "secondary_source_status": request.secondary.source_status,
+                "secondary_identity": secondary_identity,
+            },
+        }
+
+        base = engine.evaluate(
+            base_case,
+            phase="base",
+        )
+
+        variant = engine.evaluate(
+            base_case,
+            phase="variant",
+        )
+
+        evidence_lookup = {
+            communication["communication_id"]: communication
+            for communication in communications
+        }
+
+        base_snapshot = reasoning_snapshot(
+            base,
+            evidence_lookup,
+        )
+
+        variant_snapshot = reasoning_snapshot(
+            variant,
+            evidence_lookup,
+        )
+
+        return IntegratedEvaluationResult(
+            run_id=str(uuid4()),
+            created_at=created_at,
+            name=request.name.strip(),
+            objective=request.objective.strip(),
+            primary=request.primary,
+            secondary=request.secondary,
+            base=base_snapshot,
+            variant=variant_snapshot,
+            interpretation_changed=(
+                base.interpretation_class
+                != variant.interpretation_class
+            ),
+            support_changed=(
+                base.support_level
+                != variant.support_level
+            ),
+            decision_strength_changed=(
+                base.decision_strength
+                != variant.decision_strength
+            ),
+            assumptions=[
+                (
+                    "Identity was evaluated from the customer identities "
+                    "supplied by the integrating system."
+                ),
+                (
+                    "This result is an integrated v0.2 engine result and "
+                    "is not scored against frozen benchmark ground truth."
+                ),
+            ],
+        )
     def get(
         self,
         run_id: str,

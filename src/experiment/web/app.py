@@ -11,6 +11,8 @@ from .models import (
     EvaluationListItem,
     EvaluationResult,
     HealthResponse,
+    IntegratedEvaluationCreateRequest,
+    IntegratedEvaluationResult,
     UserEvaluationCreateRequest,
     UserEvaluationResult,
 )
@@ -121,7 +123,18 @@ def get_case(
         status_code=404,
         detail="Case not found.",
     )
+# ---------------------------------------------------------------------------
+# Structured integration evaluation
+# ---------------------------------------------------------------------------
 
+@app.post(
+    "/v1/integrated-evaluations",
+    response_model=IntegratedEvaluationResult,
+)
+def create_integrated_evaluation(
+    request: IntegratedEvaluationCreateRequest,
+) -> IntegratedEvaluationResult:
+    return service.run_integrated_evaluation(request)
 
 # ---------------------------------------------------------------------------
 # User evaluation

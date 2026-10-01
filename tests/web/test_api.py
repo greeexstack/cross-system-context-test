@@ -38,7 +38,80 @@ def test_run_frozen_v02_evaluation() -> None:
     assert body["passed_cases"] == 20
     assert len(body["cases"]) == 20
 
+def test_create_integrated_evaluation() -> None:
+    payload = {
+        "name": "CRM Integration Test",
+        "objective": (
+            "Evaluate whether customer communication changes "
+            "the opportunity interpretation."
+        ),
+        "primary": {
+            "record_id": "opp_001",
+            "record_type": "opportunity",
+            "summary": (
+                "A quote was sent to the customer and no decision "
+                "has been recorded."
+            ),
+            "customer": {
+                "id": "crm_cust_001",
+                "name": "Aarav Mehta",
+                "email": "aarav@example.com",
+                "phone": "+91-9000000001",
+            },
+            "stage": "quote_sent",
+            "value": 85000,
+            "quote_sent_at": "2026-09-10T09:00:00",
+            "last_crm_activity_at": "2026-09-11T10:00:00",
+        },
+        "secondary": {
+            "source_status": "available",
+            "communications": [
+                {
+                    "communication_id": "comm_001",
+                    "customer": {
+                        "id": "crm_cust_001",
+                        "name": "Aarav Mehta",
+                        "email": "aarav@example.com",
+                        "phone": "+91-9000000001",
+                    },
+                    "direction": "inbound",
+                    "occurred_at": "2026-09-11T14:30:00",
+                    "channel": "whatsapp",
+                    "topic": "quote",
+                    "content": (
+    "Customer asked to schedule a review call "
+    "about the proposal next week."
+),
+                }
+            ],
+        },
+        "evaluation_at": "2026-09-12T09:00:00",
+    }
 
+    response = client.post(
+        "/v1/integrated-evaluations",
+        json=payload,
+    )
+
+    assert response.status_code == 200
+
+    body = response.json()
+
+    assert body["evaluation_version"] == "v0.2-integrated"
+    assert body["source"] == "integrated-input"
+    assert body["status"] == "completed"
+
+    assert body["name"] == payload["name"]
+    assert body["objective"] == payload["objective"]
+
+    assert body["base"]["interpretation_class"] == "quote_pending_decision"
+    assert body["variant"]["interpretation_class"] == "quote_followup_pending"
+
+    assert body["interpretation_changed"] is True
+    assert body["variant"]["identity_match"] == "confident_match"
+    assert body["variant"]["evidence_ids"] == ["comm_001"]
+
+    assert body["assumptions"]
 def test_get_case_after_evaluation() -> None:
     run = client.post(
         "/v1/evaluations",

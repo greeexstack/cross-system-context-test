@@ -73,7 +73,53 @@ class UserEvaluationCreateRequest(BaseModel):
         min_length=1,
         max_length=4000,
     )
+class IntegratedCustomer(BaseModel):
+    id: str = Field(min_length=1)
+    name: str = Field(min_length=1)
+    email: str | None = None
+    phone: str | None = None
 
+
+class IntegratedPrimaryRecord(BaseModel):
+    record_id: str = Field(min_length=1)
+    record_type: Literal["opportunity"] = "opportunity"
+    summary: str = Field(min_length=1, max_length=4000)
+
+    customer: IntegratedCustomer
+
+    stage: str = Field(min_length=1)
+    value: float
+    quote_sent_at: datetime | None = None
+    last_crm_activity_at: datetime | None = None
+
+class IntegratedCommunication(BaseModel):
+    communication_id: str = Field(min_length=1)
+    customer: IntegratedCustomer
+    direction: Literal["inbound", "outbound"]
+    occurred_at: datetime
+    channel: str = Field(min_length=1)
+    topic: str = Field(min_length=1)
+    content: str = Field(min_length=1, max_length=10000)
+
+
+class IntegratedSecondaryContext(BaseModel):
+    source_status: Literal[
+        "available",
+        "unavailable",
+    ] = "available"
+    communications: list[IntegratedCommunication] = Field(
+        default_factory=list
+    )
+
+
+class IntegratedEvaluationCreateRequest(BaseModel):
+    name: str = Field(min_length=2, max_length=100)
+    objective: str = Field(min_length=10, max_length=1000)
+
+    primary: IntegratedPrimaryRecord
+    secondary: IntegratedSecondaryContext
+
+    evaluation_at: datetime | None = None
 
 class EvaluationResult(BaseModel):
     run_id: str
@@ -129,7 +175,28 @@ class UserEvaluationResult(BaseModel):
 
     starred: bool = False
     deleted_at: datetime | None = None
+class IntegratedEvaluationResult(BaseModel):
+    run_id: str
+    evaluation_version: Literal["v0.2-integrated"] = "v0.2-integrated"
+    source: Literal["integrated-input"] = "integrated-input"
+    status: Literal["completed"] = "completed"
 
+    created_at: datetime
+
+    name: str
+    objective: str
+
+    primary: IntegratedPrimaryRecord
+    secondary: IntegratedSecondaryContext
+
+    base: ReasoningSnapshot
+    variant: ReasoningSnapshot
+
+    interpretation_changed: bool
+    support_changed: bool
+    decision_strength_changed: bool
+
+    assumptions: list[str] = Field(default_factory=list)
 class HealthResponse(BaseModel):
     status: Literal["ok"] = "ok"
     product_experiment: str = "v0.2"
