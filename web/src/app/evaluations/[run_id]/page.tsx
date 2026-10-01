@@ -100,7 +100,25 @@ export default function EvaluationResultPage({
       return matchesStatus && matchesDimension;
     });
   }, [result, statusFilter, dimensionFilter]);
+  const evidenceCount = useMemo(() => {
+    if (!result) {
+      return 0;
+    }
 
+    return new Set(
+      result.cases.flatMap((item) =>
+        item.variant.evidence.map(
+          (evidence) => evidence.evidence_id,
+        ),
+      ),
+    ).size;
+  }, [result]);
+
+  const contextChecksPassed =
+    (result?.dimensions.context_sensitivity?.passed ?? 0) ===
+      (result?.dimensions.context_sensitivity?.total ?? 0) &&
+    (result?.dimensions.context_resistance?.passed ?? 0) ===
+      (result?.dimensions.context_resistance?.total ?? 0);
   function formatDimension(value: string) {
     return value
       .replaceAll("_", " ")
@@ -245,7 +263,77 @@ export default function EvaluationResultPage({
           </p>
         </div>
       </section>
+ <section className="result-overview">
+        <div className="result-overview-heading">
+          <div>
+            <div className="section-kicker">
+              WHY THIS RESULT
+            </div>
 
+            <h2>See what supported the evaluation.</h2>
+
+            <p>
+              The result is backed by evidence checks,
+              subject matching, information timing, and
+              context validation.
+            </p>
+          </div>
+        </div>
+
+        <div className="result-overview-grid">
+          <div className="result-overview-card">
+            <span>Evidence considered</span>
+            <strong>{evidenceCount}</strong>
+            <p>
+              Evidence records used across the evaluated cases.
+            </p>
+          </div>
+
+          <div className="result-overview-card">
+            <span>Identity</span>
+            <strong>
+              {result.dimensions.identity_integrity?.passed ?? 0}
+              {" / "}
+              {result.dimensions.identity_integrity?.total ?? 0}
+            </strong>
+            <p>
+              Evidence matched to the evaluated subject.
+            </p>
+          </div>
+
+          <div className="result-overview-card">
+            <span>Information timing</span>
+            <strong>
+              {result.dimensions.temporal_integrity?.passed ?? 0}
+              {" / "}
+              {result.dimensions.temporal_integrity?.total ?? 0}
+            </strong>
+            <p>
+              Timing checks completed against the case requirements.
+            </p>
+          </div>
+
+          <div className="result-overview-card">
+            <span>Context handling</span>
+            <strong>
+              {contextChecksPassed
+                ? "Validated"
+                : "Review needed"}
+            </strong>
+            <p>
+              Relevant context was tested for both change and resistance to irrelevant change.
+            </p>
+          </div>
+
+          <div className="result-overview-card">
+            <span>Provenance</span>
+            <strong>{result.evaluation_version}</strong>
+            <p>
+              {result.source} · Run {result.run_id}
+            </p>
+          </div>
+        </div>
+      </section>
       <section className="result-section">
         <div className="section-heading-row">
           <div>
@@ -347,6 +435,7 @@ export default function EvaluationResultPage({
 
         </div>
       </section>
+
 
       <section className="result-section technical">
         <div>
