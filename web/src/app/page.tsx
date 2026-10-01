@@ -61,8 +61,21 @@ export default function Home() {
         </Link>
 
         <div className="nav-links">
-          <Link href="/evaluate">Evaluations</Link>
-          <Link href="/integrate">Integrate</Link>
+          <Link href="/" className="nav-active">
+            Overview
+          </Link>
+
+          <Link href="/evaluate">
+            Evaluations
+          </Link>
+
+          <Link href="/integrate">
+            Integrations
+          </Link>
+
+          <Link href="/reports">
+            Reports
+          </Link>
         </div>
       </nav>
 
