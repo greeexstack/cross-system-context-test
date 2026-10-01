@@ -111,8 +111,21 @@ export default function ReportsPage() {
           </Link>
 
           <div className="nav-links">
-            <Link href="/evaluate">Evaluations</Link>
-            <Link href="/integrate">Integrate</Link>
+            <Link href="/">
+              Overview
+            </Link>
+
+            <Link href="/evaluate">
+              Evaluations
+            </Link>
+
+            <Link href="/integrate">
+              Integrations
+            </Link>
+
+            <Link href="/reports" className="nav-active">
+              Reports
+            </Link>
           </div>
         </nav>
 
@@ -138,8 +151,21 @@ export default function ReportsPage() {
         </Link>
 
         <div className="nav-links">
-          <Link href="/evaluate">Evaluations</Link>
-          <Link href="/integrate">Integrate</Link>
+          <Link href="/">
+            Overview
+          </Link>
+
+          <Link href="/evaluate">
+            Evaluations
+          </Link>
+
+          <Link href="/integrate">
+            Integrations
+          </Link>
+
+          <Link href="/reports" className="nav-active">
+            Reports
+          </Link>
         </div>
       </nav>
 
