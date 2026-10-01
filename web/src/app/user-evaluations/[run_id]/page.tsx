@@ -90,51 +90,6 @@ function interpretationSummary(value: string | null) {
   }
 }
 
-function supportSummary(value: string | null) {
-  switch (value) {
-    case "no_secondary_evidence":
-      return "No additional information was available.";
-
-    case "primary_only":
-      return "The additional information was considered, but it did not provide enough evidence to change the conclusion.";
-    case "secondary_supported":
-      return "The additional information strengthened the existing conclusion.";
-
-    case "supported_by_secondary_context":
-      return "The additional information supports the existing conclusion.";
-
-    case "weakened_by_secondary_context":
-      return "The additional information made the existing conclusion less certain.";
-
-    case "temporal_context_rejected":
-      return "The information was too old to treat as current.";
-
-    case "safe_fallback_primary_only":
-      return "The supporting source was unavailable, so the original conclusion was kept.";
-
-    default:
-      return formatValue(value);
-  }
-}
-
-function signalSummary(value: string | null) {
-  switch (value) {
-    case "high":
-      return "Strong support";
-
-    case "moderate":
-      return "Moderate support";
-
-    case "weak":
-      return "Limited support";
-
-    case "low":
-      return "Limited support";
-
-    default:
-      return "Not enough information";
-  }
-}
 
 function getResultState(
   result: UserEvaluationResult,
@@ -362,25 +317,6 @@ function EvidenceList({
   );
 }
 
-function Notes({
-  snapshot,
-}: {
-  snapshot: ReasoningSnapshot;
-}) {
-  if (snapshot.notes.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="result-notes">
-      {snapshot.notes.map((note, index) => (
-        <p key={`${note}-${index}`}>
-          {note}
-        </p>
-      ))}
-    </div>
-  );
-}
 
 export default function UserEvaluationResultPage({
   params,
