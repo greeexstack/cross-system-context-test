@@ -12,7 +12,10 @@ type EvaluationMeta = {
   objective?: string;
   workflow?: string;
 };
-
+type EvaluationEvidenceRecord = {
+  evidence: EvaluationResult["cases"][number]["variant"]["evidence"][number];
+  cases: string[];
+};
 export default function EvaluationResultPage({
   params,
 }: {
@@ -119,6 +122,39 @@ export default function EvaluationResultPage({
       (result?.dimensions.context_sensitivity?.total ?? 0) &&
     (result?.dimensions.context_resistance?.passed ?? 0) ===
       (result?.dimensions.context_resistance?.total ?? 0);
+        const evidenceRecords = useMemo<EvaluationEvidenceRecord[]>(() => {
+    if (!result) {
+      return [];
+    }
+
+    const records = new Map<
+      string,
+      EvaluationEvidenceRecord
+    >();
+
+    for (const item of result.cases) {
+      for (const evidence of item.variant.evidence) {
+        const existing = records.get(
+          evidence.evidence_id,
+        );
+
+        if (existing) {
+          if (!existing.cases.includes(item.pair_id)) {
+            existing.cases.push(item.pair_id);
+          }
+
+          continue;
+        }
+
+        records.set(evidence.evidence_id, {
+          evidence,
+          cases: [item.pair_id],
+        });
+      }
+    }
+
+    return Array.from(records.values());
+  }, [result]);
   function formatDimension(value: string) {
     return value
       .replaceAll("_", " ")
@@ -334,6 +370,110 @@ export default function EvaluationResultPage({
           </div>
         </div>
       </section>
+      <section className="result-section evidence-overview">
+        <div className="section-heading-row">
+          <div>
+            <div className="section-kicker">
+              EVIDENCE USED
+            </div>
+
+            <h2>Review the information behind the result.</h2>
+
+            <p>
+              These evidence records were considered across the
+              evaluated cases. Open a case to inspect the full
+              validation chain.
+            </p>
+          </div>
+
+          <div className="case-count">
+            {evidenceRecords.length} evidence{" "}
+            {evidenceRecords.length === 1
+              ? "record"
+              : "records"}
+          </div>
+        </div>
+
+        {evidenceRecords.length === 0 ? (
+          <div className="evidence-overview-empty">
+            No evidence records were used in this evaluation.
+          </div>
+        ) : (
+          <div className="evidence-overview-list">
+            {evidenceRecords.map((record) => {
+              const direction =
+                record.evidence.direction === "inbound"
+                  ? "Incoming"
+                  : record.evidence.direction === "outbound"
+                    ? "Outgoing"
+                    : formatDimension(
+                        record.evidence.direction,
+                      );
+
+              const channel = formatDimension(
+                record.evidence.channel,
+              );
+
+              const occurredAt = new Date(
+                record.evidence.occurred_at,
+              );
+
+              const occurredLabel = Number.isNaN(
+                occurredAt.getTime(),
+              )
+                ? record.evidence.occurred_at
+                : new Intl.DateTimeFormat("en", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  }).format(occurredAt);
+
+              return (
+                <article
+                  key={record.evidence.evidence_id}
+                  className="evidence-overview-card"
+                >
+                  <div className="evidence-overview-top">
+                    <div>
+                      <span className="evidence-overview-id">
+                        {record.evidence.evidence_id}
+                      </span>
+
+                      <strong>
+                        {record.evidence.subject}
+                      </strong>
+                    </div>
+
+                    <span className="evidence-overview-type">
+                      {direction} · {channel}
+                    </span>
+                  </div>
+
+                  <p className="evidence-overview-summary">
+                    {record.evidence.summary}
+                  </p>
+
+                  <div className="evidence-overview-footer">
+                    <span>{occurredLabel}</span>
+
+                    <span>
+                      Used in {record.cases.length}{" "}
+                      {record.cases.length === 1
+                        ? "case"
+                        : "cases"}
+                    </span>
+
+                    <Link
+                      href={`/evaluations/${runId}/cases/${record.cases[0]}`}
+                    >
+                      Open case →
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </section>
       <section className="result-section">
         <div className="section-heading-row">
           <div>
@@ -435,7 +575,6 @@ export default function EvaluationResultPage({
 
         </div>
       </section>
-
 
       <section className="result-section technical">
         <div>
