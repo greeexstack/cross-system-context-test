@@ -376,8 +376,21 @@ export default function CasePage({
         </Link>
 
         <div className="nav-links">
-          <Link href="/evaluate">Evaluations</Link>
-          <Link href="/integrate">Integrate</Link>
+          <Link href="/">
+            Overview
+          </Link>
+
+          <Link href="/evaluate" className="nav-active">
+            Evaluations
+          </Link>
+
+          <Link href="/integrate">
+            Integrations
+          </Link>
+
+          <Link href="/reports">
+            Reports
+          </Link>
         </div>
       </nav>
 

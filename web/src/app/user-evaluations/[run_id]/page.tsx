@@ -510,14 +510,23 @@ const [activeSection, setActiveSection] =
         </Link>
 
         <div className="nav-links">
-          <Link href="/evaluate">
+          <Link href="/">
+            Overview
+          </Link>
+
+          <Link href="/evaluate" className="nav-active">
             Evaluations
           </Link>
 
           <Link href="/integrate">
-            Integrate
+            Integrations
+          </Link>
+
+          <Link href="/reports">
+            Reports
           </Link>
         </div>
+
       </nav>
 
       <section className="result-page-header">

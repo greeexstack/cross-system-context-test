@@ -151,12 +151,20 @@ export default function UserEvaluationReportPage({
         </Link>
 
         <div className="nav-links">
+          <Link href="/">
+            Overview
+          </Link>
+
           <Link href="/evaluate">
             Evaluations
           </Link>
 
           <Link href="/integrate">
-            Integrate
+            Integrations
+          </Link>
+
+          <Link href="/reports" className="nav-active">
+            Reports
           </Link>
         </div>
       </nav>
