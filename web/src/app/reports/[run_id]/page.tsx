@@ -320,7 +320,90 @@ export default function UserEvaluationReportPage({
         </section>
       )}
 
+<section className="report-section">
+  <div className="report-section-heading">
+    <span className="report-section-number">02</span>
+    <h2>What the evaluation considered</h2>
+  </div>
 
+  <p className="report-section-intro">
+    This is the information available when the evaluation was run
+    and the checks applied before reaching the result.
+  </p>
+
+  <div className="report-context-grid">
+    <div className="report-context-card">
+      <span>Identity</span>
+      <p>{statusLabel(result.variant.identity_match)}</p>
+    </div>
+
+    <div className="report-context-card">
+      <span>Timing</span>
+      <p>{statusLabel(result.variant.temporal_status)}</p>
+    </div>
+
+    <div className="report-context-card">
+      <span>Availability</span>
+      <p>{statusLabel(result.variant.availability)}</p>
+    </div>
+
+    <div className="report-context-card">
+      <span>Evidence validity</span>
+      <p>
+        {result.variant.evidence_valid
+          ? "Valid evidence was available."
+          : "Evidence requires review."}
+      </p>
+    </div>
+  </div>
+
+  <div className="report-section-heading" style={{ marginTop: 28 }}>
+    <h2>Information used</h2>
+  </div>
+
+  {result.variant.evidence.length === 0 ? (
+    <div className="result-empty">
+      No additional information was used for this conclusion.
+    </div>
+  ) : (
+    <div className="result-evidence-list">
+      {result.variant.evidence.map((evidence) => (
+        <article
+          key={evidence.evidence_id}
+          className="result-evidence"
+        >
+          <div className="result-evidence-head">
+            <div>
+              <span>Information used</span>
+              <strong>{evidence.subject}</strong>
+            </div>
+
+            <small>
+              {evidence.direction === "inbound"
+                ? "Incoming"
+                : "Provided"}{" "}
+              · {formatValue(evidence.channel)}
+            </small>
+          </div>
+
+          <p>{evidence.summary}</p>
+
+          <time>
+            {new Date(evidence.occurred_at).toLocaleString()}
+          </time>
+        </article>
+      ))}
+    </div>
+  )}
+
+  {result.variant.notes.length > 0 ? (
+    <div className="result-notes">
+      {result.variant.notes.map((note, index) => (
+        <p key={`${note}-${index}`}>{note}</p>
+      ))}
+    </div>
+  ) : null}
+</section>
       <section className="report-next-step">
         <div className="section-kicker">
   WHAT TO DO NEXT
