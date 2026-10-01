@@ -101,17 +101,21 @@ export default function EvaluatePage() {
             Cross-System Context
           </span>
         </Link>
-
         <div className="nav-links">
-          <Link
-            href="/evaluate"
-            className="nav-active"
-          >
+          <Link href="/">
+            Overview
+          </Link>
+
+          <Link href="/evaluate" className="nav-active">
             Evaluations
           </Link>
 
           <Link href="/integrate">
-            Integrate
+            Integrations
+          </Link>
+
+          <Link href="/reports">
+            Reports
           </Link>
         </div>
       </nav>
