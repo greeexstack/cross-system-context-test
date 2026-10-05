@@ -1,0 +1,143 @@
+[
+  {
+    "channel": "email",
+    "communication_id": "M001",
+    "customer_id": "C001",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T10:00:00Z",
+    "subject": "Quote review",
+    "summary": "Customer said the proposal is under internal review and asked for a follow-up next week."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M002",
+    "customer_id": "C002",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T11:00:00Z",
+    "subject": "Budget confirmation",
+    "summary": "Customer confirmed the quoted amount is within the approved budget and said the proposal is moving through procurement."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M003",
+    "customer_id": "C003",
+    "direction": "inbound",
+    "occurred_at": "2026-09-05T11:00:00Z",
+    "subject": "Quote question",
+    "summary": "Customer asked one technical question about the proposal; no decision was stated."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M004",
+    "customer_id": "C004",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T13:00:00Z",
+    "subject": "Revised terms",
+    "summary": "Customer said the revised commercial terms do not work for them and asked for the proposal to be revisited."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M005",
+    "customer_id": "C005",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T08:00:00Z",
+    "subject": "Different project",
+    "summary": "Customer discussed a separate store rollout project; no statement about the quoted opportunity."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M006",
+    "customer_id": "C001",
+    "direction": "inbound",
+    "occurred_at": "2026-08-01T10:00:00Z",
+    "subject": "Old quote review",
+    "summary": "Customer said an earlier proposal was under review at that time."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M007",
+    "customer_id": "C002",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T12:00:00Z",
+    "subject": "Service completion",
+    "summary": "Customer confirmed the migration workshop was completed and asked what the next handoff step is."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M008",
+    "customer_id": "C002",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T12:30:00Z",
+    "source_identity": {
+      "email": null,
+      "name": "Northstar Health",
+      "phone": null
+    },
+    "subject": "Unclear sender",
+    "summary": "The message contains only a customer name and gives no email address or phone number for matching."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M009",
+    "customer_id": null,
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T13:30:00Z",
+    "source_identity": {
+      "email": "sales@acme-manufacturing.example",
+      "name": "Acme Manufacturing",
+      "phone": "+1-555-0199"
+    },
+    "subject": "Proposal discussion",
+    "summary": "A proposal-related message exists, but its source identity belongs to a different customer."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M010",
+    "customer_id": null,
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T14:00:00Z",
+    "source_identity": {
+      "email": "buying@northstar-holdings.example",
+      "name": "Northstar Holdings",
+      "phone": "+1-555-0198"
+    },
+    "subject": "Proposal discussion",
+    "summary": "A proposal-related message exists, but its source identity belongs to a different customer."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M011",
+    "customer_id": "C001",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T15:00:00Z",
+    "subject": "Service rollout",
+    "summary": "Customer discussed a separate service rollout project; no statement about the quoted opportunity."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M012",
+    "customer_id": "C003",
+    "direction": "inbound",
+    "occurred_at": "2026-09-08T10:00:00Z",
+    "subject": "Proposal review",
+    "summary": "Customer asked to schedule a review call about the proposal next week."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M013",
+    "customer_id": "C003",
+    "direction": "inbound",
+    "occurred_at": "2026-09-10T10:00:00Z",
+    "subject": "Commercial concern",
+    "summary": "Customer said the commercial terms do not work for them and requested that the proposal be revisited."
+  },
+  {
+    "channel": "email",
+    "communication_id": "M014",
+    "customer_id": "C002",
+    "direction": "inbound",
+    "occurred_at": "2026-09-12T12:45:00Z",
+    "subject": "Service handoff follow-up",
+    "summary": "Customer confirmed the service transition handoff is complete and asked what the next follow-up step is."
+  }
+]

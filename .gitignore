@@ -6,3 +6,7 @@ __pycache__/
 .pytest-tmp/
 *.egg-info/
 .runtime/
+.wrangler/
+
+python_modules/
+pylock.toml

@@ -1,0 +1,56 @@
+[
+  {
+    "amount": 120000,
+    "currency": "USD",
+    "expires_at": "2026-09-24T23:59:59Z",
+    "opportunity_id": "O001",
+    "quote_id": "Q001",
+    "quote_status": "sent",
+    "sent_at": "2026-09-10T09:00:00Z"
+  },
+  {
+    "amount": 95000,
+    "currency": "USD",
+    "expires_at": "2026-09-25T23:59:59Z",
+    "opportunity_id": "O002",
+    "quote_id": "Q002",
+    "quote_status": "sent",
+    "sent_at": "2026-09-11T09:00:00Z"
+  },
+  {
+    "amount": 78000,
+    "currency": "USD",
+    "expires_at": "2026-09-23T23:59:59Z",
+    "opportunity_id": "O003",
+    "quote_id": "Q003",
+    "quote_status": "sent",
+    "sent_at": "2026-09-09T09:00:00Z"
+  },
+  {
+    "amount": 150000,
+    "currency": "USD",
+    "expires_at": "2026-09-22T23:59:59Z",
+    "opportunity_id": "O004",
+    "quote_id": "Q004",
+    "quote_status": "revised_sent",
+    "sent_at": "2026-09-08T09:00:00Z"
+  },
+  {
+    "amount": 64000,
+    "currency": "USD",
+    "expires_at": "2026-09-26T23:59:59Z",
+    "opportunity_id": "O005",
+    "quote_id": "Q005",
+    "quote_status": "sent",
+    "sent_at": "2026-09-12T09:00:00Z"
+  },
+  {
+    "amount": 40000,
+    "currency": "USD",
+    "expires_at": "2026-09-25T23:59:59Z",
+    "opportunity_id": "O006",
+    "quote_id": "Q006",
+    "quote_status": "sent",
+    "sent_at": "2026-09-11T09:00:00Z"
+  }
+]

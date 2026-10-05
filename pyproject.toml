@@ -6,7 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "cross-system-context-test"
 version = "0.1.1"
 description = "A controlled experiment engine for testing whether cross-system business context improves business decisions."
-requires-python = ">=3.12"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi==0.141.1",
+]
 
 [project.scripts]
 cross-system-context = "experiment.cli:main"
@@ -20,4 +23,10 @@ dev = [
 ]
 nlp-experiment = [
     "spacy==3.8.16",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py==1.17.6",
+    "workers-runtime-sdk==1.9.2",
 ]

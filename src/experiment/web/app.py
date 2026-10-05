@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from .models import (
@@ -16,21 +16,36 @@ from .models import (
     UserEvaluationCreateRequest,
     UserEvaluationResult,
 )
+from .d1_storage import D1UserEvaluationStore
 from .service import EvaluationService
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-FIXTURE_ROOT = PROJECT_ROOT / "fixtures_package"
+FIXTURE_ROOT = Path(__file__).resolve().parents[2] / "fixtures_package"
 
-USER_STORAGE_PATH = os.environ.get(
-    "CROSS_SYSTEM_USER_STORAGE_PATH",
-    str(PROJECT_ROOT / ".runtime" / "user_evaluations.sqlite3"),
-)
+def _local_user_storage_path() -> str | None:
+    configured = os.environ.get("CROSS_SYSTEM_USER_STORAGE_PATH")
+    if configured is not None:
+        return configured
+
+    try:
+        import js  # type: ignore  # noqa: F401
+    except ModuleNotFoundError:
+        return str(PROJECT_ROOT / ".runtime" / "user_evaluations.sqlite3")
+
+    return None
+
+
+USER_STORAGE_PATH = _local_user_storage_path()
 
 service = EvaluationService(
     FIXTURE_ROOT,
     user_storage_path=USER_STORAGE_PATH,
 )
+
+
+def worker_env(request: Request):
+    return request.scope.get("env")
 
 app = FastAPI(
     title="Cross-System Context API",
@@ -144,27 +159,42 @@ def create_integrated_evaluation(
     "/v1/user-evaluations",
     response_model=UserEvaluationResult,
 )
-def create_user_evaluation(
+async def create_user_evaluation(
     request: UserEvaluationCreateRequest,
+    env=Depends(worker_env),
 ) -> UserEvaluationResult:
-    return service.run_user_evaluation(request)
+    if env is None:
+        return service.run_user_evaluation(request)
 
+    store = D1UserEvaluationStore(env.cross_system_context_prod)
+    return await service.run_user_evaluation_d1(request, store)
 
 @app.get(
     "/v1/user-evaluations",
     response_model=list[UserEvaluationResult],
 )
-def list_user_evaluations() -> list[UserEvaluationResult]:
-    return service.list_user_evaluations()
+async def list_user_evaluations(
+    env=Depends(worker_env),
+) -> list[UserEvaluationResult]:
+    if env is None:
+        return service.list_user_evaluations()
+
+    store = D1UserEvaluationStore(env.cross_system_context_prod)
+    return await service.list_user_evaluations_d1(store)
 
 @app.delete(
     "/v1/user-evaluations/{run_id}",
     status_code=204,
 )
-def delete_user_evaluation(
+async def delete_user_evaluation(
     run_id: str,
+    env=Depends(worker_env),
 ) -> None:
-    deleted = service.delete_user_evaluation(run_id)
+    if env is None:
+        deleted = service.delete_user_evaluation(run_id)
+    else:
+        store = D1UserEvaluationStore(env.cross_system_context_prod)
+        deleted = await service.delete_user_evaluation_d1(run_id, store)
 
     if not deleted:
         raise HTTPException(
@@ -172,18 +202,19 @@ def delete_user_evaluation(
             detail="User evaluation not found.",
         )
 
-
 @app.post(
     "/v1/user-evaluations/{run_id}/star",
     response_model=UserEvaluationResult,
 )
-def star_user_evaluation(
+async def star_user_evaluation(
     run_id: str,
+    env=Depends(worker_env),
 ) -> UserEvaluationResult:
-    result = service.set_user_evaluation_starred(
-        run_id,
-        True,
-    )
+    if env is None:
+        result = service.set_user_evaluation_starred(run_id, True)
+    else:
+        store = D1UserEvaluationStore(env.cross_system_context_prod)
+        result = await service.set_user_evaluation_starred_d1(run_id, True, store)
 
     if result is None:
         raise HTTPException(
@@ -198,13 +229,15 @@ def star_user_evaluation(
     "/v1/user-evaluations/{run_id}/star",
     response_model=UserEvaluationResult,
 )
-def unstar_user_evaluation(
+async def unstar_user_evaluation(
     run_id: str,
+    env=Depends(worker_env),
 ) -> UserEvaluationResult:
-    result = service.set_user_evaluation_starred(
-        run_id,
-        False,
-    )
+    if env is None:
+        result = service.set_user_evaluation_starred(run_id, False)
+    else:
+        store = D1UserEvaluationStore(env.cross_system_context_prod)
+        result = await service.set_user_evaluation_starred_d1(run_id, False, store)
 
     if result is None:
         raise HTTPException(
@@ -217,10 +250,15 @@ def unstar_user_evaluation(
     "/v1/user-evaluations/{run_id}",
     response_model=UserEvaluationResult,
 )
-def get_user_evaluation(
+async def get_user_evaluation(
     run_id: str,
+    env=Depends(worker_env),
 ) -> UserEvaluationResult:
-    result = service.get_user(run_id)
+    if env is None:
+        result = service.get_user(run_id)
+    else:
+        store = D1UserEvaluationStore(env.cross_system_context_prod)
+        result = await service.get_user_d1(run_id, store)
 
     if result is None:
         raise HTTPException(

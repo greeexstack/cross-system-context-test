@@ -1,0 +1,23 @@
+﻿{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cross-system-context-api",
+  "main": "src/entry.py",
+  "compatibility_date": "2026-10-02",
+  "compatibility_flags": ["python_workers"],
+  "find_additional_modules": true,
+  "preserve_file_names": true,
+  "base_dir": "src",
+  "rules": [
+    {
+      "type": "Data",
+      "globs": ["fixtures_package/**/*.json"]
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "cross_system_context_prod",
+      "database_name": "cross-system-context-prod",
+      "database_id": "df4e9a24-845a-4f9d-93f7-13c9c2c348c8"
+    }
+  ]
+}

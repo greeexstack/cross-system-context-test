@@ -1,0 +1,152 @@
+{
+  "cases": [
+    {
+      "base_expectation": {
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      },
+      "family_id": "F01",
+      "pair_id": "F01-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "interpretation_class": "quote_followup_pending",
+        "support_level": "supported_by_secondary_context"
+      }
+    },
+    {
+      "base_expectation": {
+        "decision_strength": "moderate",
+        "interpretation_class": "quote_followup_pending",
+        "support_level": "primary_only"
+      },
+      "family_id": "F02",
+      "pair_id": "F02-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "decision_strength": "stronger",
+        "interpretation_class": "quote_followup_pending",
+        "support_level": "secondary_supported"
+      }
+    },
+    {
+      "base_expectation": {
+        "decision_strength": "moderate",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      },
+      "family_id": "F03",
+      "pair_id": "F03-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "decision_strength": "weaker",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "mixed_evidence"
+      }
+    },
+    {
+      "base_expectation": {
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      },
+      "family_id": "F04",
+      "pair_id": "F04-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      }
+    },
+    {
+      "base_expectation": {
+        "identity_match": "no_match",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      },
+      "family_id": "F05",
+      "pair_id": "F05-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "identity_match": "no_match",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      }
+    },
+    {
+      "base_expectation": {
+        "identity_match": "confirmed_match",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      },
+      "family_id": "F06",
+      "pair_id": "F06-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "identity_match": "ambiguous_match",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "primary_only"
+      }
+    },
+    {
+      "base_expectation": {
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "secondary_supported",
+        "temporal_status": "fresh"
+      },
+      "family_id": "F07",
+      "pair_id": "F07-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "temporal_context_rejected",
+        "temporal_status": "clearly_stale"
+      }
+    },
+    {
+      "base_expectation": {
+        "availability": "available",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "no_secondary_evidence"
+      },
+      "family_id": "F08",
+      "pair_id": "F08-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "availability": "unavailable",
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "safe_fallback_primary_only"
+      }
+    },
+    {
+      "base_expectation": {
+        "interpretation_class": "quote_pending_decision",
+        "support_level": "secondary_supported"
+      },
+      "family_id": "F09",
+      "pair_id": "F09-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "interpretation_class": "quote_pending_decision",
+        "reversion": "toward_primary_only",
+        "support_level": "primary_only"
+      }
+    },
+    {
+      "base_expectation": {
+        "interpretation_class": "service_completed_next_step_unrecorded",
+        "support_level": "primary_only"
+      },
+      "family_id": "F10",
+      "pair_id": "F10-E1",
+      "split": "evaluation",
+      "variant_expectation": {
+        "interpretation_class": "service_completed_next_step_unrecorded",
+        "recommended_focus": "next_step_followup",
+        "support_level": "supported_by_secondary_context"
+      }
+    }
+  ],
+  "experiment_time": "2026-09-13T12:00:00Z",
+  "experiment_version": "v0.2",
+  "frozen": true,
+  "split": "evaluation"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "customer_id": "C001",
+    "email": "ops@acme-industrial.example",
+    "name": "Acme Industrial",
+    "phone": "+1-555-0101"
+  },
+  {
+    "customer_id": "C002",
+    "email": "procurement@northstar-health.example",
+    "name": "Northstar Health",
+    "phone": "+1-555-0102"
+  },
+  {
+    "customer_id": "C003",
+    "email": "buying@bluepeak-logistics.example",
+    "name": "BluePeak Logistics",
+    "phone": "+1-555-0103"
+  },
+  {
+    "customer_id": "C004",
+    "email": "projects@summit-energy.example",
+    "name": "Summit Energy",
+    "phone": "+1-555-0104"
+  },
+  {
+    "customer_id": "C005",
+    "email": "it@orchid-retail.example",
+    "name": "Orchid Retail",
+    "phone": "+1-555-0105"
+  }
+]

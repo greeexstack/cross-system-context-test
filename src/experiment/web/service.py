@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from datetime import datetime, timezone
 from pathlib import Path
@@ -82,7 +82,7 @@ class EvaluationService:
     def __init__(
     self,
     fixture_root: str | Path,
-    user_storage_path: str | Path = ":memory:",
+    user_storage_path: str | Path | None = ":memory:",
 ) -> None:
         self.fixture_root = Path(fixture_root)
 
@@ -97,7 +97,11 @@ class EvaluationService:
         }
 
         self._runs: dict[str, EvaluationResult] = {}
-        self.user_store = UserEvaluationStore(user_storage_path)
+        self.user_store = (
+            UserEvaluationStore(user_storage_path)
+            if user_storage_path is not None
+            else None
+        )
 
     def run_v02(self) -> EvaluationResult:
         started_at = datetime.now(timezone.utc)
@@ -198,6 +202,7 @@ class EvaluationService:
     def run_user_evaluation(
         self,
         request: UserEvaluationCreateRequest,
+        persist: bool = True,
     ) -> UserEvaluationResult:
         created_at = datetime.now(timezone.utc)
 
@@ -335,8 +340,19 @@ class EvaluationService:
             ],
         )
 
-        self.user_store.save(result)
+        if persist:
+            if self.user_store is None:
+                raise RuntimeError("User evaluation persistence is not configured.")
+            self.user_store.save(result)
 
+        return result
+    async def run_user_evaluation_d1(
+        self,
+        request: UserEvaluationCreateRequest,
+        store,
+    ) -> UserEvaluationResult:
+        result = self.run_user_evaluation(request, persist=False)
+        await store.save(result)
         return result
     def run_integrated_evaluation(
         self,
@@ -491,21 +507,45 @@ class EvaluationService:
     ) -> EvaluationResult | None:
         return self._runs.get(run_id)
 
+    async def get_user_d1(
+        self,
+        run_id: str,
+        store,
+    ) -> UserEvaluationResult | None:
+        return await store.get(run_id)
     def get_user(
         self,
         run_id: str,
     ) -> UserEvaluationResult | None:
         return self.user_store.get(run_id)
 
+    async def list_user_evaluations_d1(
+        self,
+        store,
+    ) -> list[UserEvaluationResult]:
+        return await store.list_all()
     def list_user_evaluations(self) -> list[UserEvaluationResult]:
         return self.user_store.list_all()
 
+    async def delete_user_evaluation_d1(
+        self,
+        run_id: str,
+        store,
+    ) -> bool:
+        return await store.delete(run_id)
     def delete_user_evaluation(
         self,
         run_id: str,
     ) -> bool:
         return self.user_store.delete(run_id)
 
+    async def set_user_evaluation_starred_d1(
+        self,
+        run_id: str,
+        starred: bool,
+        store,
+    ) -> UserEvaluationResult | None:
+        return await store.set_starred(run_id, starred)
     def set_user_evaluation_starred(
         self,
         run_id: str,
